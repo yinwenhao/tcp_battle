@@ -26,6 +26,7 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import when_how.hero.common.PropertiesStaticConstants;
@@ -44,7 +45,7 @@ public final class HttpHelloWorldServer {
     public static void main(String[] args) throws Exception {
     	
     	PropertiesStaticConstants.propertiesFilePath = System.getProperty("webDir", "");
-//		PropertyConfigurator.configure("WebContent/WEB-INF/log4j.properties");
+//		PropertyConfigurator.configure("log4j.properties");
 		MyTcpConstants.factory = new ClassPathXmlApplicationContext(
 				"classpath:applicationContext.xml");
 		

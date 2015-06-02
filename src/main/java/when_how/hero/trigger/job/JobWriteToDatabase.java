@@ -25,7 +25,7 @@ public class JobWriteToDatabase implements Job {
 	@Override
 	public void execute(JobExecutionContext je) throws JobExecutionException {
 		try {
-			log.info("execute job: [" + getClass() + "]");
+//			log.info("execute job: [" + getClass() + "]");
 			for (User o : DBCache.cacheUser.values()) {
 				userDao.saveOrUpdate(o);
 			}

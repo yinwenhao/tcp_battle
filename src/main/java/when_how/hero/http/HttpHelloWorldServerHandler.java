@@ -91,7 +91,13 @@ public class HttpHelloWorldServerHandler extends ChannelInboundHandlerAdapter {
     		MySession session = MySessionManager.getSession(sessionId);
     		String uri = req.getUri(); // TODO: /favicon.ico
             String[] uu = uri.split("\\?");
-            short jiekouId = Short.valueOf(uu[0].substring(1));
+            short jiekouId = 0;
+            try {
+            	jiekouId = Short.valueOf(uu[0].substring(1));
+            } catch (Exception e) {
+            	// 不是需要捕获的请求
+            	return;
+            }
             MyResponse response =MyDispatcher.getResult(jiekouId, URLDecoder.decode(uu[1]), session);
             ObjectMapper objectMapper = new ObjectMapper();
 			ByteBuf responseByteBuf = Unpooled.copiedBuffer(objectMapper.writeValueAsString(response), Charset.forName(MyTcpConstants.charset));

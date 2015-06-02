@@ -17,7 +17,7 @@ public class JobCheckMySession implements Job {
 	@Override
 	public void execute(JobExecutionContext je) throws JobExecutionException {
 		try {
-			log.info("execute job: [" + getClass() + "]");
+//			log.info("execute job: [" + getClass() + "]");
 			MySessionManager.checkMySession();
 		} catch (Exception e) {
 			log.error("", e);
