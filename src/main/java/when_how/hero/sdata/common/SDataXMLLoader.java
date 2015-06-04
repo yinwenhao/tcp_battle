@@ -199,7 +199,7 @@ public class SDataXMLLoader {
 						+ f.getName().substring(0, 1).toUpperCase()
 						+ f.getName().substring(1);
 				Method m = clazz.getMethod(setter, new Class<?>[] { fc });
-				Object value = getValue(fc, node.getTextContent());
+				Object value = getValue(fc, node.getNodeValue());
 				m.invoke(obj, value);
 				if (f.getAnnotation(SdataColumn.class).type()
 						.equalsIgnoreCase("id")) {
