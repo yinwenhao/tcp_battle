@@ -5,7 +5,7 @@ public class MyConstants {
 	public static final int PAGE_MAX = 50;
 	public static final int ROWS_PER_PAGE = 30;
 
-	public static final String SESSION_KEY_PLAYER = "player";
+	public static final String SESSION_KEY_USER = "user";
 
 	private static final String LOG_SPLIT = "#";
 

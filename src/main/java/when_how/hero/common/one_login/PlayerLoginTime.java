@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import when_how.hero.common.PropertiesConstants;
 import when_how.hero.common.PropertiesKeys;
-import when_how.hero.request.dto.PlayerDto;
+import when_how.hero.request.dto.UserDto;
 
 
-public class PlayerLoginNanoTime {
+public class PlayerLoginTime {
 
 	/** 累计下线时间超过这个数就清空累计在线时间 */
 	public static final int offlineHours = 5;
@@ -80,22 +80,22 @@ public class PlayerLoginNanoTime {
 	/**
 	 * 0正常，1更新登录时间，-1已经被挤下线
 	 * 
-	 * @param playerDto
+	 * @param userDto
 	 * @return
 	 */
-	public static int checkLogin(PlayerDto playerDto) {
-		if (!onlineMap.containsKey(playerDto.getPlayerId())) {
+	public static int checkLogin(UserDto userDto) {
+		if (!onlineMap.containsKey(userDto.getId())) {
 			return -1;
 		} else {
-			long currentLoginTime = onlineMap.get(playerDto.getPlayerId());
-			if (playerDto.getLoginNanoTime() - currentLoginTime < 0) {
+			long currentLoginTime = onlineMap.get(userDto.getId());
+			if (userDto.getLoginTime() - currentLoginTime < 0) {
 				// 比较纳秒务必使用减法然后和0比，防止溢出
 				return -1;
-			} else if (playerDto.getLoginNanoTime() == currentLoginTime) {
+			} else if (userDto.getLoginTime() == currentLoginTime) {
 				return 0;
 			} else {
-				onlineMap.put(playerDto.getPlayerId(),
-						playerDto.getLoginNanoTime());
+				onlineMap.put(userDto.getId(),
+						userDto.getLoginTime());
 				return 1;
 			}
 		}
@@ -104,27 +104,27 @@ public class PlayerLoginNanoTime {
 	/**
 	 * 存放登录时间（纳秒）
 	 * 
-	 * @param playerDto
+	 * @param userDto
 	 */
-	public static void putPlayerLoginNanoTime(PlayerDto playerDto) {
-		onlineMap.put(playerDto.getPlayerId(), playerDto.getLoginNanoTime());
+	public static void putPlayerLoginTime(UserDto userDto) {
+		onlineMap.put(userDto.getId(), userDto.getLoginTime());
 	}
 
 	/**
 	 * 移除登录时间（纳秒）
 	 * 
-	 * @param playerDto
+	 * @param userDto
 	 */
-	public static void removePlayerLoginNanoTime(PlayerDto playerDto) {
-		if (playerDto == null) {
+	public static void removePlayerLoginTime(UserDto userDto) {
+		if (userDto == null) {
 			return;
 		}
-		if (!onlineMap.containsKey(playerDto.getPlayerId())) {
+		if (!onlineMap.containsKey(userDto.getId())) {
 			return;
 		}
-		if (onlineMap.get(playerDto.getPlayerId()) <= playerDto
-				.getLoginNanoTime()) {
-			onlineMap.remove(playerDto.getPlayerId());
+		if (onlineMap.get(userDto.getId()) <= userDto
+				.getLoginTime()) {
+			onlineMap.remove(userDto.getId());
 		}
 	}
 

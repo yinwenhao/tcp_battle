@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import when_how.hero.common.MyConstants;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.common.util.GZipUtils;
-import when_how.hero.request.dto.PlayerDto;
+import when_how.hero.request.dto.UserDto;
 
 
 public class TcpServerHandler extends ChannelInboundHandlerAdapter {
@@ -66,11 +66,11 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 		session.sendResponse(jiekouId, response);
 
 		long endTime = System.currentTimeMillis();
-		if (session.containsKey(MyConstants.SESSION_KEY_PLAYER)) {
-			PlayerDto playerDto = (PlayerDto) session.get(MyConstants.SESSION_KEY_PLAYER);
-			log.info(MyConstants.formatInterfaceLog(playerDto.getPlayerId(), playerDto.getPlayerName(), playerDto.getLevel(), remoteAddress.toString(), jiekouId, endTime - startTime, playerDto.getUserId(), content));
+		if (session.containsKey(MyConstants.SESSION_KEY_USER)) {
+			UserDto userDto = (UserDto) session.get(MyConstants.SESSION_KEY_USER);
+//			log.info(MyConstants.formatInterfaceLog());
 		} else {
-			log.info(MyConstants.formatInterfaceLog(0, "null", 0, remoteAddress.toString(), jiekouId, endTime - startTime, 0, content));
+//			log.info(MyConstants.formatInterfaceLog(0, "null", 0, remoteAddress.toString(), jiekouId, endTime - startTime, 0, content));
 		}
 	}
 

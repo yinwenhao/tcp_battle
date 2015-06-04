@@ -10,8 +10,8 @@ import java.util.Map;
 import when_how.hero.common.MyConstants;
 import when_how.hero.common.MyErrorMessage;
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.common.one_login.PlayerLoginNanoTime;
-import when_how.hero.request.dto.PlayerDto;
+import when_how.hero.common.one_login.PlayerLoginTime;
+import when_how.hero.request.dto.UserDto;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -61,9 +61,9 @@ public class MyDispatcher {
 		if (ACTION_MAP_NOT_CHECK_LOGIN.containsKey(jiekouId)) {
 			actionClassNameAndMethod = ACTION_MAP_NOT_CHECK_LOGIN.get(jiekouId);
 		} else if (ACTION_MAP.containsKey(jiekouId)) {
-			if (session.containsKey(MyConstants.SESSION_KEY_PLAYER)) {
-				PlayerDto playerDto = (PlayerDto) session.get(MyConstants.SESSION_KEY_PLAYER);
-				if (PlayerLoginNanoTime.checkLogin(playerDto) < 0) {
+			if (session.containsKey(MyConstants.SESSION_KEY_USER)) {
+				UserDto userDto = (UserDto) session.get(MyConstants.SESSION_KEY_USER);
+				if (PlayerLoginTime.checkLogin(userDto) < 0) {
 					MyResponse responseJSON = new MyResponse(MyErrorMessage.needLogin);
 					return responseJSON;
 				}

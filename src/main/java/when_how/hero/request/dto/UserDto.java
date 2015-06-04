@@ -1,27 +1,27 @@
 package when_how.hero.request.dto;
 
+import when_how.hero.hibernate.dto.IDto;
+
 /**
  * @author when_how
  * 
  */
 
-public class UserDto {
+public class UserDto implements IDto {
 	/** 用户id */
 	private Integer id;
+
+	/** 昵称 */
+	private String name;
 	
-	/** 用户账号 */
-	private String account;
+	/** 用户等级 */
+	private int user_lv;
 	
-	/** 运营商标志 */
-	private String yunying;
+	/** 用户vip等级 */
+	private int vip;
 	
-	private String accessToken360;
-	
-	private String userId360;
-	
-	private String refresh_token_360;
-	
-	private long expires_in_360;
+	/** 登陆时间 */
+	private long loginTime;
 
 	public Integer getId() {
 		return id;
@@ -31,52 +31,36 @@ public class UserDto {
 		this.id = id;
 	}
 
-	public String getAccount() {
-		return account;
+	public String getName() {
+		return name;
 	}
 
-	public void setAccount(String account) {
-		this.account = account;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getYunying() {
-		return yunying;
+	public int getUser_lv() {
+		return user_lv;
 	}
 
-	public void setYunying(String yunying) {
-		this.yunying = yunying;
+	public void setUser_lv(int user_lv) {
+		this.user_lv = user_lv;
 	}
 
-	public String getRefresh_token_360() {
-		return refresh_token_360;
+	public int getVip() {
+		return vip;
 	}
 
-	public void setRefresh_token_360(String refresh_token_360) {
-		this.refresh_token_360 = refresh_token_360;
+	public void setVip(int vip) {
+		this.vip = vip;
 	}
 
-	public long getExpires_in_360() {
-		return expires_in_360;
+	public long getLoginTime() {
+		return loginTime;
 	}
 
-	public void setExpires_in_360(long expires_in_360) {
-		this.expires_in_360 = expires_in_360;
-	}
-
-	public String getAccessToken360() {
-		return accessToken360;
-	}
-
-	public void setAccessToken360(String accessToken360) {
-		this.accessToken360 = accessToken360;
-	}
-
-	public String getUserId360() {
-		return userId360;
-	}
-
-	public void setUserId360(String userId360) {
-		this.userId360 = userId360;
+	public void setLoginTime(long loginTime) {
+		this.loginTime = loginTime;
 	}
 
 }
