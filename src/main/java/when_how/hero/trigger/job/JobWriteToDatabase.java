@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import when_how.hero.domain.User;
-import when_how.hero.login.dao.IUserDao;
 import when_how.hero.mydbcache.DBCache;
+import when_how.hero.request.dao.IUserDao;
+import when_how.hero.request.domain.User;
 
 @Component("jobWriteToDatabase")
 public class JobWriteToDatabase implements Job {

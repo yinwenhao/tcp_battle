@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import when_how.hero.common.MyConstants;
 import when_how.hero.common.exception.AuthenticationException;
 import when_how.hero.common.one_login.PlayerLoginNanoTime;
-import when_how.hero.login.dto.PlayerDto;
 
+
+
+import when_how.hero.request.dto.PlayerDto;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;

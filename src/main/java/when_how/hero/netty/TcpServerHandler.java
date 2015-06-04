@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import when_how.hero.common.MyConstants;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.common.util.GZipUtils;
-import when_how.hero.login.dto.PlayerDto;
+import when_how.hero.request.dto.PlayerDto;
 
 
 public class TcpServerHandler extends ChannelInboundHandlerAdapter {

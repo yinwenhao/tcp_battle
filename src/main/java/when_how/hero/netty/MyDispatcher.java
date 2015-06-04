@@ -11,7 +11,7 @@ import when_how.hero.common.MyConstants;
 import when_how.hero.common.MyErrorMessage;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.common.one_login.PlayerLoginNanoTime;
-import when_how.hero.login.dto.PlayerDto;
+import when_how.hero.request.dto.PlayerDto;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;

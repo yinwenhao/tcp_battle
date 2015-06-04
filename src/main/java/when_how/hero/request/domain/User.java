@@ -1,4 +1,4 @@
-package when_how.hero.domain;
+package when_how.hero.request.domain;
 
 import when_how.hero.hibernate.model.IModel;
 

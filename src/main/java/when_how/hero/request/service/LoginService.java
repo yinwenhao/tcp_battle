@@ -1,4 +1,4 @@
-package when_how.hero.login.service;
+package when_how.hero.request.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import when_how.hero.common.MyErrorMessage;
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.domain.User;
-import when_how.hero.login.dao.IUserDao;
+import when_how.hero.request.dao.IUserDao;
+import when_how.hero.request.domain.User;
 
 
 /**

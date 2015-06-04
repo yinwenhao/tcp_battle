@@ -1,7 +1,7 @@
-package when_how.hero.login.dao;
+package when_how.hero.request.dao;
 
-import when_how.hero.domain.User;
 import when_how.hero.hibernate.dao.IBaseDao;
+import when_how.hero.request.domain.User;
 
 /**
  * @author when_how

@@ -3,7 +3,7 @@ package when_how.hero.mydbcache;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import when_how.hero.domain.User;
+import when_how.hero.request.domain.User;
 
 
 public class DBCache {

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import when_how.hero.common.PropertiesConstants;
 import when_how.hero.common.PropertiesKeys;
-import when_how.hero.login.dto.PlayerDto;
+import when_how.hero.request.dto.PlayerDto;
 
 
 public class PlayerLoginNanoTime {

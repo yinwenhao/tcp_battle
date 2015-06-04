@@ -1,4 +1,4 @@
-package when_how.hero.login.dto;
+package when_how.hero.request.dto;
 
 /**
  * @author when_how
