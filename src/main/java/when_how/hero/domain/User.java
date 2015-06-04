@@ -33,12 +33,6 @@ public class User implements IModel {
 	/** 用户vip等级 */
 	private int vip;
 	
-	/** 开发者id */
-	private int developer_id;
-
-	/** 投资者id */
-	private int Investor_id;
-	
 	/**
 	 * @hibernate.id unsaved-value="null"
 	 * @hibernate.column name="id"
@@ -105,28 +99,6 @@ public class User implements IModel {
 
 	public void setVip(int vip) {
 		this.vip = vip;
-	}
-
-	/**
-	 * @hibernate.property column="developer_id"
-	 */
-	public int getDeveloper_id() {
-		return developer_id;
-	}
-
-	public void setDeveloper_id(int developer_id) {
-		this.developer_id = developer_id;
-	}
-
-	/**
-	 * @hibernate.property column="Investor_id"
-	 */
-	public int getInvestor_id() {
-		return Investor_id;
-	}
-
-	public void setInvestor_id(int investor_id) {
-		Investor_id = investor_id;
 	}
 
 }
