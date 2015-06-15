@@ -17,15 +17,17 @@ import when_how.hero.request.domain.User;
 public class JobWriteToDatabase implements Job {
 	/** log */
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	
+
 	@Autowired
 	private IUserDao userDao;
-	
-	@Transactional(rollbackFor=Exception.class)
+
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void execute(JobExecutionContext je) throws JobExecutionException {
 		try {
-//			log.info("execute job: [" + getClass() + "]");
+			if (log.isDebugEnabled()) {
+				log.debug("execute job: [" + getClass() + "]");
+			}
 			for (User o : DBCache.cacheUser.values()) {
 				userDao.saveOrUpdate(o);
 			}

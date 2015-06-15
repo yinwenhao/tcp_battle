@@ -13,11 +13,13 @@ import when_how.hero.netty.MySessionManager;
 public class JobCheckMySession implements Job {
 	/** log */
 	private Logger log = LoggerFactory.getLogger(JobCheckMySession.class);
-	
+
 	@Override
 	public void execute(JobExecutionContext je) throws JobExecutionException {
 		try {
-//			log.info("execute job: [" + getClass() + "]");
+			if (log.isDebugEnabled()) {
+				log.debug("execute job: [" + getClass() + "]");
+			}
 			MySessionManager.checkMySession();
 		} catch (Exception e) {
 			log.error("", e);
