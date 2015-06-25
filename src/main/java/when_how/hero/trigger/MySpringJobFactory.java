@@ -11,6 +11,14 @@ import org.slf4j.LoggerFactory;
 
 import when_how.hero.netty.MyTcpConstants;
 
+/**
+ *  spring-context-support包里的这个：org.springframework.scheduling.quartz.SpringBeanJobFactory不靠谱
+ *  它也只是和quartz原来的一样new了个对象，而且没有注入
+ *  所以还是用自己写的
+ *  
+ * @author yinwenhao
+ *
+ */
 public class MySpringJobFactory implements JobFactory {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
