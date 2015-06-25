@@ -13,7 +13,7 @@ import when_how.hero.mydbcache.DBCache;
 import when_how.hero.request.dao.IUserDao;
 import when_how.hero.request.domain.User;
 
-@Component("jobWriteToDatabase")
+@Component("jobWriteToDatabase") // 使用org.springframework.scheduling.quartz.SpringBeanJobFactory可以不加这个注释，而且是多例的
 public class JobWriteToDatabase implements Job {
 	/** log */
 	private final Logger log = LoggerFactory.getLogger(getClass());
