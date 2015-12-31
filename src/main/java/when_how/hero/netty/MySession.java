@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import when_how.hero.common.MySimpleEncrypt;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.common.util.GZipUtils;
 

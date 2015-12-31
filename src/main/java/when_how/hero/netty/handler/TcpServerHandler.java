@@ -1,4 +1,4 @@
-package when_how.hero.netty;
+package when_how.hero.netty.handler;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -10,8 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import when_how.hero.common.MyConstants;
+import when_how.hero.common.MySimpleEncrypt;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.common.util.GZipUtils;
+import when_how.hero.netty.MyDispatcher;
+import when_how.hero.netty.MySession;
+import when_how.hero.netty.MySessionManager;
+import when_how.hero.netty.MyTcpConstants;
 import when_how.hero.request.dto.UserDto;
 
 

@@ -1,4 +1,4 @@
-package when_how.hero.netty;
+package when_how.hero.common;
 
 public class MySimpleEncrypt {
 

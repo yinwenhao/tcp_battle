@@ -6,8 +6,6 @@ import java.util.concurrent.ConcurrentMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import when_how.hero.common.PropertiesConstants;
-import when_how.hero.common.PropertiesKeys;
 import when_how.hero.request.dto.UserDto;
 
 
@@ -134,8 +132,7 @@ public class PlayerLoginTime {
 	 * @return
 	 */
 	public static boolean isFCMOn() {
-		return "ON".equalsIgnoreCase(PropertiesConstants.getInstance()
-				.getProperties(PropertiesKeys.FCM));
+		return false;
 	}
 
 }

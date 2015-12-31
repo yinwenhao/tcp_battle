@@ -1,4 +1,4 @@
-package when_how.hero.netty;
+package when_how.hero.netty.handler;
 
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;

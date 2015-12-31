@@ -2,9 +2,6 @@ package when_how.hero.sdata.common;
 
 import java.util.List;
 
-import when_how.hero.common.PropertiesConstants;
-import when_how.hero.common.PropertiesKeys;
-
 
 /**
  * 静态数组载入器
@@ -13,7 +10,7 @@ import when_how.hero.common.PropertiesKeys;
 public class SDataLoader {
 	
 	public static List<Object[]> getModels(Class<?> clazz) {
-		String path = PropertiesConstants.getInstance().getProperties(PropertiesKeys.SDATA);
+		String path = "";
 
 		SDataXMLLoader loader = SDataXMLLoader.getInstance(path);
 		return loader.getModels(clazz);

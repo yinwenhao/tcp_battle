@@ -17,16 +17,16 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import when_how.hero.common.PropertiesConstants;
-import when_how.hero.common.PropertiesKeys;
-import when_how.hero.common.PropertiesStaticConstants;
 import when_how.hero.common.listener.IMySessionListener;
+import when_how.hero.netty.handler.DecodeHandler;
+import when_how.hero.netty.handler.EncodeHandler;
+import when_how.hero.netty.handler.MyReaderHandler;
+import when_how.hero.netty.handler.TcpServerHandler;
 
 public class MyNettyMain {
 
 	public static void initNetty(IMySessionListener mySessionListener, int bossNum, int workerNum, final int readSecondForClose) throws Exception {
 
-		PropertiesStaticConstants.propertiesFilePath = System.getProperty("webDir", "");
 //		PropertyConfigurator.configure("WebContent/WEB-INF/log4j.properties");
 		MyTcpConstants.factory = new ClassPathXmlApplicationContext(
 				"classpath:applicationContext.xml");
@@ -46,16 +46,17 @@ public class MyNettyMain {
 						public void initChannel(SocketChannel ch)
 								throws Exception {
 							ChannelPipeline p = ch.pipeline();
-//							EventExecutorGroup myWorkerGroup = new DefaultEventExecutorGroup(500); 这个还没搞懂
 							p.addLast("idleStateHandler", new IdleStateHandler(
 									readSecondForClose, 0, 0));
 							p.addLast("closeHandler", new MyReaderHandler());
-							p.addLast("decoder",
+							p.addLast("lengthFieldBasedFrameDecoder",
 									new LengthFieldBasedFrameDecoder(
 											MyTcpConstants.maxFrameLength, 0,
 											MyTcpConstants.lengthFieldLength));
-							p.addLast("encoder", new LengthFieldPrepender(
+							p.addLast("lengthFieldPrepender", new LengthFieldPrepender(
 									MyTcpConstants.lengthFieldLength));
+							p.addLast("encoder", new EncodeHandler());
+							p.addLast("decoder", new DecodeHandler());
 							p.addLast("actionHandler", new TcpServerHandler());
 						}
 					});
@@ -65,8 +66,7 @@ public class MyNettyMain {
 			b.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);//关键是这句
 			
 			// Bind and start to accept incoming connections.
-			b.bind(PropertiesConstants.getInstance().getIntProperties(
-					PropertiesKeys.PORT)).sync().channel().closeFuture().sync();
+			b.bind(8080).sync().channel().closeFuture().sync();
 		} finally {
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
