@@ -46,10 +46,10 @@ import java.util.Collections;
 import java.util.Set;
 
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.netty.MyDispatcher;
 import when_how.hero.netty.MySession;
 import when_how.hero.netty.MySessionManager;
 import when_how.hero.netty.MyTcpConstants;
+import when_how.hero.netty.dispatcher.MyDispatcher;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;

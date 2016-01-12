@@ -33,8 +33,8 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
     	Request request = new Request();
-    	request.setMethod("123");
-    	request.setClazz(Request.class);
+    	request.setMethod("logout");
+    	request.setBean("login");
     	Map<String, Object> map = new HashMap<String, Object>();
     	map.put("a", 1);
     	map.put("b", "hehe");

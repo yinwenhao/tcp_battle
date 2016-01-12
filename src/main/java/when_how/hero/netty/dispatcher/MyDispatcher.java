@@ -1,4 +1,4 @@
-package when_how.hero.netty;
+package when_how.hero.netty.dispatcher;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -11,6 +11,8 @@ import when_how.hero.common.MyConstants;
 import when_how.hero.common.MyErrorMessage;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.common.one_login.PlayerLoginTime;
+import when_how.hero.netty.MySession;
+import when_how.hero.netty.MyTcpConstants;
 import when_how.hero.request.dto.UserDto;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -56,6 +58,7 @@ public class MyDispatcher {
 
 	public static MyResponse getResult(short jiekouId, String param, MySession session) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, JsonParseException, JsonMappingException, IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
+		@SuppressWarnings("unchecked")
 		Map<String, Object> paramMap = objectMapper.readValue(param, Map.class);
 		String[] actionClassNameAndMethod;
 		if (ACTION_MAP_NOT_CHECK_LOGIN.containsKey(jiekouId)) {
@@ -74,14 +77,21 @@ public class MyDispatcher {
 			MyResponse responseJSON = new MyResponse(MyErrorMessage.wrongJiekouId);
 			return responseJSON;
 		}
-		
-		Object action = MyTcpConstants.factory.getBean(actionClassNameAndMethod[0]);
+		return getResult(actionClassNameAndMethod[0], actionClassNameAndMethod[1], paramMap, session);
+	}
+	
+	public static MyResponse getResult(String actionClassBean, String method, Map<String, Object> param) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		return getResult(actionClassBean, method, param, null);
+	}
+	
+	private static MyResponse getResult(String actionClassBean, String method, Map<String, Object> param, MySession session) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+		Object action = MyTcpConstants.factory.getBean(actionClassBean);
 		Class<? extends Object> clazz = action.getClass();
 
 		// 设置session
 		clazz.getMethod("setSession", MySession.class).invoke(action, session);
 		// 把参数赋值
-		for (String key : paramMap.keySet()) {
+		for (String key : param.keySet()) {
 			Field f = null;
 			try {
 				f = clazz.getDeclaredField(key);
@@ -94,18 +104,18 @@ public class MyDispatcher {
 			Object value = null;
 			if (f.getType().isAssignableFrom(int.class)
 					|| f.getType().isAssignableFrom(Integer.class)) {
-				value = (Integer) paramMap.get(key);
+				value = (Integer) param.get(key);
 			} else if (f.getType().isAssignableFrom(float.class)
 					|| f.getType().isAssignableFrom(Float.class)) {
-				value = (Short) paramMap.get(key);
+				value = (Short) param.get(key);
 			} else if (f.getType().isAssignableFrom(long.class)
 					|| f.getType().isAssignableFrom(Long.class)) {
-				value = (Long) paramMap.get(key);
+				value = (Long) param.get(key);
 			} else if (f.getType().isAssignableFrom(double.class)
 					|| f.getType().isAssignableFrom(Double.class)) {
-				value = (Double) paramMap.get(key);
+				value = (Double) param.get(key);
 			} else if (f.getType().isAssignableFrom(String.class)) {
-				value = (String) paramMap.get(key);
+				value = (String) param.get(key);
 			}
 			if (value != null) {
 				m.invoke(action, value);
@@ -113,7 +123,7 @@ public class MyDispatcher {
 		}
 
 		// 执行action
-		Method m = clazz.getMethod(actionClassNameAndMethod[1]);
+		Method m = clazz.getMethod(method);
 		m.invoke(action);
 
 		// 设置返回值

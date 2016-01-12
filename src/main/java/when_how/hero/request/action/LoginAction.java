@@ -23,7 +23,7 @@ import com.opensymphony.xwork2.Action;
  * 
  */
 @Scope("prototype") //配置多例
-@Controller("loginAction")
+@Controller("login")
 public class LoginAction extends BaseAction {
 
 	/**
