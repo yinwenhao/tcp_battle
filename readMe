@@ -1,0 +1,1 @@
+java -jar xxx -DconfPath=/gitWorkSpace/tcp_battle/conf
