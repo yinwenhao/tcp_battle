@@ -1,5 +1,14 @@
 package tcp_battle;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import when_how.hero.netty.MyTcpConstants;
+import when_how.hero.netty.handler.DecodeHandler;
+import when_how.hero.netty.handler.EncodeHandler;
+import when_how.hero.netty.handler.MyReaderHandler;
+import when_how.hero.netty.handler.TcpServerHandler;
+import when_how.hero.netty.serial.impl.JsonSerialFactory;
+import when_how.hero.request.Request;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -9,18 +18,30 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+import io.netty.handler.timeout.IdleStateHandler;
 
 public class TestNettyTcpMain {
 
     static final boolean SSL = System.getProperty("ssl") != null;
     static final String HOST = System.getProperty("host", "127.0.0.1");
-    static final int PORT = Integer.parseInt(System.getProperty("port", "8007"));
+    static final int PORT = Integer.parseInt(System.getProperty("port", "8080"));
     static final int SIZE = Integer.parseInt(System.getProperty("size", "256"));
 
     public static void main(String[] args) throws Exception {
+    	
+    	JsonSerialFactory a = new JsonSerialFactory();
+    	
+    	final EncodeHandler encoder = new EncodeHandler(a);
+    	
+    	final DecodeHandler decoder = new DecodeHandler(a, Request.class);
+    	
         // Configure SSL.git
         final SslContext sslCtx;
         if (SSL) {
@@ -36,18 +57,23 @@ public class TestNettyTcpMain {
             Bootstrap b = new Bootstrap();
             b.group(group)
              .channel(NioSocketChannel.class)
-             .option(ChannelOption.TCP_NODELAY, true)
-             .handler(new ChannelInitializer<SocketChannel>() {
-                 @Override
-                 public void initChannel(SocketChannel ch) throws Exception {
-                     ChannelPipeline p = ch.pipeline();
-                     if (sslCtx != null) {
-                         p.addLast(sslCtx.newHandler(ch.alloc(), HOST, PORT));
-                     }
-                     //p.addLast(new LoggingHandler(LogLevel.INFO));
-                     p.addLast(new EchoClientHandler());
-                 }
-             });
+			 .handler(new ChannelInitializer<SocketChannel>() {
+						@Override
+						public void initChannel(SocketChannel ch)
+								throws Exception {
+							ChannelPipeline p = ch.pipeline();
+//							p.addLast("closeHandler", new MyReaderHandler());
+							p.addLast("lengthFieldBasedFrameDecoder",
+									new LengthFieldBasedFrameDecoder(
+											MyTcpConstants.maxFrameLength, 0,
+											MyTcpConstants.lengthFieldLength));
+							p.addLast("lengthFieldPrepender", new LengthFieldPrepender(
+									MyTcpConstants.lengthFieldLength));
+							p.addLast("encoder", encoder);
+							p.addLast("decoder", decoder);
+							p.addLast("actionHandler", new EchoClientHandler());
+						}
+					});
 
             // Start the client.
             ChannelFuture f = b.connect(HOST, PORT).sync();

@@ -15,10 +15,13 @@
  */
 package tcp_battle;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import when_how.hero.request.Request;
 
 /**
  * Handler implementation for the echo client.  It initiates the ping-pong
@@ -27,21 +30,16 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  */
 public class EchoClientHandler extends ChannelInboundHandlerAdapter {
 
-    private final ByteBuf firstMessage;
-
-    /**
-     * Creates a client-side handler.
-     */
-    public EchoClientHandler() {
-        firstMessage = Unpooled.buffer(TestNettyTcpMain.SIZE);
-        for (int i = 0; i < firstMessage.capacity(); i ++) {
-            firstMessage.writeByte((byte) i);
-        }
-    }
-
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
-        ctx.writeAndFlush(firstMessage);
+    	Request request = new Request();
+    	request.setMethod("123");
+    	request.setClazz(Request.class);
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	map.put("a", 1);
+    	map.put("b", "hehe");
+    	request.setParam(map);
+        ctx.writeAndFlush(request);
     }
 
     @Override

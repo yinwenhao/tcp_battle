@@ -13,26 +13,25 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import io.netty.handler.timeout.IdleStateHandler;
-
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import when_how.hero.common.listener.IMySessionListener;
 import when_how.hero.netty.handler.DecodeHandler;
 import when_how.hero.netty.handler.EncodeHandler;
-import when_how.hero.netty.handler.MyReaderHandler;
 import when_how.hero.netty.handler.TcpServerHandler;
+import when_how.hero.netty.serial.InputFactory;
+import when_how.hero.netty.serial.OutputFactory;
+import when_how.hero.netty.serial.impl.JsonSerialFactory;
+import when_how.hero.request.Request;
 
-public class MyNettyMain {
-
-	public static void initNetty(IMySessionListener mySessionListener, int bossNum, int workerNum, final int readSecondForClose) throws Exception {
-
-//		PropertyConfigurator.configure("WebContent/WEB-INF/log4j.properties");
-		MyTcpConstants.factory = new ClassPathXmlApplicationContext(
-				"classpath:applicationContext.xml");
-		
-//		MySessionManager.setMySessionListener(mySessionListener);
-
+public class NettyServer {
+	
+	private InputFactory input = new JsonSerialFactory();
+	
+	private OutputFactory output = new JsonSerialFactory();
+	
+	private int bossNum = 1;
+	
+	private int workerNum = 0;
+	
+	public void startServer() throws Exception {
 		EventLoopGroup bossGroup = new NioEventLoopGroup(bossNum);
 		EventLoopGroup workerGroup = new NioEventLoopGroup(workerNum);
 		
@@ -46,17 +45,17 @@ public class MyNettyMain {
 						public void initChannel(SocketChannel ch)
 								throws Exception {
 							ChannelPipeline p = ch.pipeline();
-							p.addLast("idleStateHandler", new IdleStateHandler(
-									readSecondForClose, 0, 0));
-							p.addLast("closeHandler", new MyReaderHandler());
+//							p.addLast("idleStateHandler", new IdleStateHandler(
+//									readSecondForClose, 0, 0));
+//							p.addLast("closeHandler", new MyReaderHandler());
 							p.addLast("lengthFieldBasedFrameDecoder",
 									new LengthFieldBasedFrameDecoder(
 											MyTcpConstants.maxFrameLength, 0,
 											MyTcpConstants.lengthFieldLength));
 							p.addLast("lengthFieldPrepender", new LengthFieldPrepender(
 									MyTcpConstants.lengthFieldLength));
-							p.addLast("encoder", new EncodeHandler());
-							p.addLast("decoder", new DecodeHandler());
+							p.addLast("encoder", new EncodeHandler(output));
+							p.addLast("decoder", new DecodeHandler(input, Request.class));
 							p.addLast("actionHandler", new TcpServerHandler());
 						}
 					});
@@ -71,6 +70,38 @@ public class MyNettyMain {
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
 		}
+	}
+
+	public InputFactory getInput() {
+		return input;
+	}
+
+	public void setInput(InputFactory input) {
+		this.input = input;
+	}
+
+	public OutputFactory getOutput() {
+		return output;
+	}
+
+	public void setOutput(OutputFactory output) {
+		this.output = output;
+	}
+
+	public int getBossNum() {
+		return bossNum;
+	}
+
+	public void setBossNum(int bossNum) {
+		this.bossNum = bossNum;
+	}
+
+	public int getWorkerNum() {
+		return workerNum;
+	}
+
+	public void setWorkerNum(int workerNum) {
+		this.workerNum = workerNum;
 	}
 	
 }
