@@ -24,38 +24,44 @@ import java.util.Map;
 import when_how.hero.request.Request;
 
 /**
- * Handler implementation for the echo client.  It initiates the ping-pong
+ * Handler implementation for the echo client. It initiates the ping-pong
  * traffic between the echo client and server by sending the first message to
  * the server.
  */
 public class EchoClientHandler extends ChannelInboundHandlerAdapter {
 
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) {
-    	Request request = new Request();
-    	request.setMethod("logout");
-    	request.setBean("login");
-    	Map<String, Object> map = new HashMap<String, Object>();
-    	map.put("account", "root");
-    	map.put("password", "123456");
-    	request.setParam(map);
-        ctx.writeAndFlush(request);
-    }
+	@Override
+	public void channelActive(ChannelHandlerContext ctx) {
+		Request request = new Request();
+		request.setMethod("login");
+		request.setBean("login");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("account", "root");
+		map.put("password", "123456");
+		request.setParam(map);
+		ctx.writeAndFlush(request);
+	}
 
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) {
-//        ctx.write(msg);
-    }
+	@Override
+	public void channelRead(ChannelHandlerContext ctx, Object msg) {
+		// ctx.write(msg);
+	}
 
-    @Override
-    public void channelReadComplete(ChannelHandlerContext ctx) {
-       ctx.flush();
-    }
+	@Override
+	public void channelReadComplete(ChannelHandlerContext ctx) {
+		ctx.flush();
+	}
 
-    @Override
-    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        // Close the connection when an exception is raised.
-        cause.printStackTrace();
-        ctx.close();
-    }
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		// Close the connection when an exception is raised.
+		cause.printStackTrace();
+		ctx.close();
+	}
+
+	@Override
+	public void channelInactive(ChannelHandlerContext ctx) {
+		System.out.println("断开连接了");
+	}
+
 }

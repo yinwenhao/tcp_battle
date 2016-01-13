@@ -47,7 +47,7 @@ public class NettyServer {
 						public void initChannel(SocketChannel ch)
 								throws Exception {
 							ChannelPipeline p = ch.pipeline();
-							p.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0));
+							p.addLast("idleStateHandler", new IdleStateHandler(60, 60, 60));
 							p.addLast("closeHandler", new MyCloseHandler());
 							p.addLast("lengthFieldBasedFrameDecoder",
 									new LengthFieldBasedFrameDecoder(

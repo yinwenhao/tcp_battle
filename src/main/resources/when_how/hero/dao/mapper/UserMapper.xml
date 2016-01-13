@@ -2,30 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 这里的namespace名字必须为执行该sql的dao地址&nbsp; -->
-<mapper namespace="com.when_how.hero.dao.mapper.UserMapper">
+<mapper namespace="when_how.hero.dao.mapper.UserMapper">
 
 	<select id="getUser" parameterType="long"
-		resultType="com.when_how.hero.dao.entity.User">
+		resultType="when_how.hero.dao.entity.User">
 		<![CDATA[ 
 			SELECT * FROM t_user WHERE id = #{id}
         ]]>
 	</select>
 	
 	<select id="getUserByAccount" parameterType="String"
-		resultType="com.when_how.hero.dao.entity.User">
+		resultType="when_how.hero.dao.entity.User">
 		<![CDATA[ 
 			SELECT * FROM t_user WHERE account = #{account}
         ]]>
 	</select>
 
-	<select id="getUserList" resultType="com.when_how.hero.dao.entity.User">  
+	<select id="getUserList" resultType="when_how.hero.dao.entity.User">  
         <![CDATA[ 
 			SELECT * FROM t_user
         ]]>
 	</select>
 
 	<!-- 新增用户 -->
-	<insert id="insertUser" parameterType="com.when_how.hero.dao.entity.User">
+	<insert id="insertUser" parameterType="when_how.hero.dao.entity.User">
 		insert into t_user (account, password) values(#{account}, #{password})
 	</insert>
 
