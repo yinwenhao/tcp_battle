@@ -2,7 +2,6 @@ package when_how.hero.sdata.domain;
 
 import when_how.hero.common.annotation.SdataColumn;
 import when_how.hero.common.annotation.SdataTable;
-import when_how.hero.hibernate.model.IModel;
 
 /**
  * 用户表
@@ -10,12 +9,7 @@ import when_how.hero.hibernate.model.IModel;
  *
  */
 @SdataTable(table="army")
-public class Army implements IModel {
-	
-	/**
-	 * serialVersionUID
-	 */
-	private static final long serialVersionUID = 2026468815849441L;
+public class Army {
 
 	@SdataColumn(type="id")
 	private int id;

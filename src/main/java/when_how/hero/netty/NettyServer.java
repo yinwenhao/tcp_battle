@@ -13,8 +13,10 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 import when_how.hero.netty.handler.DecodeHandler;
 import when_how.hero.netty.handler.EncodeHandler;
+import when_how.hero.netty.handler.MyCloseHandler;
 import when_how.hero.netty.handler.TcpServerHandler;
 import when_how.hero.netty.serial.InputFactory;
 import when_how.hero.netty.serial.OutputFactory;
@@ -45,9 +47,8 @@ public class NettyServer {
 						public void initChannel(SocketChannel ch)
 								throws Exception {
 							ChannelPipeline p = ch.pipeline();
-//							p.addLast("idleStateHandler", new IdleStateHandler(
-//									readSecondForClose, 0, 0));
-//							p.addLast("closeHandler", new MyReaderHandler());
+							p.addLast("idleStateHandler", new IdleStateHandler(60, 0, 0));
+							p.addLast("closeHandler", new MyCloseHandler());
 							p.addLast("lengthFieldBasedFrameDecoder",
 									new LengthFieldBasedFrameDecoder(
 											MyTcpConstants.maxFrameLength, 0,

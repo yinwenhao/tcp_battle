@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="trigger.test" />
+			</list>
+		</property>
+	</bean>
+
+	<bean name="job.test"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="testQuartz" />
+		<property name="targetMethod" value="test" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="trigger.test"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="job.test" />
+		<property name="cronExpression" value="*/5 * * * * ?" />
+	</bean>
+
+</beans>

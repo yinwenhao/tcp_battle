@@ -35,6 +35,7 @@
 		</property>
 	</bean>
 	
-	<import resource="common-applicationContext.xml" />
+	<import resource="spring-mybatis.xml" />
 	<import resource="spring-serial.xml" />
+	<import resource="spring-quartz.xml" />
 </beans> 

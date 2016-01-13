@@ -1,18 +1,8 @@
 package tcp_battle;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import when_how.hero.netty.MyTcpConstants;
-import when_how.hero.netty.handler.DecodeHandler;
-import when_how.hero.netty.handler.EncodeHandler;
-import when_how.hero.netty.handler.MyReaderHandler;
-import when_how.hero.netty.handler.TcpServerHandler;
-import when_how.hero.netty.serial.impl.JsonSerialFactory;
-import when_how.hero.request.Request;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -20,12 +10,14 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
-import io.netty.handler.timeout.IdleStateHandler;
+import when_how.hero.common.json.MyResponse;
+import when_how.hero.netty.MyTcpConstants;
+import when_how.hero.netty.handler.DecodeHandler;
+import when_how.hero.netty.handler.EncodeHandler;
+import when_how.hero.netty.serial.impl.JsonSerialFactory;
 
 public class TestNettyTcpMain {
 
@@ -37,10 +29,12 @@ public class TestNettyTcpMain {
     public static void main(String[] args) throws Exception {
     	
     	JsonSerialFactory a = new JsonSerialFactory();
+
+//    	JsonSerialFactory aa = new JsonSerialFactory();
     	
     	final EncodeHandler encoder = new EncodeHandler(a);
     	
-    	final DecodeHandler decoder = new DecodeHandler(a, Request.class);
+    	final DecodeHandler decoder = new DecodeHandler(a, MyResponse.class);
     	
         // Configure SSL.git
         final SslContext sslCtx;

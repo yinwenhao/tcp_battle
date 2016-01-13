@@ -12,10 +12,6 @@ public class ExceptionListener implements GenericFutureListener<Future<Void>> {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	private ExceptionListener() {
-
-	}
-
 	@Override
 	public void operationComplete(Future<Void> future) throws Exception {
 		if (!future.isSuccess() && future.cause() != null) {

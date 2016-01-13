@@ -36,15 +36,15 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
     	request.setMethod("logout");
     	request.setBean("login");
     	Map<String, Object> map = new HashMap<String, Object>();
-    	map.put("a", 1);
-    	map.put("b", "hehe");
+    	map.put("account", "root");
+    	map.put("password", "123456");
     	request.setParam(map);
         ctx.writeAndFlush(request);
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
-        ctx.write(msg);
+//        ctx.write(msg);
     }
 
     @Override

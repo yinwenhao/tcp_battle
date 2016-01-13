@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.List;
 
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.netty.MySession;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,17 +36,6 @@ public class BaseAction extends ActionSupport {
 
 	public static final String[] keys = new String[] { "playerDataChange",
 			"chats", "bobao", "fcmTips" };
-
-	/** mySession */
-	private MySession session = new MySession();
-
-	public MySession getSession() {
-		return session;
-	}
-
-	public void setSession(MySession session) {
-		this.session = session;
-	}
 
 	public void setInputStream(InputStream inputStream) {
 		this.inputStream = inputStream;
