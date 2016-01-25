@@ -22,20 +22,17 @@ public class BaseAction extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 1060001L;
 
-	private long chatTime;
-
 	/** 给客户端的string响应结果 */
 	private String stringResponse;
 
 	/** 给客户端的响应结果 */
 	private MyResponse response;
+	
+	private long uid;
 
 	private InputStream inputStream;
 	private InputStream stringInputStream;
 	private InputStream inputStreamException;
-
-	public static final String[] keys = new String[] { "playerDataChange",
-			"chats", "bobao", "fcmTips" };
 
 	public void setInputStream(InputStream inputStream) {
 		this.inputStream = inputStream;
@@ -84,14 +81,6 @@ public class BaseAction extends ActionSupport {
 		this.inputStreamException = inputStreamException;
 	}
 
-	public long getChatTime() {
-		return chatTime;
-	}
-
-	public void setChatTime(long chatTime) {
-		this.chatTime = chatTime;
-	}
-
 	public InputStream getStringInputStream() {
 		setStringInputStream(new ByteArrayInputStream(stringResponse.getBytes()));
 		return stringInputStream;
@@ -107,6 +96,14 @@ public class BaseAction extends ActionSupport {
 
 	public void setStringResponse(String stringResponse) {
 		this.stringResponse = stringResponse;
+	}
+
+	public long getUid() {
+		return uid;
+	}
+
+	public void setUid(long uid) {
+		this.uid = uid;
 	}
 
 }

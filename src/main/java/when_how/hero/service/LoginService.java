@@ -10,23 +10,11 @@ import when_how.hero.common.json.MyResponse;
 public interface LoginService {
 
 	/**
-	 * 用户登陆
-	 * 
-	 * @param account
-	 *            用户账号
-	 * @param password
-	 *            用户密码
-	 * @param userDto
+	 * 连接战斗服务器，开始对战
+	 * @param token
 	 * @return
+	 * @throws Exception
 	 */
-	MyResponse login(String account, String password);
-
-	/**
-	 * 用户退出
-	 * 
-	 * @param playerId
-	 * @return
-	 */
-	String logout(int playerId);
+	MyResponse login(String token) throws Exception;
 
 }

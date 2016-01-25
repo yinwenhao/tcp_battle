@@ -36,8 +36,8 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
 		request.setMethod("login");
 		request.setBean("login");
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("account", "root");
-		map.put("password", "123456");
+		map.put("token", "12345678901234567890123456789012999");
+//		map.put("password", "123456");
 		request.setParam(map);
 		ctx.writeAndFlush(request);
 	}

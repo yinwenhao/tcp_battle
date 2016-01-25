@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 public @interface SdataTable {
 
 	/**
-	 * 对应的静态库的表名，忽略大小写
+	 * 对应的静态库的表名
 	 * @return
 	 */
 	public String table();

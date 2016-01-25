@@ -12,7 +12,11 @@ public class MyErrorMessage {
 	
 	/** 未登陆，或被挤下线*/
 	public static final int needLogin = 1;
-	/** 接口号错误*/
-	public static final int wrongJiekouId = 2;
+	/** 错误的接口名 */
+	public static final int wrongAction = 2;
+	/** 不是你的回合 */
+	public static final int notYourTurn = 3;
+	/** 参数错误 */
+	public static final int wrongParam = 4;
 
 }

@@ -237,6 +237,9 @@ public class SDataXMLLoader {
 		} else if (type.isAssignableFrom(double.class)
 				|| type.isAssignableFrom(Double.class)) {
 			return Double.parseDouble(value);
+		} else if (type.isAssignableFrom(short.class)
+				|| type.isAssignableFrom(Short.class)) {
+			return Short.parseShort(value);
 		} else if (type.isAssignableFrom(String.class)) {
 			return String.valueOf(value);
 		} else {

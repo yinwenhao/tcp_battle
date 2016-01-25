@@ -38,4 +38,5 @@
 	<import resource="spring-mybatis.xml" />
 	<import resource="spring-serial.xml" />
 	<import resource="spring-quartz.xml" />
+	<import resource="spring-redis.xml" />
 </beans> 

@@ -19,65 +19,17 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg)
 			throws Exception {
 		Request request = (Request) msg;
-		log.debug(request.getBean() + "." + request.getMethod() + "("
-				+ request.getParam() + ")");
+		if (log.isDebugEnabled()) {
+			log.debug(request.getBean() + "." + request.getMethod() + "("
+					+ request.getParam() + ")");
+		}
+		if (request.getParam().containsKey("uid")) {
+			throw new Exception("参数错误，不能含有uid");
+		}
 		RequestExecutor executor = MyTcpConstants.factory
 				.getBean(RequestExecutor.class);
 		executor.execute(new RequestTask(request.getBean(),
 				request.getMethod(), request.getParam(), ctx));
-		// long startTime = System.currentTimeMillis();
-		// ByteBuf msgByteBuf = (ByteBuf) msg;
-		// int length = msgByteBuf.readInt();
-		// System.out.println("length: " + length);
-		// int sessionId = msgByteBuf.readInt();
-		// System.out.println("sessionId: " + sessionId);
-		// SocketAddress remoteAddress = ctx.channel().remoteAddress();
-		// sessionId = MySessionManager.checkAndGetSessionId(sessionId,
-		// remoteAddress.hashCode());
-		// MySession session = MySessionManager.getSession(sessionId);
-		// session.setCtx(ctx);
-		//
-		// short jiekouId = msgByteBuf.readShort();
-		// System.out.println("jiekouId: " + jiekouId);
-		// byte type = msgByteBuf.readByte();
-		// System.out.println("type: " + type);
-		// byte[] contentBytes = new byte[msgByteBuf.readableBytes()];
-		// msgByteBuf.readBytes(contentBytes);
-		// System.out.println("content length: " + contentBytes.length);
-		//
-		// MySimpleEncrypt.decode(contentBytes);
-		// String content = null;
-		// switch (type) {
-		// case MyTcpConstants.type_string:
-		// // 字符串
-		// content = new String(contentBytes, MyTcpConstants.charset);
-		// break;
-		// case MyTcpConstants.type_gzip:
-		// // gzip
-		// content = new String(GZipUtils.decompress(contentBytes),
-		// MyTcpConstants.charset);
-		// break;
-		// default:
-		// // 默认字符串
-		// content = new String(contentBytes, MyTcpConstants.charset);
-		// break;
-		// }
-		// System.out.println("content: " + content);
-		//
-		// MyResponse response =MyDispatcher.getResult(jiekouId, content,
-		// session);
-		// session.sendResponse(jiekouId, response);
-		//
-		// long endTime = System.currentTimeMillis();
-		// if (session.containsKey(MyConstants.SESSION_KEY_USER)) {
-		// UserDto userDto = (UserDto)
-		// session.get(MyConstants.SESSION_KEY_USER);
-		// // log.info(MyConstants.formatInterfaceLog());
-		// } else {
-		// // log.info(MyConstants.formatInterfaceLog(0, "null", 0,
-		// remoteAddress.toString(), jiekouId, endTime - startTime, 0,
-		// content));
-		// }
 	}
 
 	@Override

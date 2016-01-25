@@ -30,6 +30,6 @@ public abstract class SdataCache<K, V> implements ICache<K, V> {
 
 	@Override
 	public Collection<V> getModels() {
-		return (Collection<V>) map.values();
+		return map.values();
 	}
 }

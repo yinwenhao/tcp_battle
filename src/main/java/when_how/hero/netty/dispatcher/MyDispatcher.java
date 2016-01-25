@@ -3,12 +3,26 @@ package when_how.hero.netty.dispatcher;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.netty.MyTcpConstants;
 
 public class MyDispatcher {
+	
+	private static final Map<String, Integer> notNeedLoginMethod = new HashMap<String, Integer>();
+	static {
+		// 1表示不需要验证登陆
+		notNeedLoginMethod.put("login.login", 1);
+	}
+	
+	public static boolean isNeedLogin(String actionClassBean, String method) {
+		if (notNeedLoginMethod.containsKey(actionClassBean+"."+method)) {
+			return false;
+		}
+		return true;
+	}
 
 	public static MyResponse getResult(String actionClassBean, String method, Map<String, Object> param) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		Object action = MyTcpConstants.factory.getBean(actionClassBean);

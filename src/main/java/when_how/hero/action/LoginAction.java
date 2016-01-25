@@ -30,47 +30,30 @@ public class LoginAction extends BaseAction {
 	@Autowired
 	private LoginService loginService;
 
-	/** 用户账号 */
-	private String account;
-
-	/** 用户密码 */
-	private String password;
+	private String token;
 
 	/**
-	 * 用户登陆
+	 * 连接战斗服务器，开始对战
 	 * 
 	 * @return
+	 * @throws Exception 
 	 */
-	public String login() {
-		MyResponse result = loginService.login(account, password);
+	public String login() throws Exception {
+		if (token == null) {
+			setResponse(new MyResponse(MyErrorMessage.wrongParam));
+			return Action.SUCCESS;
+		}
+		MyResponse result = loginService.login(token);
 		setResponse(result);
 		return Action.SUCCESS;
 	}
 
-	/**
-	 * 用户退出
-	 * 
-	 * @return
-	 */
-	public String logout() {
-		setResponse(new MyResponse(MyErrorMessage.success));
-		return Action.SUCCESS;
-	}
-	
-	public void setAccount(String account) {
-		this.account = account;
+	public String getToken() {
+		return token;
 	}
 
-	public String getAccount() {
-		return account;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPassword() {
-		return password;
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }
