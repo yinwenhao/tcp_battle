@@ -34,7 +34,11 @@ public class MyDispatcher {
 			try {
 				f = clazz.getDeclaredField(key);
 			} catch (NoSuchFieldException e) {
-				continue;
+				try {
+					f = clazz.getSuperclass().getDeclaredField(key);
+				} catch (NoSuchFieldException e1) {
+					continue;
+				}
 			}
 			String setter = "set" + f.getName().substring(0, 1).toUpperCase()
 					+ f.getName().substring(1);

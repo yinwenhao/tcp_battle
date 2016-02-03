@@ -7,18 +7,21 @@ import when_how.hero.battle.data.Entity;
 
 @JsonInclude(Include.NON_NULL)
 public class OwnEntity {
-	
+
 	private int sid;
-	
+
 	private int att;
 
+	private int attNum;
+
 	private int hpMax;
-	
+
 	private int hp;
-	
+
 	public OwnEntity(Entity entity) {
 		this.sid = entity.getSid();
 		this.att = entity.getAtt();
+		this.attNum = entity.getAttNum();
 		this.hpMax = entity.getHpMax();
 		this.hp = entity.getHp();
 	}
@@ -54,5 +57,13 @@ public class OwnEntity {
 	public void setAtt(int att) {
 		this.att = att;
 	}
-	
+
+	public int getAttNum() {
+		return attNum;
+	}
+
+	public void setAttNum(int attNum) {
+		this.attNum = attNum;
+	}
+
 }

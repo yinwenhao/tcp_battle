@@ -1,5 +1,7 @@
 package when_how.hero.battle.data;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import when_how.hero.battle.BattleConstants;
@@ -14,11 +16,77 @@ public class Player {
 	
 	private int energy;
 	
+	private int energyMax;
+	
 	private Cards cards;
 	
 	private List<Servant> servants;
 	
 	private List<Card> hand;
+	
+	private boolean canChange;
+	
+	public Player(long uid, Hero hero, int[] cards) {
+		this.setHero(hero);
+		this.setUserId(uid);
+		this.setEnergy(BattleConstants.ENERGY_INIT);
+		this.setCardIds(cards);
+		this.initCards();
+		List<Servant> servants = new LinkedList<Servant>();
+		this.setServants(servants);
+		this.setHand(new ArrayList<Card>(BattleConstants.HAND_LIMIT));
+		this.setCanChange(true);
+	}
+	
+	public void changeCardsInhand(int[] changeIndex) {
+		for (int i : changeIndex) {
+			cards.add(hand.get(i));
+		}
+		cards.shuffle();
+		for (int i : changeIndex) {
+			hand.set(i, cards.getOneCard());
+		}
+		this.setCanChange(false);
+	}
+	
+	/**
+	 * 消耗能量
+	 * @param cost
+	 * @return 是否成功
+	 */
+	public boolean useEnergy(int cost) {
+		if (this.energy >= cost) {
+			this.energy -= cost;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * 重置能量
+	 */
+	public void resetEnergy() {
+		this.setEnergy(this.getEnergyMax());
+	}
+	
+	/**
+	 * 增加能量上限
+	 * @param energy 增加的数量
+	 * @param canUse 新增的能量是否可以立即使用
+	 */
+	public void addEnergy(int energy, boolean canUse) {
+		this.energyMax += energy;
+		if (this.energyMax > BattleConstants.ENERGY_LIMIT) {
+			this.energyMax = BattleConstants.ENERGY_LIMIT;
+		}
+		if (canUse) {
+			this.energy += energy;
+			if (this.energy > this.energyMax) {
+				this.energy = this.energyMax;
+			}
+		}
+	}
 	
 	/**
 	 * 摸牌
@@ -104,6 +172,22 @@ public class Player {
 
 	public void setHand(List<Card> hand) {
 		this.hand = hand;
+	}
+
+	public int getEnergyMax() {
+		return energyMax;
+	}
+
+	public void setEnergyMax(int energyMax) {
+		this.energyMax = energyMax;
+	}
+
+	public boolean isCanChange() {
+		return canChange;
+	}
+
+	public void setCanChange(boolean canChange) {
+		this.canChange = canChange;
 	}
 	
 }

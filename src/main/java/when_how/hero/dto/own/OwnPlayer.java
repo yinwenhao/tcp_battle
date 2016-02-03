@@ -8,11 +8,13 @@ import when_how.hero.battle.data.Player;
 @JsonInclude(Include.NON_NULL)
 public class OwnPlayer {
 
-	private long userId;
+	private int index;
 
 	private OwnHero hero;
 
 	private int energy;
+
+	private int energyMax;
 
 	private int cardsNum;
 
@@ -23,9 +25,9 @@ public class OwnPlayer {
 	private OwnCard[] hand;
 
 	public OwnPlayer(Player player, long ownUid) {
-		this.userId = player.getUserId();
 		this.hero = new OwnHero(player.getHero());
 		this.energy = player.getEnergy();
+		this.energyMax = player.getEnergyMax();
 		this.cardsNum = player.getCards().size();
 		this.cardInHandNum = player.getHand().size();
 		if (player.getServants() != null && player.getServants().size() > 0) {
@@ -41,14 +43,6 @@ public class OwnPlayer {
 				this.hand[i] = new OwnCard(player.getHand().get(i));
 			}
 		}
-	}
-
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
 	}
 
 	public OwnHero getHero() {
@@ -97,6 +91,22 @@ public class OwnPlayer {
 
 	public void setCardInHandNum(int cardInHandNum) {
 		this.cardInHandNum = cardInHandNum;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public int getEnergyMax() {
+		return energyMax;
+	}
+
+	public void setEnergyMax(int energyMax) {
+		this.energyMax = energyMax;
 	}
 
 }

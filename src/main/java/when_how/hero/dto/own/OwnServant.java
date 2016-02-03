@@ -11,6 +11,8 @@ import when_how.hero.sdata.domain.SEffect;
 @JsonInclude(Include.NON_NULL)
 public class OwnServant extends OwnEntity {
 
+	private boolean summoningSickness; // 是否召唤失调
+
 	private int[] effects; // 受到的影响
 
 	private int[] aureoleEffect; // 光环
@@ -31,6 +33,7 @@ public class OwnServant extends OwnEntity {
 
 	public OwnServant(Servant servant) {
 		super(servant);
+		this.summoningSickness = servant.isSummoningSickness();
 		this.effects = convertEffectListToIntArray(servant.getEffects());
 		this.aureoleEffect = convertEffectListToIntArray(servant
 				.getAureoleEffect());
@@ -101,6 +104,14 @@ public class OwnServant extends OwnEntity {
 
 	public void setChooseoneEffect(int[] chooseoneEffect) {
 		this.chooseoneEffect = chooseoneEffect;
+	}
+
+	public boolean isSummoningSickness() {
+		return summoningSickness;
+	}
+
+	public void setSummoningSickness(boolean summoningSickness) {
+		this.summoningSickness = summoningSickness;
 	}
 
 }

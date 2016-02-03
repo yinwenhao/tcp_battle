@@ -17,11 +17,7 @@ package tcp_battle;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import when_how.hero.request.Request;
+import when_how.hero.common.json.MyResponse;
 
 /**
  * Handler implementation for the echo client. It initiates the ping-pong
@@ -32,19 +28,15 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) {
-		Request request = new Request();
-		request.setMethod("login");
-		request.setBean("login");
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("token", "12345678901234567890123456789012999");
-//		map.put("password", "123456");
-		request.setParam(map);
-		ctx.writeAndFlush(request);
+		new Thread(new CommandManager(ctx)).start();
 	}
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
-		// ctx.write(msg);
+		MyResponse res =(MyResponse)msg;
+		System.out.println();
+		System.out.println(res.toString());
+		System.out.print(">");
 	}
 
 	@Override

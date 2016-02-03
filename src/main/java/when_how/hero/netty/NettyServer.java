@@ -24,19 +24,19 @@ import when_how.hero.netty.serial.impl.JsonSerialFactory;
 import when_how.hero.request.Request;
 
 public class NettyServer {
-	
+
 	private InputFactory input = new JsonSerialFactory();
-	
+
 	private OutputFactory output = new JsonSerialFactory();
-	
+
 	private int bossNum = 1;
-	
+
 	private int workerNum = 0;
-	
+
 	public void startServer() throws Exception {
 		EventLoopGroup bossGroup = new NioEventLoopGroup(bossNum);
 		EventLoopGroup workerGroup = new NioEventLoopGroup(workerNum);
-		
+
 		try {
 			ServerBootstrap b = new ServerBootstrap();
 			b.group(bossGroup, workerGroup)
@@ -47,24 +47,28 @@ public class NettyServer {
 						public void initChannel(SocketChannel ch)
 								throws Exception {
 							ChannelPipeline p = ch.pipeline();
-							p.addLast("idleStateHandler", new IdleStateHandler(60, 60, 60));
+							p.addLast("idleStateHandler", new IdleStateHandler(
+									MyTcpConstants.timeForClose, 0, 0));
 							p.addLast("closeHandler", new MyCloseHandler());
 							p.addLast("lengthFieldBasedFrameDecoder",
 									new LengthFieldBasedFrameDecoder(
 											MyTcpConstants.maxFrameLength, 0,
 											MyTcpConstants.lengthFieldLength));
-							p.addLast("lengthFieldPrepender", new LengthFieldPrepender(
-									MyTcpConstants.lengthFieldLength));
+							p.addLast("lengthFieldPrepender",
+									new LengthFieldPrepender(
+											MyTcpConstants.lengthFieldLength));
 							p.addLast("encoder", new EncodeHandler(output));
-							p.addLast("decoder", new DecodeHandler(input, Request.class));
+							p.addLast("decoder", new DecodeHandler(input,
+									Request.class));
 							p.addLast("actionHandler", new TcpServerHandler());
 						}
 					});
-			
+
 			// 使用对象池
-			b.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT); 
-			b.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);//关键是这句
-			
+			b.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
+			b.childOption(ChannelOption.ALLOCATOR,
+					PooledByteBufAllocator.DEFAULT);// 关键是这句
+
 			// Bind and start to accept incoming connections.
 			b.bind(8080).sync().channel().closeFuture().sync();
 		} finally {
@@ -104,5 +108,5 @@ public class NettyServer {
 	public void setWorkerNum(int workerNum) {
 		this.workerNum = workerNum;
 	}
-	
+
 }

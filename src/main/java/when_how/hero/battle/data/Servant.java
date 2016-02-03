@@ -4,10 +4,12 @@ import java.util.List;
 
 import when_how.hero.sdata.domain.SEffect;
 
-public class Servant  extends Entity {
-	
+public class Servant extends Entity {
+
+	private boolean summoningSickness; // 是否召唤失调
+
 	private List<SEffect> effects; // 受到的影响
-	
+
 	private List<SEffect> aureoleEffect; // 光环
 
 	private List<SEffect> battlecryEffect; // 战吼
@@ -17,13 +19,13 @@ public class Servant  extends Entity {
 	private List<SEffect> inspireEffect; // 激励
 
 	private List<SEffect> chooseoneEffect; // 抉择
-	
-//	private boolean taunt; // 嘲讽
-//	private boolean stealth; // 潜行
-//	private boolean charge; // 冲锋
-//	private boolean shengdun; // 圣盾
-//	private boolean fenglu; // 风怒
-	
+
+	// private boolean taunt; // 嘲讽
+	// private boolean stealth; // 潜行
+	// private boolean charge; // 冲锋
+	// private boolean shengdun; // 圣盾
+	// private boolean fenglu; // 风怒
+
 	public Servant(Card card) {
 		setSid(card.getSid());
 		setAtt(card.getAtt());
@@ -35,6 +37,23 @@ public class Servant  extends Entity {
 		setDeathrattleEffect(card.getDeathrattleEffect());
 		setInspireEffect(card.getInspireEffect());
 		setChooseoneEffect(card.getChooseoneEffect());
+
+		// 召唤失调
+		setSummoningSickness(true);
+	}
+
+	@Override
+	public boolean isCanAttack() {
+		if (getAtt() <= 0) {
+			return false;
+		}
+		if (getAttNum() > 0) {
+			return false;
+		}
+		if (isSummoningSickness()) {
+			return false;
+		}
+		return true;
 	}
 
 	public List<SEffect> getEffects() {
@@ -83,6 +102,14 @@ public class Servant  extends Entity {
 
 	public void setChooseoneEffect(List<SEffect> chooseoneEffect) {
 		this.chooseoneEffect = chooseoneEffect;
+	}
+
+	public boolean isSummoningSickness() {
+		return summoningSickness;
+	}
+
+	public void setSummoningSickness(boolean summoningSickness) {
+		this.summoningSickness = summoningSickness;
 	}
 
 }

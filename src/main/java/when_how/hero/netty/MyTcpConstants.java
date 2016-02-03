@@ -10,8 +10,8 @@ public class MyTcpConstants {
 	/** mySession过期的毫秒数 */
 	public static final int mySessionTime = TimeUtil.halfhourMillisecond;
 
-	/** 读检测时间（超过这个时间没有读到数据，则断开连接） */
-	public static final int readTimeForClose = 30;
+	/** 检测时间（超过这个时间没有读到数据，则断开连接，秒） */
+	public static final int timeForClose = 120;
 
 	public static BeanFactory factory;
 

@@ -14,10 +14,8 @@ import when_how.hero.common.json.MyLoginSuccessResponse;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.dao.mapper.UserMapper;
 import when_how.hero.dto.BattleInitData;
-import when_how.hero.dto.own.OwnBattleData;
 import when_how.hero.netty.serial.impl.JsonAutoCloseOutput;
 import when_how.hero.service.LoginService;
-
 
 /**
  * @author when_how
@@ -37,25 +35,24 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private BattleInit battleInit;
-	
+
 	@Override
 	public MyResponse login(String token) throws Exception {
 		long uid = UidToken.getUidFromToken(token);
-		String currentToken = redisTemplate.opsForValue().get("token."+uid);
-		log.debug("currentToken: "+currentToken);
+		String currentToken = redisTemplate.opsForValue().get("token." + uid);
+		log.debug("currentToken: " + currentToken);
 		if (!token.equals(currentToken)) {
 			return new MyResponse(MyErrorMessage.needLogin);
 		}
-		String battleInitDataString = redisTemplate.opsForValue().get("battle.init.data." + uid);
-		log.debug("battleInitDataString: "+battleInitDataString);
-		BattleInitData battleInitData = JsonAutoCloseOutput.MAPPER.readValue(battleInitDataString, BattleInitData.class);
+		String battleInitDataString = redisTemplate.opsForValue().get(
+				"battle.init.data." + uid);
+		log.debug("battleInitDataString: " + battleInitDataString);
+		BattleInitData battleInitData = JsonAutoCloseOutput.MAPPER.readValue(
+				battleInitDataString, BattleInitData.class);
 		Battle battle = battleInit.init(battleInitData);
 
 		// 把目前的战场数据发给客户端
-		OwnBattleData obd = new OwnBattleData(battle, uid);
-		MyResponse result = new MyLoginSuccessResponse();
-		result.setData(obd);
-		return result;
+		return new MyLoginSuccessResponse(uid, battle);
 	}
 
 }

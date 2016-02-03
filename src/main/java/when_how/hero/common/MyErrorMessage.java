@@ -18,5 +18,13 @@ public class MyErrorMessage {
 	public static final int notYourTurn = 3;
 	/** 参数错误 */
 	public static final int wrongParam = 4;
+	/** 不能攻击 */
+	public static final int cannotAttack = 5;
+	/** 能量不足 */
+	public static final int notEnoughEnergy = 6;
+	/** 不能更改 */
+	public static final int cannotChange = 7;
+	/** 请求过期 */
+	public static final int requestOutOfDate = 8;
 
 }

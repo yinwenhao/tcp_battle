@@ -17,7 +17,8 @@ import com.opensymphony.xwork2.Action;
  * @author when_how
  * 
  */
-@Scope("prototype") //配置多例
+@Scope("prototype")
+// 配置多例
 @Controller("battle")
 public class BattleAction extends BaseAction {
 
@@ -29,21 +30,44 @@ public class BattleAction extends BaseAction {
 	@Autowired
 	private BattleService battleService;
 
+	private int targetIndex;
+
 	private int i;
-	
-	private int location;
 
 	private int target;
-	
-	private int chooseOne;
 
 	/**
-	 * 出牌
+	 * 使用英雄技能
 	 * 
 	 * @return
 	 */
-	public String useCard() {
-		MyResponse result = battleService.useCard(getUid(), i, location, target, chooseOne);
+	public String useHeroSkill() {
+		MyResponse result = battleService.useHeroSkill(getUid(), targetIndex,
+				target);
+		setResponse(result);
+		return Action.SUCCESS;
+	}
+
+	/**
+	 * 英雄攻击
+	 * 
+	 * @return
+	 */
+	public String heroAttack() {
+		MyResponse result = battleService.heroAttack(getUid(), targetIndex,
+				target);
+		setResponse(result);
+		return Action.SUCCESS;
+	}
+
+	/**
+	 * 随从攻击
+	 * 
+	 * @return
+	 */
+	public String servantAttack() {
+		MyResponse result = battleService.servantAttack(getUid(), targetIndex,
+				i, target);
 		setResponse(result);
 		return Action.SUCCESS;
 	}
@@ -56,14 +80,6 @@ public class BattleAction extends BaseAction {
 		this.i = i;
 	}
 
-	public int getLocation() {
-		return location;
-	}
-
-	public void setLocation(int location) {
-		this.location = location;
-	}
-
 	public int getTarget() {
 		return target;
 	}
@@ -72,12 +88,12 @@ public class BattleAction extends BaseAction {
 		this.target = target;
 	}
 
-	public int getChooseOne() {
-		return chooseOne;
+	public int getTargetIndex() {
+		return targetIndex;
 	}
 
-	public void setChooseOne(int chooseOne) {
-		this.chooseOne = chooseOne;
+	public void setTargetIndex(int targetIndex) {
+		this.targetIndex = targetIndex;
 	}
 
 }

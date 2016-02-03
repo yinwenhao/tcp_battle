@@ -12,14 +12,32 @@ public class Battle {
 
 	private Random ran = new Random();
 
+	private boolean start;
+
+	public Battle(Player[] players) {
+		this.setPlayers(players);
+		this.setTurn(0);
+		this.setStart(false);
+	}
+
 	/**
-	 * 战斗开始
+	 * 战斗初始化
 	 */
-	public void start() {
+	public void init() {
 		turn = ran.nextInt(players.length);
 		getPlayer(turn).getCardsToHand(BattleConstants.FIRST_SIDE_HAND_LIMIT);
 		getPlayer(turn + 1).getCardsToHand(
 				BattleConstants.SECOND_SIDE_HAND_LIMIT);
+	}
+
+	public void start() {
+		for (Player p : players) {
+			if (p.isCanChange()) {
+				return;
+			}
+		}
+		setStart(true);
+		startTurn();
 	}
 
 	/**
@@ -28,15 +46,41 @@ public class Battle {
 	 * @return 是否死亡
 	 */
 	public boolean startTurn() {
-		return getPlayer(turn).getCardsToHand(1);
+		getTurnPlayer().addEnergy(BattleConstants.ENERGY_PER_TURN, false);
+		getTurnPlayer().resetEnergy();
+		return getTurnPlayer().getCardsToHand(1);
 	}
 
 	/**
 	 * 回合结束
 	 */
 	public void endTurn() {
-		getPlayer(turn).getHero().getSkill().setCanUse(true);
-		turn++;
+		Hero hero = getPlayer(this.turn).getHero();
+		// 英雄技能使用次数清零
+		hero.getSkill().setUseNum(0);
+		// 英雄攻击次数清零
+		hero.setAttNum(0);
+
+		// 随从攻击次数清零
+		for (Servant s : getPlayer(this.turn).getServants()) {
+			s.setAttNum(0);
+			s.setSummoningSickness(false);
+		}
+
+		this.turn++;
+	}
+
+	public Player getPlayerByUid(long uid) {
+		for (Player p : players) {
+			if (p.getUserId() == uid) {
+				return p;
+			}
+		}
+		return null;
+	}
+
+	public int getTurnIndex() {
+		return turn % players.length;
 	}
 
 	public Player getTurnPlayer() {
@@ -62,6 +106,14 @@ public class Battle {
 
 	public void setPlayers(Player[] players) {
 		this.players = players;
+	}
+
+	public boolean isStart() {
+		return start;
+	}
+
+	public void setStart(boolean start) {
+		this.start = start;
 	}
 
 }

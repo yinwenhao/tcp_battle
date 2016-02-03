@@ -1,1 +1,4 @@
 java -jar xxx -DconfPath=/gitWorkSpace/tcp_battle/conf
+
+eclipse启动时，在VM arguments中填：
+-DconfPath=/gitWorkSpace/tcp_battle/conf

@@ -7,17 +7,17 @@ import when_how.hero.battle.data.HeroSkill;
 
 @JsonInclude(Include.NON_NULL)
 public class OwnHeroSkill {
-	
+
 	private int sid;
-	
+
 	private int cost;
-	
-	private boolean canUse;
-	
+
+	private int useNum;
+
 	public OwnHeroSkill(HeroSkill heroSkill) {
 		this.sid = heroSkill.getSid();
 		this.cost = heroSkill.getCost();
-		this.canUse = heroSkill.getCanUse();
+		this.setUseNum(heroSkill.getUseNum());
 	}
 
 	public int getCost() {
@@ -28,20 +28,20 @@ public class OwnHeroSkill {
 		this.cost = cost;
 	}
 
-	public boolean getCanUse() {
-		return canUse;
-	}
-
-	public void setCanUse(boolean canUse) {
-		this.canUse = canUse;
-	}
-
 	public int getSid() {
 		return sid;
 	}
 
 	public void setSid(int sid) {
 		this.sid = sid;
+	}
+
+	public int getUseNum() {
+		return useNum;
+	}
+
+	public void setUseNum(int useNum) {
+		this.useNum = useNum;
 	}
 
 }
