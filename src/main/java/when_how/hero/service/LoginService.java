@@ -11,6 +11,7 @@ public interface LoginService {
 
 	/**
 	 * 连接战斗服务器，开始对战
+	 * 
 	 * @param token
 	 * @return
 	 * @throws Exception

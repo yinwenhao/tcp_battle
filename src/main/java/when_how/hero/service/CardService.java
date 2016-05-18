@@ -11,16 +11,32 @@ public interface CardService {
 
 	/**
 	 * 出牌
+	 * 
 	 * @param uid
-	 * @param targetPlayerIndex 目标玩家的index
-	 * @param i 手牌的序号
-	 * @param location 随从放置位置
-	 * @param target 目标序号，-1表示英雄
-	 * @param chooseOne 抉择
+	 * @param targetPlayerIndex
+	 *            目标玩家的index
+	 * @param i
+	 *            手牌的序号
+	 * @param location
+	 *            随从放置位置
+	 * @param target
+	 *            目标序号，-1表示英雄
+	 * @param chooseOne
+	 *            抉择
 	 * @return
 	 */
-	MyResponse useCard(long uid, int targetPlayerIndex, int i, int location, int target, int chooseOne);
-	
+	MyResponse useCard(long uid, int targetPlayerIndex, int i, int location,
+			int target, int chooseOne);
+
+	/**
+	 * 换牌
+	 * 
+	 * @param uid
+	 * @param changeIndex
+	 *            需要交换的手牌index列表
+	 * @param turn
+	 * @return
+	 */
 	MyResponse changeCardsInHand(long uid, int[] changeIndex, int turn);
 
 }

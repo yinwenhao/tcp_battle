@@ -19,8 +19,8 @@ public class MyTcpConstants {
 	public static final String charset = "UTF-8";
 
 	/** tcp包内容的长度（字节） */
-	public static final int lengthFieldLength = 4;
-	public static final int maxFrameLength = Integer.MAX_VALUE;
+	public static final int lengthFieldLength = 2;
+	public static final int maxFrameLength = Short.MAX_VALUE;
 
 	/** tcp包内容的类型标志字节长度（如：字符串、zip包等） */
 	public static final int typeFieldLength = 1;
