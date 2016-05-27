@@ -30,4 +30,10 @@ public class TurnServiceImpl extends BaseService implements TurnService {
 		return new MyResponse(battle, uid, sb.toString());
 	}
 
+	@Override
+	public MyResponse concede(long uid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

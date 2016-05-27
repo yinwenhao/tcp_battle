@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里的namespace名字必须为执行该sql的dao地址&nbsp; -->
+<mapper namespace="when_how.hero.dao.mapper.UserCardMapper">
+
+	<select id="getUser" resultType="when_how.hero.dao.entity.UserCard">
+		<![CDATA[ 
+			SELECT * FROM t_user_card WHERE user_id = #{userId}
+        ]]>
+	</select>
+
+	<select id="getUserByAccount" resultType="when_how.hero.dao.entity.UserCard">
+		<![CDATA[ 
+			SELECT * FROM t_user_card WHERE account = #{account}
+        ]]>
+	</select>
+
+	<select id="getUserList" resultType="when_how.hero.dao.entity.UserCard">  
+        <![CDATA[ 
+			SELECT * FROM t_user_card
+        ]]>
+	</select>
+
+	<!-- 新增用户 -->
+	<insert id="insertUser" parameterType="when_how.hero.dao.entity.UserCard">
+		insert into t_user_card
+		(account, password) values(#{account}, #{password})
+	</insert>
+
+</mapper>

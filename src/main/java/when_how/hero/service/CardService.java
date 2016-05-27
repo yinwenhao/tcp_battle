@@ -39,4 +39,14 @@ public interface CardService {
 	 */
 	MyResponse changeCardsInHand(long uid, int[] changeIndex, int turn);
 
+	/**
+	 * 选择一张牌
+	 * 
+	 * @param uid
+	 * @param i
+	 *            选择的牌的序号
+	 * @return
+	 */
+	MyResponse chooseCard(long uid, int i);
+
 }

@@ -17,4 +17,12 @@ public interface TurnService {
 	 */
 	MyResponse endTurn(long uid, int turn);
 
+	/**
+	 * 认输
+	 * 
+	 * @param uid
+	 * @return
+	 */
+	MyResponse concede(long uid);
+
 }

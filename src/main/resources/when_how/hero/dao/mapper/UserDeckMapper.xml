@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里的namespace名字必须为执行该sql的dao地址&nbsp; -->
+<mapper namespace="when_how.hero.dao.mapper.UserDeckMapper">
+
+	<resultMap id="UserDeck" type="when_how.hero.dao.entity.UserDeck">
+		<id column="user_id" property="userId" />
+		<id column="number" property="number" />
+		<result column="deck_name" property="deckName" />
+		<result column="deck" property="deck" javaType="ArrayList"
+			typeHandler="when_how.hero.mybatis.typehandler.IntegerListTypeHandler" />
+	</resultMap>
+
+	<select id="getUserDeck" resultMap="UserDeck">
+		<![CDATA[ 
+			SELECT * FROM t_user_deck WHERE user_id=#{userId}
+        ]]>
+	</select>
+
+	<update id="updateUserDeck" parameterType="when_how.hero.dao.entity.UserDeck">
+		<![CDATA[ 
+			UPDATE t_user_deck SET deck_name=#{deckName}, deck=#{deck,typeHandler=when_how.hero.mybatis.typehandler.IntegerListTypeHandler}
+			WHERE user_id=#{userId} AND number=#{number}
+        ]]>
+	</update>
+
+</mapper>

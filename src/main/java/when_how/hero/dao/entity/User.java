@@ -1,21 +1,21 @@
 package when_how.hero.dao.entity;
 
 public class User {
-	
-	private long id;
-	
+
+	private long userId;
+
 	private String account;
-	
+
 	private String password;
-	
+
 	private String nick;
-	
-	private int level;
-	
+
+	private int vipLevel;
+
 	private String mobile;
-	
+
 	private String identityCard;
-	
+
 	public String getAccount() {
 		return account;
 	}
@@ -40,22 +40,6 @@ public class User {
 		this.nick = nick;
 	}
 
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public String getMobile() {
 		return mobile;
 	}
@@ -71,5 +55,21 @@ public class User {
 	public void setIdentityCard(String identityCard) {
 		this.identityCard = identityCard;
 	}
-	
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public int getVipLevel() {
+		return vipLevel;
+	}
+
+	public void setVipLevel(int vipLevel) {
+		this.vipLevel = vipLevel;
+	}
+
 }

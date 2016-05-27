@@ -1,5 +1,7 @@
 package when_how.hero.service.impl;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,8 @@ import when_how.hero.common.MyErrorMessage;
 import when_how.hero.common.UidToken;
 import when_how.hero.common.json.MyLoginSuccessResponse;
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.dao.mapper.UserMapper;
+import when_how.hero.dao.entity.UserDeck;
+import when_how.hero.dao.mapper.UserDeckMapper;
 import when_how.hero.dto.BattleInitData;
 import when_how.hero.netty.serial.impl.JsonAutoCloseOutput;
 import when_how.hero.service.LoginService;
@@ -28,16 +31,19 @@ public class LoginServiceImpl implements LoginService {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	private UserMapper userMapper;
+	private StringRedisTemplate redisTemplate;
 
 	@Autowired
-	private StringRedisTemplate redisTemplate;
+	private UserDeckMapper userDeckMapper;
 
 	@Autowired
 	private BattleInit battleInit;
 
 	@Override
 	public MyResponse login(String token) throws Exception {
+		List<UserDeck> rr = userDeckMapper.getUserDeck(1);
+		rr.get(0).setDeckName("haha2");
+		userDeckMapper.updateUserDeck(rr.get(0));
 		long uid = UidToken.getUidFromToken(token);
 		String currentToken = redisTemplate.opsForValue().get("token." + uid);
 		log.debug("currentToken: " + currentToken);

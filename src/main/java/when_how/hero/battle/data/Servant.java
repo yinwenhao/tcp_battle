@@ -24,7 +24,7 @@ public class Servant extends Entity {
 	// private boolean stealth; // 潜行
 	// private boolean charge; // 冲锋
 	// private boolean shengdun; // 圣盾
-	// private boolean fenglu; // 风怒
+	// private boolean fengnu; // 风怒
 
 	public Servant(Card card) {
 		setSid(card.getSid());

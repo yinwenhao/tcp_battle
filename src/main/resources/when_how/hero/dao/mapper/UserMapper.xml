@@ -4,15 +4,13 @@
 <!-- 这里的namespace名字必须为执行该sql的dao地址&nbsp; -->
 <mapper namespace="when_how.hero.dao.mapper.UserMapper">
 
-	<select id="getUser" parameterType="long"
-		resultType="when_how.hero.dao.entity.User">
+	<select id="getUser" resultType="when_how.hero.dao.entity.User">
 		<![CDATA[ 
-			SELECT * FROM t_user WHERE id = #{id}
+			SELECT * FROM t_user WHERE user_id = #{userId}
         ]]>
 	</select>
-	
-	<select id="getUserByAccount" parameterType="String"
-		resultType="when_how.hero.dao.entity.User">
+
+	<select id="getUserByAccount" resultType="when_how.hero.dao.entity.User">
 		<![CDATA[ 
 			SELECT * FROM t_user WHERE account = #{account}
         ]]>
@@ -26,7 +24,8 @@
 
 	<!-- 新增用户 -->
 	<insert id="insertUser" parameterType="when_how.hero.dao.entity.User">
-		insert into t_user (account, password) values(#{account}, #{password})
+		insert into t_user
+		(account, password) values(#{account}, #{password})
 	</insert>
 
 </mapper>

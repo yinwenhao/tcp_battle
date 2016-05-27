@@ -92,4 +92,10 @@ public class CardServiceImpl extends BaseService implements CardService {
 		return new MyResponse(battle, uid, sb.toString());
 	}
 
+	@Override
+	public MyResponse chooseCard(long uid, int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
