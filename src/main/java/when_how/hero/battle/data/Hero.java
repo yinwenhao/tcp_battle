@@ -6,6 +6,8 @@ import when_how.hero.sdata.domain.SHero;
 public class Hero extends Entity {
 
 	private HeroSkill skill;
+	
+	private Equip equip;
 
 	public Hero(int heroId) {
 		SHero sHero = SHeroCache.CACHE.get(heroId);
@@ -22,6 +24,14 @@ public class Hero extends Entity {
 
 	public void setSkill(HeroSkill skill) {
 		this.skill = skill;
+	}
+
+	public Equip getEquip() {
+		return equip;
+	}
+
+	public void setEquip(Equip equip) {
+		this.equip = equip;
 	}
 
 }

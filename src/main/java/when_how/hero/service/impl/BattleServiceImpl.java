@@ -52,7 +52,7 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 		if (targetPlayer.getUserId() == uid) {
 			return new MyResponse(MyErrorMessage.wrongParam);
 		}
-		if (target >= targetPlayer.getServants().size() || target < -1) {
+		if (target >= targetPlayer.getServantSize() || target < -1) {
 			return new MyResponse(MyErrorMessage.wrongParam);
 		}
 		Hero hero = player.getHero();
@@ -85,7 +85,7 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 				sb.append(fillBattleResultByWin(uid, battle));
 			} else {
 				// 对方随从挂了
-				targetPlayer.getServants().remove(attackResult.get(j));
+				targetPlayer.removeServant(attackResult.get(j));
 			}
 		}
 		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
@@ -103,7 +103,7 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 		if (player.getUserId() != uid) {
 			return new MyResponse(MyErrorMessage.notYourTurn);
 		}
-		if (i >= player.getServants().size()) {
+		if (i >= player.getServantSize()) {
 			return new MyResponse(MyErrorMessage.wrongParam);
 		}
 		if (targetPlayerIndex >= battle.getPlayers().length) {
@@ -113,7 +113,7 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 		if (targetPlayer.getUserId() == uid) {
 			return new MyResponse(MyErrorMessage.wrongParam);
 		}
-		if (target >= targetPlayer.getServants().size() || target < -1) {
+		if (target >= targetPlayer.getServantSize() || target < -1) {
 			return new MyResponse(MyErrorMessage.wrongParam);
 		}
 		Servant servant = player.getServants().get(i);
@@ -137,7 +137,7 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 		List<Integer> attackResult = doAttack(servant, targetPlayer, target, sb);
 		if (attackResult.get(0) == -1) {
 			// 自己挂了
-			player.getServants().remove(i);
+			player.removeServant(i);
 		}
 		for (int j = 1; j < attackResult.size(); j++) {
 			if (attackResult.get(j) == -1) {
@@ -146,7 +146,7 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 				sb.append(fillBattleResultByWin(uid, battle));
 			} else {
 				// 对方随从挂了
-				targetPlayer.getServants().remove(attackResult.get(j));
+				targetPlayer.removeServant(attackResult.get(j));
 			}
 		}
 		notifyAllPlayersExceptUid(battle, sb.toString(), uid);

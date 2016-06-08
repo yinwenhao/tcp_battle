@@ -12,7 +12,15 @@
 			typeHandler="when_how.hero.mybatis.typehandler.IntegerListTypeHandler" />
 	</resultMap>
 
-	<select id="getUserDeck" resultMap="UserDeck">
+	<!--
+（1）当为select语句时：
+flushCache默认为false，表示任何时候语句被调用，都不会去清空本地缓存和二级缓存。
+useCache默认为true，表示会将本条语句的结果进行二级缓存。
+（2）当为insert、update、delete语句时：
+flushCache默认为true，表示任何时候语句被调用，都会导致本地缓存和二级缓存被清空。
+useCache属性在该情况下没有。
+-->
+	<select id="getUserDeck" resultMap="UserDeck" flushCache="true">
 		<![CDATA[ 
 			SELECT * FROM t_user_deck WHERE user_id=#{userId}
         ]]>

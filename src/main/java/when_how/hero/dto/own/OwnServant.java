@@ -15,15 +15,15 @@ public class OwnServant extends OwnEntity {
 
 	private int[] effects; // 受到的影响
 
-	private int[] aureoleEffect; // 光环
-
-	private int[] battlecryEffect; // 战吼
-
-	private int[] deathrattleEffect; // 亡语
-
-	private int[] inspireEffect; // 激励
-
-	private int[] chooseoneEffect; // 抉择
+//	private int[] aureoleEffect; // 光环
+//
+//	private int[] battlecryEffect; // 战吼
+//
+//	private int[] deathrattleEffect; // 亡语
+//
+//	private int[] inspireEffect; // 激励
+//
+//	private int[] chooseoneEffect; // 抉择
 
 	// private boolean taunt; // 嘲讽
 	// private boolean stealth; // 潜行
@@ -35,16 +35,16 @@ public class OwnServant extends OwnEntity {
 		super(servant);
 		this.summoningSickness = servant.isSummoningSickness();
 		this.effects = convertEffectListToIntArray(servant.getEffects());
-		this.aureoleEffect = convertEffectListToIntArray(servant
-				.getAureoleEffect());
-		this.battlecryEffect = convertEffectListToIntArray(servant
-				.getBattlecryEffect());
-		this.deathrattleEffect = convertEffectListToIntArray(servant
-				.getDeathrattleEffect());
-		this.inspireEffect = convertEffectListToIntArray(servant
-				.getInspireEffect());
-		this.chooseoneEffect = convertEffectListToIntArray(servant
-				.getChooseoneEffect());
+//		this.aureoleEffect = convertEffectListToIntArray(servant
+//				.getAureoleEffect());
+//		this.battlecryEffect = convertEffectListToIntArray(servant
+//				.getBattlecryEffect());
+//		this.deathrattleEffect = convertEffectListToIntArray(servant
+//				.getDeathrattleEffect());
+//		this.inspireEffect = convertEffectListToIntArray(servant
+//				.getInspireEffect());
+//		this.chooseoneEffect = convertEffectListToIntArray(servant
+//				.getChooseoneEffect());
 	}
 
 	private int[] convertEffectListToIntArray(List<SEffect> list) {
@@ -66,45 +66,45 @@ public class OwnServant extends OwnEntity {
 		this.effects = effects;
 	}
 
-	public int[] getAureoleEffect() {
-		return aureoleEffect;
-	}
-
-	public void setAureoleEffect(int[] aureoleEffect) {
-		this.aureoleEffect = aureoleEffect;
-	}
-
-	public int[] getBattlecryEffect() {
-		return battlecryEffect;
-	}
-
-	public void setBattlecryEffect(int[] battlecryEffect) {
-		this.battlecryEffect = battlecryEffect;
-	}
-
-	public int[] getDeathrattleEffect() {
-		return deathrattleEffect;
-	}
-
-	public void setDeathrattleEffect(int[] deathrattleEffect) {
-		this.deathrattleEffect = deathrattleEffect;
-	}
-
-	public int[] getInspireEffect() {
-		return inspireEffect;
-	}
-
-	public void setInspireEffect(int[] inspireEffect) {
-		this.inspireEffect = inspireEffect;
-	}
-
-	public int[] getChooseoneEffect() {
-		return chooseoneEffect;
-	}
-
-	public void setChooseoneEffect(int[] chooseoneEffect) {
-		this.chooseoneEffect = chooseoneEffect;
-	}
+//	public int[] getAureoleEffect() {
+//		return aureoleEffect;
+//	}
+//
+//	public void setAureoleEffect(int[] aureoleEffect) {
+//		this.aureoleEffect = aureoleEffect;
+//	}
+//
+//	public int[] getBattlecryEffect() {
+//		return battlecryEffect;
+//	}
+//
+//	public void setBattlecryEffect(int[] battlecryEffect) {
+//		this.battlecryEffect = battlecryEffect;
+//	}
+//
+//	public int[] getDeathrattleEffect() {
+//		return deathrattleEffect;
+//	}
+//
+//	public void setDeathrattleEffect(int[] deathrattleEffect) {
+//		this.deathrattleEffect = deathrattleEffect;
+//	}
+//
+//	public int[] getInspireEffect() {
+//		return inspireEffect;
+//	}
+//
+//	public void setInspireEffect(int[] inspireEffect) {
+//		this.inspireEffect = inspireEffect;
+//	}
+//
+//	public int[] getChooseoneEffect() {
+//		return chooseoneEffect;
+//	}
+//
+//	public void setChooseoneEffect(int[] chooseoneEffect) {
+//		this.chooseoneEffect = chooseoneEffect;
+//	}
 
 	public boolean isSummoningSickness() {
 		return summoningSickness;

@@ -2,14 +2,18 @@ package when_how.hero.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import when_how.hero.battle.BattleConstants;
 import when_how.hero.battle.Manager;
 import when_how.hero.battle.data.Battle;
 import when_how.hero.battle.data.Card;
+import when_how.hero.battle.data.Equip;
 import when_how.hero.battle.data.Player;
 import when_how.hero.battle.data.Servant;
+import when_how.hero.battle.effect.ComponentFactory;
+import when_how.hero.battle.effect.MyComponent;
 import when_how.hero.common.MyErrorMessage;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.service.CardService;
@@ -23,6 +27,9 @@ import when_how.hero.service.CardService;
 public class CardServiceImpl extends BaseService implements CardService {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	@Autowired
+	private ComponentFactory componentFactory;
 
 	@Override
 	public MyResponse useCard(long uid, int targetPlayerIndex, int i,
@@ -38,29 +45,35 @@ public class CardServiceImpl extends BaseService implements CardService {
 
 		StringBuilder sb = new StringBuilder();
 		Card card = player.getHand().get(i);
-		if (player.getEnergy() < card.getCost()) {
+		if (!player.useEnergy(card.getCost())) {
 			// 能量不足
 			return new MyResponse(MyErrorMessage.notEnoughEnergy);
+		}
+		
+		if (card.getChooseone() != null) {
+			// 抉择
+			card = new Card(card.getChooseone()[chooseOne]);
 		}
 
 		// 卡牌效果
 		if (card.getType() == BattleConstants.CARD_TYPE_SERVANT) {
 			// 随从牌
 			Servant servant = new Servant(card);
-			player.getServants().add(location, servant);
-			// TODO: 随从的特殊效果
+			player.addServant(location, servant);
+			// 战吼
+			MyComponent battlecry = componentFactory.getBattlecryComposite(
+					card.getBattlecryEffect(), battle, location, target);
+			battlecry.display();
 		} else if (card.getType() == BattleConstants.CARD_TYPE_SPELL) {
-			// 法术牌
+			// TODO 法术牌
 
 		} else if (card.getType() == BattleConstants.CARD_TYPE_EQUIP) {
 			// 装备牌
-
+			Equip equip = new Equip(card);
+			player.getHero().setEquip(equip);
+			// TODO: 装备的特殊效果
 		}
 
-		if (!player.useEnergy(card.getCost())) {
-			// 能量不足
-			return new MyResponse(MyErrorMessage.notEnoughEnergy);
-		}
 		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
 		return new MyResponse(battle, uid, sb.toString());
 	}

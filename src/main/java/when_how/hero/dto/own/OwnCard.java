@@ -10,9 +10,9 @@ import when_how.hero.sdata.domain.SEffect;
 
 @JsonInclude(Include.NON_NULL)
 public class OwnCard {
-	
+
 	private int sid;
-	
+
 	private int hp;
 
 	private int att;
@@ -20,7 +20,7 @@ public class OwnCard {
 	private int cost;
 
 	private int type;
-	
+
 	private int[] effects; // 受到的影响
 
 	private int[] aureoleEffect; // 光环
@@ -32,7 +32,7 @@ public class OwnCard {
 	private int[] inspireEffect; // 激励
 
 	private int[] chooseoneEffect; // 抉择
-	
+
 	public OwnCard(Card card) {
 		this.sid = card.getSid();
 		this.hp = card.getHp();
@@ -40,18 +40,22 @@ public class OwnCard {
 		this.cost = card.getCost();
 		this.type = card.getType();
 		this.effects = convertEffectListToIntArray(card.getEffects());
-		this.aureoleEffect = convertEffectListToIntArray(card.getAureoleEffect());
-		this.battlecryEffect = convertEffectListToIntArray(card.getBattlecryEffect());
-		this.deathrattleEffect = convertEffectListToIntArray(card.getDeathrattleEffect());
-		this.inspireEffect = convertEffectListToIntArray(card.getInspireEffect());
-		this.chooseoneEffect = convertEffectListToIntArray(card.getChooseoneEffect());
+		this.aureoleEffect = convertEffectListToIntArray(card
+				.getAureoleEffect());
+		this.battlecryEffect = convertEffectListToIntArray(card
+				.getBattlecryEffect());
+		this.deathrattleEffect = convertEffectListToIntArray(card
+				.getDeathrattleEffect());
+		this.inspireEffect = convertEffectListToIntArray(card
+				.getInspireEffect());
+		this.chooseoneEffect = card.getChooseone();
 	}
-	
+
 	private int[] convertEffectListToIntArray(List<SEffect> list) {
 		int[] result = null;
 		if (list != null) {
 			result = new int[list.size()];
-			for (int i=0; i<result.length; i++) {
+			for (int i = 0; i < result.length; i++) {
 				result[i] = list.get(i).getSid();
 			}
 		}

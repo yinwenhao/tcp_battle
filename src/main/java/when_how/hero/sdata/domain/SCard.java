@@ -8,15 +8,15 @@ import when_how.hero.common.annotation.SdataTable;
  * @author when_how
  *
  */
-@SdataTable(table="card")
+@SdataTable(table = "card")
 public class SCard {
 
-	@SdataColumn(type="id")
+	@SdataColumn(type = "id")
 	private int sid;
-	
+
 	@SdataColumn
 	private String name;
-	
+
 	@SdataColumn
 	private String intro;
 
@@ -31,6 +31,9 @@ public class SCard {
 
 	@SdataColumn
 	private int type;
+
+	@SdataColumn
+	private int[] spellEffect; // 法术效果
 
 	@SdataColumn
 	private int[] aureoleEffect; // 光环
@@ -141,6 +144,14 @@ public class SCard {
 
 	public void setChooseoneEffect(int[] chooseoneEffect) {
 		this.chooseoneEffect = chooseoneEffect;
+	}
+
+	public int[] getSpellEffect() {
+		return spellEffect;
+	}
+
+	public void setSpellEffect(int[] spellEffect) {
+		this.spellEffect = spellEffect;
 	}
 
 }

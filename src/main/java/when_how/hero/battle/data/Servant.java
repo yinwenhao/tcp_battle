@@ -12,13 +12,13 @@ public class Servant extends Entity {
 
 	private List<SEffect> aureoleEffect; // 光环
 
-	private List<SEffect> battlecryEffect; // 战吼
+	// private List<SEffect> battlecryEffect; // 战吼
 
 	private List<SEffect> deathrattleEffect; // 亡语
 
 	private List<SEffect> inspireEffect; // 激励
 
-	private List<SEffect> chooseoneEffect; // 抉择
+	// private List<SEffect> chooseoneEffect; // 抉择
 
 	// private boolean taunt; // 嘲讽
 	// private boolean stealth; // 潜行
@@ -33,10 +33,10 @@ public class Servant extends Entity {
 		setHpMax(card.getHp());
 		setEffects(card.getEffects());
 		setAureoleEffect(card.getAureoleEffect());
-		setBattlecryEffect(card.getBattlecryEffect());
+		// setBattlecryEffect(card.getBattlecryEffect());
 		setDeathrattleEffect(card.getDeathrattleEffect());
 		setInspireEffect(card.getInspireEffect());
-		setChooseoneEffect(card.getChooseoneEffect());
+		// setChooseoneEffect(card.getChooseoneEffect());
 
 		// 召唤失调
 		setSummoningSickness(true);
@@ -72,14 +72,6 @@ public class Servant extends Entity {
 		this.aureoleEffect = aureoleEffect;
 	}
 
-	public List<SEffect> getBattlecryEffect() {
-		return battlecryEffect;
-	}
-
-	public void setBattlecryEffect(List<SEffect> battlecryEffect) {
-		this.battlecryEffect = battlecryEffect;
-	}
-
 	public List<SEffect> getDeathrattleEffect() {
 		return deathrattleEffect;
 	}
@@ -94,14 +86,6 @@ public class Servant extends Entity {
 
 	public void setInspireEffect(List<SEffect> inspireEffect) {
 		this.inspireEffect = inspireEffect;
-	}
-
-	public List<SEffect> getChooseoneEffect() {
-		return chooseoneEffect;
-	}
-
-	public void setChooseoneEffect(List<SEffect> chooseoneEffect) {
-		this.chooseoneEffect = chooseoneEffect;
 	}
 
 	public boolean isSummoningSickness() {

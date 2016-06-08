@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import when_how.hero.battle.data.Battle;
 import when_how.hero.battle.init.BattleInit;
@@ -39,11 +42,24 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	private BattleInit battleInit;
 
+	//rollbackFor=Exception.class, 
 	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED)
 	public MyResponse login(String token) throws Exception {
 		List<UserDeck> rr = userDeckMapper.getUserDeck(1);
-		rr.get(0).setDeckName("haha2");
+//		rr.get(0).setDeckName("haha2");
+//		userDeckMapper.updateUserDeck(rr.get(0));
+		
+		List<UserDeck> rr2 = userDeckMapper.getUserDeck(1);
+		if (rr2.get(0).getDeckName().equals("haha2")) {
+			System.out.println("~~~~~~~~~~~~~~~~~~~~~");
+		}
+		
+//		TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		
+		rr.get(0).setDeckName("haha4");
 		userDeckMapper.updateUserDeck(rr.get(0));
+		
 		long uid = UidToken.getUidFromToken(token);
 		String currentToken = redisTemplate.opsForValue().get("token." + uid);
 		log.debug("currentToken: " + currentToken);

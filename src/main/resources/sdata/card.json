@@ -1,3 +1,5 @@
 {"sid":1,"name":"card1","intro":"card1 intro~","cost":1,"att":1,"hp":1, "type":0,"aureoleEffect":[1,2],"battlecryEffect":[1],"deathrattleEffect":[3],"inspireEffect":[],"chooseoneEffect":[]}
 {"sid":2,"name":"card2","intro":"card2 intro~","cost":1,"att":2,"hp":2, "type":0,"aureoleEffect":[1,2],"battlecryEffect":[2],"deathrattleEffect":[3],"inspireEffect":[]}
 {"sid":3,"name":"card3","intro":"card3 intro~","cost":1,"att":3,"hp":3, "type":0,"aureoleEffect":[1,2],"battlecryEffect":[1],"deathrattleEffect":[3],"inspireEffect":[]}
+{"sid":4,"name":"card4","intro":"card4 intro~","cost":1,"att":3,"hp":3, "type":1,"spellEffect":[2,3],"inspireEffect":[]}
+{"sid":5,"name":"card5","intro":"card5 intro~","cost":1,"att":3,"hp":3, "type":2,"aureoleEffect":[1,2],"battlecryEffect":[1],"deathrattleEffect":[3],"inspireEffect":[]}

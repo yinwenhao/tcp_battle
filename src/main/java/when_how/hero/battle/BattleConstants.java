@@ -3,6 +3,11 @@ package when_how.hero.battle;
 public class BattleConstants {
 
 	/**
+	 * 随从最大数量
+	 */
+	public static final int SERVANTS_NUM_MAX = 7;
+
+	/**
 	 * 每回合增加的能量
 	 */
 	public static final int ENERGY_PER_TURN = 1;
