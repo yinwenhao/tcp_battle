@@ -9,20 +9,23 @@ public class SummonComponent implements MyComponent {
 
 	private Player player;
 
-	private int[] param;
+	private int num;
+
+	private int cardId;
 
 	private int location;
 
-	public SummonComponent(Player player, int[] param, int location) {
+	public SummonComponent(Player player, int num, int cardId, int location) {
 		this.player = player;
-		this.param = param;
+		this.num = num;
+		this.cardId = cardId;
 		this.location = location;
 	}
 
 	@Override
 	public void display() {
-		for (int i = 0; i < param[1]; i++) {
-			Servant servant = new Servant(new Card(param[0]));
+		for (int i = 0; i < num; i++) {
+			Servant servant = new Servant(new Card(cardId));
 			player.addServant(location, servant);
 		}
 	}

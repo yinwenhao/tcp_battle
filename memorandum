@@ -10,5 +10,9 @@
 3、用userId从redis里拿到battleInitDataString，初始化战斗，一场战斗只会被初始化一次
 4、返回目前战场信息
 
+战斗结束时：
+将结果放入redis，通过web接口获得奖励或惩罚
 
+
+战报格式：
 

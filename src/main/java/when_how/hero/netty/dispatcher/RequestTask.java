@@ -8,9 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import when_how.hero.battle.Manager;
-import when_how.hero.common.MyErrorMessage;
 import when_how.hero.common.json.MyLoginSuccessResponse;
 import when_how.hero.common.json.MyResponse;
+import when_how.hero.constants.MyErrorMessage;
 
 public class RequestTask implements Runnable {
 

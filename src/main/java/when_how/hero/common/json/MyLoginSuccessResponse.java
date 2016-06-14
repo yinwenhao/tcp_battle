@@ -3,7 +3,7 @@ package when_how.hero.common.json;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import when_how.hero.battle.data.Battle;
-import when_how.hero.common.MyErrorMessage;
+import when_how.hero.constants.MyErrorMessage;
 
 public class MyLoginSuccessResponse extends MyResponse {
 

@@ -1,3 +1,3 @@
-{"sid":1,"name":"effect1","intro":"effect1 intro~","type":1,"param":[1,2]}
+{"sid":1,"name":"effect1","intro":"effect1 intro~","type":1,"param":[0,1,2]}
 {"sid":2,"name":"effect2","intro":"effect2 intro~","type":2}
 {"sid":3,"name":"effect3","intro":"effect3 intro~","type":3,"param":[]}

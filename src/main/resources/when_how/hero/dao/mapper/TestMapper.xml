@@ -107,5 +107,11 @@ AND date >= '2016-06-10'
 AND date <= '2016-09-07';
         ]]>
 	</select>
+	
+	<!-- 新增用户 -->
+	<insert id="insertTest2">
+		INSERT INTO test2(user_id, coupon_id, order_id, status)
+		VALUES (#{userId}, #{couponId}, #{orderId}, #{status})
+	</insert>
 
 </mapper>

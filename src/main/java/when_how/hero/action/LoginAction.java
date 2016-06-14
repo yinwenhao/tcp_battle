@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import when_how.hero.common.MyErrorMessage;
 import when_how.hero.common.action.BaseAction;
 import when_how.hero.common.json.MyResponse;
+import when_how.hero.constants.MyErrorMessage;
 import when_how.hero.service.LoginService;
 
 /**

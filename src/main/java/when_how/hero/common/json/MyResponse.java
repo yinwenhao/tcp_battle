@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import when_how.hero.battle.data.Battle;
-import when_how.hero.common.MyErrorMessage;
+import when_how.hero.constants.MyErrorMessage;
 import when_how.hero.dto.own.OwnBattleData;
 import when_how.hero.netty.serial.impl.JsonAutoCloseOutput;
 

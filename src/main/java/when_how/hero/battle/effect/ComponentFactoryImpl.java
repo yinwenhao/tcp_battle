@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import when_how.hero.battle.BattleConstants;
 import when_how.hero.battle.data.Battle;
 import when_how.hero.battle.effect.impl.SummonComponent;
 import when_how.hero.sdata.domain.SEffect;
@@ -26,8 +27,13 @@ public class ComponentFactoryImpl implements ComponentFactory {
 			int location, int target) {
 		switch (se.getType()) {
 		case TypeConstants.SUMMON:
-			return new SummonComponent(battle.getTurnPlayer(), se.getParam(),
-					location);
+			// 召唤，[玩家，召唤物的cardId，召唤数量]
+			return new SummonComponent(
+					se.getParam()[0] == 0 ? battle.getTurnPlayer()
+							: battle.getNextTurnPlayer(), se.getParam()[2],
+					se.getParam()[1],
+					location == BattleConstants.TARGET_NONE ? battle
+							.getTurnPlayer().getServantSize() : location + 1);
 		}
 		return null;
 	}

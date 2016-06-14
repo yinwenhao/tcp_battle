@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import when_how.hero.battle.Manager;
 import when_how.hero.battle.data.Battle;
 import when_how.hero.battle.data.Player;
-import when_how.hero.common.MyErrorMessage;
 import when_how.hero.common.json.MyResponse;
+import when_how.hero.constants.MyErrorMessage;
 import when_how.hero.service.TurnService;
 
 @Service("turnService")

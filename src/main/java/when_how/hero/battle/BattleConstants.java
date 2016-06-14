@@ -3,6 +3,16 @@ package when_how.hero.battle;
 public class BattleConstants {
 
 	/**
+	 * 指定目标——不需要指定
+	 */
+	public static final int TARGET_NONE = -99;
+
+	/**
+	 * 指定目标——英雄
+	 */
+	public static final int TARGET_HERO = -1;
+
+	/**
 	 * 战斗结果——胜利
 	 */
 	public static final int BATTLE_RESULT_WIN = 1;

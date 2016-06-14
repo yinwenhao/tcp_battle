@@ -86,6 +86,10 @@ public class Battle {
 	public Player getTurnPlayer() {
 		return getPlayer(turn);
 	}
+	
+	public Player getNextTurnPlayer() {
+		return getPlayer(turn+1);
+	}
 
 	private Player getPlayer(int t) {
 		int i = t % players.length;

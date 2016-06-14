@@ -14,8 +14,8 @@ import when_how.hero.battle.data.Player;
 import when_how.hero.battle.data.Servant;
 import when_how.hero.battle.effect.ComponentFactory;
 import when_how.hero.battle.effect.MyComponent;
-import when_how.hero.common.MyErrorMessage;
 import when_how.hero.common.json.MyResponse;
+import when_how.hero.constants.MyErrorMessage;
 import when_how.hero.service.CardService;
 
 /**
@@ -49,7 +49,7 @@ public class CardServiceImpl extends BaseService implements CardService {
 			// 能量不足
 			return new MyResponse(MyErrorMessage.notEnoughEnergy);
 		}
-		
+
 		if (card.getChooseone() != null) {
 			// 抉择
 			card = new Card(card.getChooseone()[chooseOne]);
@@ -57,21 +57,29 @@ public class CardServiceImpl extends BaseService implements CardService {
 
 		// 卡牌效果
 		if (card.getType() == BattleConstants.CARD_TYPE_SERVANT) {
-			// 随从牌
+			if (player.getServantSize() >= BattleConstants.SERVANTS_NUM_MAX) {
+				// 随从数量限制
+				return new MyResponse(MyErrorMessage.servantNumberLimit);
+			}
+			// 随从牌，随从需要先占个位置（防止召唤类的战吼把位置占光）
 			Servant servant = new Servant(card);
 			player.addServant(location, servant);
+		}
+
+		if (card.getBattlecryEffect() != null) {
 			// 战吼
 			MyComponent battlecry = componentFactory.getBattlecryComposite(
 					card.getBattlecryEffect(), battle, location, target);
 			battlecry.display();
-		} else if (card.getType() == BattleConstants.CARD_TYPE_SPELL) {
+		}
+
+		if (card.getType() == BattleConstants.CARD_TYPE_SPELL) {
 			// TODO 法术牌
 
 		} else if (card.getType() == BattleConstants.CARD_TYPE_EQUIP) {
 			// 装备牌
 			Equip equip = new Equip(card);
 			player.getHero().setEquip(equip);
-			// TODO: 装备的特殊效果
 		}
 
 		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
