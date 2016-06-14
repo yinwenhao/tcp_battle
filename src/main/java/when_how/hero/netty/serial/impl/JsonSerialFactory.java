@@ -39,17 +39,20 @@ public class JsonSerialFactory implements OutputFactory, InputFactory {
 		}
 	}
 
-	private <T> T input(byte[] data, int offset, int length, Class<T> clazz) throws IOException {
+	private <T> T input(byte[] data, int offset, int length, Class<T> clazz)
+			throws IOException {
 		if (log.isDebugEnabled()) {
-			log.debug("json input: " + new String(data));
-			log.debug("json input with offset: " + new String(data, offset, length));
+			// log.debug("json input: " + new String(data));
+			log.debug("json input with offset: "
+					+ new String(data, offset, length));
 		}
 		try {
-			return JsonAutoCloseOutput.MAPPER.readValue(data, offset, length, clazz);
+			return JsonAutoCloseOutput.MAPPER.readValue(data, offset, length,
+					clazz);
 		} catch (IOException e) {
 			log.error("json serialize error. ", e);
 			throw e;
 		}
 	}
-	
+
 }

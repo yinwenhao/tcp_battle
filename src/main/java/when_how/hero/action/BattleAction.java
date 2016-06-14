@@ -11,8 +11,6 @@ import when_how.hero.common.action.BaseAction;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.service.BattleService;
 
-import com.opensymphony.xwork2.Action;
-
 /**
  * @author when_how
  * 
@@ -21,11 +19,6 @@ import com.opensymphony.xwork2.Action;
 // 配置多例
 @Controller("battle")
 public class BattleAction extends BaseAction {
-
-	/**
-	 * serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
 
 	@Autowired
 	private BattleService battleService;
@@ -41,11 +34,10 @@ public class BattleAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public String useHeroSkill() {
+	public void useHeroSkill() {
 		MyResponse result = battleService.useHeroSkill(getUid(), targetIndex,
 				target);
 		setResponse(result);
-		return Action.SUCCESS;
 	}
 
 	/**
@@ -53,11 +45,10 @@ public class BattleAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public String heroAttack() {
+	public void heroAttack() {
 		MyResponse result = battleService.heroAttack(getUid(), targetIndex,
 				target);
 		setResponse(result);
-		return Action.SUCCESS;
 	}
 
 	/**
@@ -65,11 +56,10 @@ public class BattleAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public String servantAttack() {
+	public void servantAttack() {
 		MyResponse result = battleService.servantAttack(getUid(), targetIndex,
 				i, target);
 		setResponse(result);
-		return Action.SUCCESS;
 	}
 
 	public int getI() {

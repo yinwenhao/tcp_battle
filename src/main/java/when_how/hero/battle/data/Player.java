@@ -26,7 +26,10 @@ public class Player {
 
 	private boolean canChange;
 
-	private boolean win;
+	/**
+	 * 0未定，1胜利，2失败
+	 */
+	private int winOrLose = 0;
 
 	public Player(long uid, Hero hero, int[] cards) {
 		this.setHero(hero);
@@ -38,7 +41,6 @@ public class Player {
 		this.setServants(servants);
 		this.setHand(new ArrayList<Card>(BattleConstants.HAND_LIMIT));
 		this.setCanChange(true);
-		this.setWin(false);
 	}
 
 	public void changeCardsInhand(int[] changeIndex) {
@@ -253,12 +255,12 @@ public class Player {
 		this.canChange = canChange;
 	}
 
-	public boolean isWin() {
-		return win;
+	public int getWinOrLose() {
+		return winOrLose;
 	}
 
-	public void setWin(boolean win) {
-		this.win = win;
+	public void setWinOrLose(int winOrLose) {
+		this.winOrLose = winOrLose;
 	}
 
 }

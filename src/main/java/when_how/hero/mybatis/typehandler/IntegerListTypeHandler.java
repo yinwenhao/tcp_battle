@@ -17,6 +17,7 @@ public class IntegerListTypeHandler implements TypeHandler<List<Integer>> {
 			List<Integer> parameter, JdbcType jdbcType) throws SQLException {
 		if (parameter == null) {
 			ps.setString(i, "");
+			return;
 		}
 		StringBuilder sb = new StringBuilder();
 		for (long p : parameter) {

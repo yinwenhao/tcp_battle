@@ -11,8 +11,6 @@ import when_how.hero.common.action.BaseAction;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.service.TurnService;
 
-import com.opensymphony.xwork2.Action;
-
 /**
  * @author when_how
  * 
@@ -21,11 +19,6 @@ import com.opensymphony.xwork2.Action;
 // 配置多例
 @Controller("turn")
 public class TurnAction extends BaseAction {
-
-	/**
-	 * serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
 
 	@Autowired
 	private TurnService turnService;
@@ -37,10 +30,9 @@ public class TurnAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public String endTurn() {
+	public void endTurn() {
 		MyResponse result = turnService.endTurn(getUid(), turn);
 		setResponse(result);
-		return Action.SUCCESS;
 	}
 
 	public int getTurn() {

@@ -17,6 +17,15 @@ public class Entity {
 	}
 
 	/**
+	 * 是否存活
+	 * 
+	 * @return
+	 */
+	public boolean isAlive() {
+		return this.hp > 0;
+	}
+
+	/**
 	 * 是否可以攻击，子类看情况重写这个方法
 	 * 
 	 * @return

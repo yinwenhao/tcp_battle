@@ -45,11 +45,11 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) {
-		// System.out.println("连接上了");
+		log.debug("连接上了");
 	}
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) {
-		// System.out.println("断开连接了");
+		log.debug("断开连接了");
 	}
 }

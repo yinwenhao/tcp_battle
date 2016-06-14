@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import when_how.hero.battle.Manager;
@@ -13,6 +14,7 @@ import when_how.hero.battle.data.Entity;
 import when_how.hero.battle.data.Hero;
 import when_how.hero.battle.data.Player;
 import when_how.hero.battle.data.Servant;
+import when_how.hero.battle.result.BattleResultChecker;
 import when_how.hero.common.MyErrorMessage;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.service.BattleService;
@@ -28,6 +30,9 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 	private static final String split = "|";
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	@Autowired
+	private BattleResultChecker simpleBattleResultChecker;
 
 	@Override
 	public MyResponse useHeroSkill(long uid, int targetPlayerIndex, int target) {
@@ -73,20 +78,20 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 		sb.append(hero.getAtt());
 		sb.append(split);
 		List<Integer> attackResult = doAttack(hero, targetPlayer, target, sb);
-		if (attackResult.get(0) == -1) {
-			// 自己挂了
-			// TODO: 游戏结束
-			sb.append(fillBattleResultByLose(uid, battle));
-		}
+//		if (attackResult.get(0) == -1) {
+//			// 自己挂了
+//		}
 		for (int j = 1; j < attackResult.size(); j++) {
 			if (attackResult.get(j) == -1) {
 				// 对方英雄挂了
-				// TODO: 游戏结束
-				sb.append(fillBattleResultByWin(uid, battle));
 			} else {
 				// 对方随从挂了
 				targetPlayer.removeServant(attackResult.get(j));
 			}
+		}
+		if (simpleBattleResultChecker.setBattleResult(battle)) {
+			// 战斗结束
+			// TODO: 战斗结果放redis
 		}
 		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
 		return new MyResponse(battle, uid, sb.toString());
@@ -134,6 +139,7 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 		sb.append(servant.getAtt());
 		sb.append(split);
 		servant.addAttNum();
+
 		List<Integer> attackResult = doAttack(servant, targetPlayer, target, sb);
 		if (attackResult.get(0) == -1) {
 			// 自己挂了
@@ -142,12 +148,14 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 		for (int j = 1; j < attackResult.size(); j++) {
 			if (attackResult.get(j) == -1) {
 				// 对方英雄挂了
-				// TODO: 游戏结束
-				sb.append(fillBattleResultByWin(uid, battle));
 			} else {
 				// 对方随从挂了
 				targetPlayer.removeServant(attackResult.get(j));
 			}
+		}
+		if (simpleBattleResultChecker.setBattleResult(battle)) {
+			// 战斗结束
+			// TODO: 战斗结果放redis
 		}
 		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
 		return new MyResponse(battle, uid, sb.toString());

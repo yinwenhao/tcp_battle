@@ -11,8 +11,6 @@ import when_how.hero.common.action.BaseAction;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.service.CardService;
 
-import com.opensymphony.xwork2.Action;
-
 /**
  * @author when_how
  * 
@@ -21,11 +19,6 @@ import com.opensymphony.xwork2.Action;
 // 配置多例
 @Controller("card")
 public class CardAction extends BaseAction {
-
-	/**
-	 * serialVersionUID
-	 */
-	private static final long serialVersionUID = 1L;
 
 	@Autowired
 	private CardService cardService;
@@ -39,9 +32,9 @@ public class CardAction extends BaseAction {
 	private int target;
 
 	private int chooseOne;
-	
+
 	private String changeIndexString;
-	
+
 	private int turn;
 
 	/**
@@ -49,27 +42,26 @@ public class CardAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public String useCard() {
+	public void useCard() {
 		MyResponse result = cardService.useCard(getUid(), targetIndex, i,
 				location, target, chooseOne);
 		setResponse(result);
-		return Action.SUCCESS;
 	}
-	
+
 	/**
 	 * 换牌
 	 * 
 	 * @return
 	 */
-	public String changeCardsInHand() {
+	public void changeCardsInHand() {
 		String[] ss = changeIndexString.trim().split(",");
 		int[] changeIndex = new int[ss.length];
-		for (int i=0; i<ss.length; i++) {
+		for (int i = 0; i < ss.length; i++) {
 			changeIndex[i] = Integer.valueOf(ss[i]);
 		}
-		MyResponse result = cardService.changeCardsInHand(getUid(), changeIndex, turn);
+		MyResponse result = cardService.changeCardsInHand(getUid(),
+				changeIndex, turn);
 		setResponse(result);
-		return Action.SUCCESS;
 	}
 
 	public int getI() {

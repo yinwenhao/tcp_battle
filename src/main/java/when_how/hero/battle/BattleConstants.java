@@ -3,6 +3,16 @@ package when_how.hero.battle;
 public class BattleConstants {
 
 	/**
+	 * 战斗结果——胜利
+	 */
+	public static final int BATTLE_RESULT_WIN = 1;
+
+	/**
+	 * 战斗结果——失败
+	 */
+	public static final int BATTLE_RESULT_LOSE = 2;
+
+	/**
 	 * 随从最大数量
 	 */
 	public static final int SERVANTS_NUM_MAX = 7;

@@ -17,6 +17,11 @@ public class RequestExecutor implements InitializingBean, DisposableBean {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
+	/**
+	 * 等待线程池关闭的时间（秒）
+	 */
+	private static final long AWAIT_SECONDS = 15;
+
 	// 创建一个可重用固定线程数的线程池
 	private ThreadPoolExecutor pool;
 
@@ -31,8 +36,9 @@ public class RequestExecutor implements InitializingBean, DisposableBean {
 	@Override
 	public void destroy() throws Exception {
 		pool.shutdown();
-		while (!pool.awaitTermination(15, TimeUnit.SECONDS)) {
-			log.warn("pool: close threads... (" + new Date() + " )");
+		if (!pool.awaitTermination(AWAIT_SECONDS, TimeUnit.SECONDS)) {
+			log.warn("pool: close threads... (" + new Date()
+					+ " ) take too long time: " + AWAIT_SECONDS + "s.");
 		}
 	}
 

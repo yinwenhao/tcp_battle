@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里的namespace名字必须为执行该sql的dao地址&nbsp; -->
+<mapper namespace="when_how.hero.dao.mapper.TestMapper">
+
+	<resultMap id="test" type="when_how.hero.dao.entity.Test">
+		<id column="prodId" property="prod_id" />
+		<id column="date" property="date"
+			typeHandler="when_how.hero.mybatis.typehandler.LongToDateHandler" />
+		<result column="price" property="price" />
+	</resultMap>
+
+	<!-- （1）当为select语句时： flushCache默认为false，表示任何时候语句被调用，都不会去清空本地缓存和二级缓存。 useCache默认为true，表示会将本条语句的结果进行二级缓存。 
+		（2）当为insert、update、delete语句时： flushCache默认为true，表示任何时候语句被调用，都会导致本地缓存和二级缓存被清空。 
+		useCache属性在该情况下没有。 -->
+	<select id="test" resultMap="test" flushCache="true">
+		<![CDATA[ 
+			SELECT
+  prod_id,
+  UNIX_TIMESTAMP(date) as date,
+  price
+FROM
+  t_rs_product_calendar_price
+WHERE
+  prod_id IN (
+1
+,2
+,3
+,4
+,5
+,6
+,7
+,8
+,9
+,10
+,11
+,12
+,13
+,14
+,15
+,16
+,17
+,18
+,19
+,20
+,21
+,22
+,23
+,24
+,25
+,26
+,27
+,28
+,29
+,30
+,31
+,32
+,33
+,34
+,35
+,36
+,37
+,38
+,39
+,40
+,41
+,42
+,43
+,44
+,45
+,46
+,47
+,48
+,49
+,50
+,51
+,52
+,53
+,54
+,55
+,56
+,57
+,58
+,59
+,60
+,61
+,62
+,63
+,64
+,65
+,66
+,67
+,68
+,69
+,70
+,71
+,72
+,73
+,74
+,75
+,76
+,77
+,78
+  )
+AND date >= '2016-06-10'
+AND date <= '2016-09-07';
+        ]]>
+	</select>
+
+</mapper>
