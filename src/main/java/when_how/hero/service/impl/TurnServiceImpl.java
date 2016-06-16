@@ -6,7 +6,7 @@ import when_how.hero.battle.Manager;
 import when_how.hero.battle.data.Battle;
 import when_how.hero.battle.data.Player;
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.constants.MyErrorMessage;
+import when_how.hero.constants.MyErrorNo;
 import when_how.hero.service.TurnService;
 
 @Service("turnService")
@@ -16,11 +16,11 @@ public class TurnServiceImpl extends BaseService implements TurnService {
 	public MyResponse endTurn(long uid, int turn) {
 		Battle battle = Manager.getBattle(uid);
 		if (turn != battle.getTurn()) {
-			return new MyResponse(MyErrorMessage.wrongParam);
+			return new MyResponse(MyErrorNo.wrongParam);
 		}
 		Player player = battle.getTurnPlayer();
 		if (player.getUserId() != uid) {
-			return new MyResponse(MyErrorMessage.notYourTurn);
+			return new MyResponse(MyErrorNo.notYourTurn);
 		}
 		battle.endTurn();
 		StringBuilder sb = new StringBuilder();

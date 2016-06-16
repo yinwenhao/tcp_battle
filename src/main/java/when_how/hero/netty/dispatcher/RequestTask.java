@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import when_how.hero.battle.Manager;
 import when_how.hero.common.json.MyLoginSuccessResponse;
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.constants.MyErrorMessage;
+import when_how.hero.constants.MyErrorNo;
 
 public class RequestTask implements Runnable {
 
@@ -36,7 +36,7 @@ public class RequestTask implements Runnable {
 	public void run() {
 		try {
 			if (!param.containsKey("sss")) {
-				ctx.writeAndFlush(new MyResponse(MyErrorMessage.wrongParam));
+				ctx.writeAndFlush(new MyResponse(MyErrorNo.wrongParam));
 				return;
 			}
 			Long uid = Manager.getUidByCtx(ctx);
@@ -44,7 +44,7 @@ public class RequestTask implements Runnable {
 				param.put("uid", uid);
 			} else {
 				if (MyDispatcher.isNeedLogin(actionClassBean, method)) {
-					ctx.writeAndFlush(new MyResponse(MyErrorMessage.needLogin));
+					ctx.writeAndFlush(new MyResponse(MyErrorNo.needLogin));
 					ctx.close();
 					return;
 				}
@@ -53,14 +53,14 @@ public class RequestTask implements Runnable {
 			if (sequence <= Manager.getsequenceByCtx(ctx)
 					&& MyDispatcher.isNeedLogin(actionClassBean, method)) {
 				ctx.writeAndFlush(new MyResponse(
-						MyErrorMessage.requestOutOfDate));
+						MyErrorNo.requestOutOfDate));
 				return;
 			}
 			synchronized (ctx) {
 				if (sequence <= Manager.getsequenceByCtx(ctx)
 						&& MyDispatcher.isNeedLogin(actionClassBean, method)) {
 					ctx.writeAndFlush(new MyResponse(
-							MyErrorMessage.requestOutOfDate));
+							MyErrorNo.requestOutOfDate));
 					return;
 				}
 				Manager.putSequence(ctx, sequence);

@@ -1,5 +1,6 @@
 package when_how.hero.service;
 
+import when_how.hero.common.MyException;
 import when_how.hero.common.json.MyResponse;
 
 /**
@@ -26,7 +27,7 @@ public interface CardService {
 	 * @return
 	 */
 	MyResponse useCard(long uid, int targetPlayerIndex, int i, int location,
-			int target, int chooseOne);
+			int target, int chooseOne) throws MyException;
 
 	/**
 	 * 换牌

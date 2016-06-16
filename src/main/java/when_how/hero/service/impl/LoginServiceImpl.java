@@ -12,7 +12,7 @@ import when_how.hero.battle.init.BattleInit;
 import when_how.hero.common.UidToken;
 import when_how.hero.common.json.MyLoginSuccessResponse;
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.constants.MyErrorMessage;
+import when_how.hero.constants.MyErrorNo;
 import when_how.hero.constants.RedisKey;
 import when_how.hero.dao.mapper.TestMapper;
 import when_how.hero.dao.mapper.UserDeckMapper;
@@ -74,7 +74,7 @@ public class LoginServiceImpl implements LoginService {
 		long uid = UidToken.getUidFromToken(token);
 		String currentToken = redisRemoteMemory.getString(RedisKey.token, uid);
 		if (!token.equals(currentToken)) {
-			return new MyResponse(MyErrorMessage.needLogin);
+			return new MyResponse(MyErrorNo.needLogin);
 		}
 		String battleInitDataString = redisRemoteMemory.getString(
 				RedisKey.battleInitData, uid);

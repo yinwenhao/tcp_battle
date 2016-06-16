@@ -14,8 +14,9 @@ import when_how.hero.battle.data.Player;
 import when_how.hero.battle.data.Servant;
 import when_how.hero.battle.effect.ComponentFactory;
 import when_how.hero.battle.effect.MyComponent;
+import when_how.hero.common.MyException;
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.constants.MyErrorMessage;
+import when_how.hero.constants.MyErrorNo;
 import when_how.hero.service.CardService;
 
 /**
@@ -33,21 +34,21 @@ public class CardServiceImpl extends BaseService implements CardService {
 
 	@Override
 	public MyResponse useCard(long uid, int targetPlayerIndex, int i,
-			int location, int target, int chooseOne) {
+			int location, int target, int chooseOne) throws MyException {
 		Battle battle = Manager.getBattle(uid);
 		if (!battle.isStart()) {
-			return new MyResponse(MyErrorMessage.notYourTurn);
+			return new MyResponse(MyErrorNo.notYourTurn);
 		}
 		Player player = battle.getTurnPlayer();
 		if (player.getUserId() != uid) {
-			return new MyResponse(MyErrorMessage.notYourTurn);
+			return new MyResponse(MyErrorNo.notYourTurn);
 		}
 
 		StringBuilder sb = new StringBuilder();
 		Card card = player.getHand().get(i);
 		if (!player.useEnergy(card.getCost())) {
 			// 能量不足
-			return new MyResponse(MyErrorMessage.notEnoughEnergy);
+			return new MyResponse(MyErrorNo.notEnoughEnergy);
 		}
 
 		if (card.getChooseone() != null) {
@@ -59,7 +60,7 @@ public class CardServiceImpl extends BaseService implements CardService {
 		if (card.getType() == BattleConstants.CARD_TYPE_SERVANT) {
 			if (player.getServantSize() >= BattleConstants.SERVANTS_NUM_MAX) {
 				// 随从数量限制
-				return new MyResponse(MyErrorMessage.servantNumberLimit);
+				return new MyResponse(MyErrorNo.servantNumberLimit);
 			}
 			// 随从牌，随从需要先占个位置（防止召唤类的战吼把位置占光）
 			Servant servant = new Servant(card);
@@ -90,11 +91,11 @@ public class CardServiceImpl extends BaseService implements CardService {
 	public MyResponse changeCardsInHand(long uid, int[] changeIndex, int turn) {
 		Battle battle = Manager.getBattle(uid);
 		if (turn != battle.getTurn()) {
-			return new MyResponse(MyErrorMessage.wrongParam);
+			return new MyResponse(MyErrorNo.wrongParam);
 		}
 		Player player = battle.getPlayerByUid(uid);
 		if (!player.isCanChange()) {
-			return new MyResponse(MyErrorMessage.cannotChange);
+			return new MyResponse(MyErrorNo.cannotChange);
 		}
 		if (changeIndex == null || changeIndex.length <= 0) {
 			player.setCanChange(false);
@@ -102,7 +103,7 @@ public class CardServiceImpl extends BaseService implements CardService {
 		}
 		for (int i : changeIndex) {
 			if (i >= player.getHand().size()) {
-				return new MyResponse(MyErrorMessage.wrongParam);
+				return new MyResponse(MyErrorNo.wrongParam);
 			}
 		}
 		player.changeCardsInhand(changeIndex);

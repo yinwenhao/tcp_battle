@@ -18,7 +18,7 @@ import when_how.hero.battle.data.Player;
 import when_how.hero.battle.data.Servant;
 import when_how.hero.battle.result.BattleResultChecker;
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.constants.MyErrorMessage;
+import when_how.hero.constants.MyErrorNo;
 import when_how.hero.constants.RedisKey;
 import when_how.hero.remotememory.RemoteMemory;
 import when_how.hero.service.BattleService;
@@ -51,25 +51,25 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 	public MyResponse heroAttack(long uid, int targetPlayerIndex, int target) {
 		Battle battle = Manager.getBattle(uid);
 		if (!battle.isStart()) {
-			return new MyResponse(MyErrorMessage.notYourTurn);
+			return new MyResponse(MyErrorNo.notYourTurn);
 		}
 		Player player = battle.getTurnPlayer();
 		if (player.getUserId() != uid) {
-			return new MyResponse(MyErrorMessage.notYourTurn);
+			return new MyResponse(MyErrorNo.notYourTurn);
 		}
 		if (targetPlayerIndex >= battle.getPlayers().length) {
-			return new MyResponse(MyErrorMessage.wrongParam);
+			return new MyResponse(MyErrorNo.wrongParam);
 		}
 		Player targetPlayer = battle.getPlayers()[targetPlayerIndex];
 		if (targetPlayer.getUserId() == uid) {
-			return new MyResponse(MyErrorMessage.wrongParam);
+			return new MyResponse(MyErrorNo.wrongParam);
 		}
 		if (target >= targetPlayer.getServantSize() || target < -1) {
-			return new MyResponse(MyErrorMessage.wrongParam);
+			return new MyResponse(MyErrorNo.wrongParam);
 		}
 		Hero hero = player.getHero();
 		if (!hero.isCanAttack()) {
-			return new MyResponse(MyErrorMessage.cannotAttack);
+			return new MyResponse(MyErrorNo.cannotAttack);
 		}
 		hero.addAttNum();
 
@@ -109,28 +109,28 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 			int target) {
 		Battle battle = Manager.getBattle(uid);
 		if (!battle.isStart()) {
-			return new MyResponse(MyErrorMessage.notYourTurn);
+			return new MyResponse(MyErrorNo.notYourTurn);
 		}
 		Player player = battle.getTurnPlayer();
 		if (player.getUserId() != uid) {
-			return new MyResponse(MyErrorMessage.notYourTurn);
+			return new MyResponse(MyErrorNo.notYourTurn);
 		}
 		if (i >= player.getServantSize()) {
-			return new MyResponse(MyErrorMessage.wrongParam);
+			return new MyResponse(MyErrorNo.wrongParam);
 		}
 		if (targetPlayerIndex >= battle.getPlayers().length) {
-			return new MyResponse(MyErrorMessage.wrongParam);
+			return new MyResponse(MyErrorNo.wrongParam);
 		}
 		Player targetPlayer = battle.getPlayers()[targetPlayerIndex];
 		if (targetPlayer.getUserId() == uid) {
-			return new MyResponse(MyErrorMessage.wrongParam);
+			return new MyResponse(MyErrorNo.wrongParam);
 		}
 		if (target >= targetPlayer.getServantSize() || target < BattleConstants.TARGET_HERO) {
-			return new MyResponse(MyErrorMessage.wrongParam);
+			return new MyResponse(MyErrorNo.wrongParam);
 		}
 		Servant servant = player.getServants().get(i);
 		if (!servant.isCanAttack()) {
-			return new MyResponse(MyErrorMessage.cannotAttack);
+			return new MyResponse(MyErrorNo.cannotAttack);
 		}
 		servant.addAttNum();
 

@@ -5,7 +5,7 @@ import when_how.hero.battle.data.Player;
 import when_how.hero.battle.effect.MyComponent;
 import when_how.hero.common.MyException;
 
-public class DamageComponent implements MyComponent {
+public class MultiDamageComponent implements MyComponent {
 
 	private Player targetPlayer;
 
@@ -13,7 +13,7 @@ public class DamageComponent implements MyComponent {
 
 	private int target;
 
-	public DamageComponent(Player targetPlayer, int damage, int target) {
+	public MultiDamageComponent(Player targetPlayer, int damage, int target) {
 		this.targetPlayer = targetPlayer;
 		this.damage = damage;
 		this.target = target;

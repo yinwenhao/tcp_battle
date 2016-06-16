@@ -1,12 +1,10 @@
 package when_how.hero.constants;
 
 /**
- * 100一下为系统预留，请定义100以上的接口号
- * 
  * @author when_how
  *
  */
-public class MyErrorMessage {
+public class MyErrorNo {
 
 	/** 成功 */
 	public static final int success = 0;

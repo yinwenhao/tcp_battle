@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import when_how.hero.common.MyException;
 import when_how.hero.common.action.BaseAction;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.service.CardService;
@@ -43,8 +44,14 @@ public class CardAction extends BaseAction {
 	 * @return
 	 */
 	public void useCard() {
-		MyResponse result = cardService.useCard(getUid(), targetIndex, i,
-				location, target, chooseOne);
+		MyResponse result = null;
+		try {
+			result = cardService.useCard(getUid(), targetIndex, i,
+					location, target, chooseOne);
+		} catch (MyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		setResponse(result);
 	}
 

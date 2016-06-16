@@ -3,12 +3,14 @@ package when_how.hero.battle.effect;
 import java.util.ArrayList;
 import java.util.List;
 
+import when_how.hero.common.MyException;
+
 public class BaseCompositeImpl implements Composite {
 
 	private List<MyComponent> components = new ArrayList<MyComponent>();
 
 	@Override
-	public void display() {
+	public void display() throws MyException {
 		for (MyComponent c : components) {
 			c.display();
 		}

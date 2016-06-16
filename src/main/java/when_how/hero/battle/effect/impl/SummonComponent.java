@@ -4,6 +4,7 @@ import when_how.hero.battle.data.Card;
 import when_how.hero.battle.data.Player;
 import when_how.hero.battle.data.Servant;
 import when_how.hero.battle.effect.MyComponent;
+import when_how.hero.common.MyException;
 
 public class SummonComponent implements MyComponent {
 
@@ -23,7 +24,7 @@ public class SummonComponent implements MyComponent {
 	}
 
 	@Override
-	public void display() {
+	public void display() throws MyException {
 		for (int i = 0; i < num; i++) {
 			Servant servant = new Servant(new Card(cardId));
 			player.addServant(location, servant);

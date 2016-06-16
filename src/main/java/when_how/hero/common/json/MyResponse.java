@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import when_how.hero.battle.data.Battle;
-import when_how.hero.constants.MyErrorMessage;
+import when_how.hero.constants.MyErrorNo;
 import when_how.hero.dto.own.OwnBattleData;
 import when_how.hero.netty.serial.impl.JsonAutoCloseOutput;
 
@@ -34,7 +34,7 @@ public class MyResponse {
 	 * @param uid
 	 */
 	public MyResponse(Battle battle, long uid) {
-		this.setState(MyErrorMessage.success);
+		this.setState(MyErrorNo.success);
 		OwnBattleData obd = new OwnBattleData(battle, uid, null);
 		this.setData(obd);
 	}
@@ -47,7 +47,7 @@ public class MyResponse {
 	 * @param battleReport
 	 */
 	public MyResponse(Battle battle, long uid, String battleReport) {
-		this.setState(MyErrorMessage.success);
+		this.setState(MyErrorNo.success);
 		OwnBattleData obd = new OwnBattleData(battle, uid, battleReport);
 		this.setData(obd);
 	}

@@ -3,7 +3,7 @@ package when_how.hero.common.json;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import when_how.hero.battle.data.Battle;
-import when_how.hero.constants.MyErrorMessage;
+import when_how.hero.constants.MyErrorNo;
 
 public class MyLoginSuccessResponse extends MyResponse {
 
@@ -11,7 +11,7 @@ public class MyLoginSuccessResponse extends MyResponse {
 	private long uid;
 
 	public MyLoginSuccessResponse(long uid) {
-		super(MyErrorMessage.success);
+		super(MyErrorNo.success);
 		this.uid = uid;
 	}
 

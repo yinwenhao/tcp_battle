@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 
 import when_how.hero.common.action.BaseAction;
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.constants.MyErrorMessage;
+import when_how.hero.constants.MyErrorNo;
 import when_how.hero.service.LoginService;
 
 /**
@@ -34,7 +34,7 @@ public class LoginAction extends BaseAction {
 	 */
 	public void login() throws Exception {
 		if (token == null) {
-			setResponse(new MyResponse(MyErrorMessage.wrongParam));
+			setResponse(new MyResponse(MyErrorNo.wrongParam));
 			return;
 		}
 		MyResponse result = loginService.login(token);
