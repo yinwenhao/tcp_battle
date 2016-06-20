@@ -1,5 +1,7 @@
 package when_how.hero.service.impl;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import when_how.hero.battle.data.Battle;
 import when_how.hero.battle.init.BattleInit;
+import when_how.hero.common.MyException;
 import when_how.hero.common.UidToken;
 import when_how.hero.common.json.MyLoginSuccessResponse;
 import when_how.hero.common.json.MyResponse;
@@ -43,13 +46,14 @@ public class LoginServiceImpl implements LoginService {
 	private RemoteMemory redisRemoteMemory;
 
 	@Override
-	@Transactional(rollbackFor = Exception.class, isolation = Isolation.DEFAULT)
-	public MyResponse login(String token) throws Exception {
-//		try {
-//			testMapper.insertTest2(281475076710965L, "3bebe554fha24", 234354325, 1);
-//		}catch (Exception e) {
-//			log.error("test error!!!!!!!", e);
-//		}
+//	@Transactional(rollbackFor = Exception.class, isolation = Isolation.DEFAULT)
+	public MyResponse login(String token) throws MyException {
+		// try {
+		// testMapper.insertTest2(281475076710965L, "3bebe554fha24", 234354325,
+		// 1);
+		// }catch (Exception e) {
+		// log.error("test error!!!!!!!", e);
+		// }
 		// long start = System.currentTimeMillis();
 		// testMapper.test();
 		// log.debug("第一次：" + (System.currentTimeMillis() - start));
@@ -74,12 +78,16 @@ public class LoginServiceImpl implements LoginService {
 		long uid = UidToken.getUidFromToken(token);
 		String currentToken = redisRemoteMemory.getString(RedisKey.token, uid);
 		if (!token.equals(currentToken)) {
-			return new MyResponse(MyErrorNo.needLogin);
+			throw new MyException(MyErrorNo.needLogin);
 		}
-		String battleInitDataString = redisRemoteMemory.getString(
-				RedisKey.battleInitData, uid);
-		BattleInitData battleInitData = JsonAutoCloseOutput.MAPPER.readValue(
-				battleInitDataString, BattleInitData.class);
+		String battleInitDataString = redisRemoteMemory.getString(RedisKey.battleInitData, uid);
+		BattleInitData battleInitData = null;
+		try {
+			battleInitData = JsonAutoCloseOutput.MAPPER.readValue(battleInitDataString, BattleInitData.class);
+		} catch (IOException e) {
+			log.error("battleInitData json error.", e);
+			throw new MyException(MyErrorNo.jsonError);
+		}
 		Battle battle = battleInit.init(battleInitData);
 
 		// 把目前的战场数据发给客户端

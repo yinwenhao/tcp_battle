@@ -29,7 +29,7 @@ public class Player {
 	/**
 	 * 0未定，1胜利，2失败
 	 */
-	private int winOrLose = 0;
+	private int winOrLose = BattleConstants.BATTLE_RESULT_DEFAULT;
 
 	public Player(long uid, Hero hero, int[] cards) {
 		this.setHero(hero);

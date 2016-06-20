@@ -6,6 +6,7 @@ import when_how.hero.battle.Manager;
 import when_how.hero.battle.data.Battle;
 import when_how.hero.battle.data.Hero;
 import when_how.hero.battle.data.Player;
+import when_how.hero.common.MyException;
 import when_how.hero.dto.BattleInitData;
 
 @Component("battleInit")
@@ -20,7 +21,7 @@ public class BattleInitImpl implements BattleInit {
 	}
 
 	@Override
-	public Battle init(BattleInitData battleInitData) throws Exception {
+	public Battle init(BattleInitData battleInitData) throws MyException {
 		long[] uids = battleInitData.getUid();
 
 		Long lockIndex = 0L;
@@ -37,8 +38,7 @@ public class BattleInitImpl implements BattleInit {
 			Player[] players = new Player[uids.length];
 			for (int i = 0; i < uids.length; i++) {
 				Hero hero = new Hero(battleInitData.getHeroId()[i]);
-				Player player = new Player(uids[i], hero,
-						battleInitData.getCards()[0]);
+				Player player = new Player(uids[i], hero, battleInitData.getCards()[0]);
 				players[i] = player;
 			}
 

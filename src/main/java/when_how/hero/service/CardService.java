@@ -26,8 +26,8 @@ public interface CardService {
 	 *            抉择
 	 * @return
 	 */
-	MyResponse useCard(long uid, int targetPlayerIndex, int i, int location,
-			int target, int chooseOne) throws MyException;
+	MyResponse useCard(long uid, int targetPlayerIndex, int i, int location, int target, int chooseOne)
+			throws MyException;
 
 	/**
 	 * 换牌
@@ -38,16 +38,16 @@ public interface CardService {
 	 * @param turn
 	 * @return
 	 */
-	MyResponse changeCardsInHand(long uid, int[] changeIndex, int turn);
+	MyResponse changeCardsInHand(long uid, int[] changeIndex, int turn) throws MyException;
 
 	/**
-	 * 选择一张牌
+	 * 选择一张牌，用于“发现”
 	 * 
 	 * @param uid
 	 * @param i
 	 *            选择的牌的序号
 	 * @return
 	 */
-	MyResponse chooseCard(long uid, int i);
+	MyResponse discoverOne(long uid, int i) throws MyException;
 
 }

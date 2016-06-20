@@ -1,11 +1,12 @@
 package when_how.hero.battle;
 
-import io.netty.channel.ChannelHandlerContext;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import io.netty.channel.ChannelHandlerContext;
 import when_how.hero.battle.data.Battle;
+import when_how.hero.common.MyException;
+import when_how.hero.constants.MyErrorNo;
 
 public class Manager {
 
@@ -18,13 +19,14 @@ public class Manager {
 	private static Map<ChannelHandlerContext, Integer> sequence = new HashMap<ChannelHandlerContext, Integer>();
 
 	private static Object lock = new Object();
-	
+
 	public static void putSequence(ChannelHandlerContext ctx, int sequence) {
 		Manager.sequence.put(ctx, sequence);
 	}
 
 	/**
 	 * 根据ctx获得请求顺序号，默认为0
+	 * 
 	 * @param ctx
 	 * @return
 	 */
@@ -65,13 +67,13 @@ public class Manager {
 		}
 	}
 
-	public static boolean inBattle(long[] uids) throws Exception {
+	public static boolean inBattle(long[] uids) throws MyException {
 		Battle b = null;
 		for (long uid : uids) {
 			if (b == null) {
 				b = battles.get(uid);
 			} else if (b != battles.get(uid)) {
-				throw new Exception("wrong battle");
+				throw new MyException(MyErrorNo.wrongBattle);
 			}
 		}
 		if (b == null) {

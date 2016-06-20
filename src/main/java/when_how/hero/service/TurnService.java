@@ -1,5 +1,6 @@
 package when_how.hero.service;
 
+import when_how.hero.common.MyException;
 import when_how.hero.common.json.MyResponse;
 
 /**
@@ -15,7 +16,7 @@ public interface TurnService {
 	 * @param uid
 	 * @return
 	 */
-	MyResponse endTurn(long uid, int turn);
+	MyResponse endTurn(long uid, int turn) throws MyException;
 
 	/**
 	 * 认输
@@ -23,6 +24,6 @@ public interface TurnService {
 	 * @param uid
 	 * @return
 	 */
-	MyResponse concede(long uid);
+	MyResponse concede(long uid) throws MyException;
 
 }

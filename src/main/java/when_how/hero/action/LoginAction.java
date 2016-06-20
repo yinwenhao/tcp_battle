@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import when_how.hero.common.MyException;
 import when_how.hero.common.action.BaseAction;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.constants.MyErrorNo;
@@ -32,7 +33,7 @@ public class LoginAction extends BaseAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public void login() throws Exception {
+	public void login() throws MyException {
 		if (token == null) {
 			setResponse(new MyResponse(MyErrorNo.wrongParam));
 			return;

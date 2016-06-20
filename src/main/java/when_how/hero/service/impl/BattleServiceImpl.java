@@ -17,6 +17,7 @@ import when_how.hero.battle.data.Hero;
 import when_how.hero.battle.data.Player;
 import when_how.hero.battle.data.Servant;
 import when_how.hero.battle.result.BattleResultChecker;
+import when_how.hero.common.MyException;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.constants.MyErrorNo;
 import when_how.hero.constants.RedisKey;
@@ -48,28 +49,28 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 	}
 
 	@Override
-	public MyResponse heroAttack(long uid, int targetPlayerIndex, int target) {
+	public MyResponse heroAttack(long uid, int targetPlayerIndex, int target) throws MyException {
 		Battle battle = Manager.getBattle(uid);
 		if (!battle.isStart()) {
-			return new MyResponse(MyErrorNo.notYourTurn);
+			throw new MyException(MyErrorNo.notYourTurn);
 		}
 		Player player = battle.getTurnPlayer();
 		if (player.getUserId() != uid) {
-			return new MyResponse(MyErrorNo.notYourTurn);
+			throw new MyException(MyErrorNo.notYourTurn);
 		}
 		if (targetPlayerIndex >= battle.getPlayers().length) {
-			return new MyResponse(MyErrorNo.wrongParam);
+			throw new MyException(MyErrorNo.wrongParam);
 		}
 		Player targetPlayer = battle.getPlayers()[targetPlayerIndex];
 		if (targetPlayer.getUserId() == uid) {
-			return new MyResponse(MyErrorNo.wrongParam);
+			throw new MyException(MyErrorNo.wrongParam);
 		}
 		if (target >= targetPlayer.getServantSize() || target < -1) {
-			return new MyResponse(MyErrorNo.wrongParam);
+			throw new MyException(MyErrorNo.wrongParam);
 		}
 		Hero hero = player.getHero();
 		if (!hero.isCanAttack()) {
-			return new MyResponse(MyErrorNo.cannotAttack);
+			throw new MyException(MyErrorNo.cannotAttack);
 		}
 		hero.addAttNum();
 
@@ -85,9 +86,9 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 		sb.append(hero.getAtt());
 		sb.append(split);
 		List<Integer> attackResult = doAttack(hero, targetPlayer, target, sb);
-//		if (attackResult.get(0) == 1) {
-//			// 自己挂了
-//		}
+		// if (attackResult.get(0) == 1) {
+		// // 自己挂了
+		// }
 		for (int j = 1; j < attackResult.size(); j++) {
 			if (attackResult.get(j) == -1) {
 				// 对方英雄挂了
@@ -105,32 +106,31 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 	}
 
 	@Override
-	public MyResponse servantAttack(long uid, int targetPlayerIndex, int i,
-			int target) {
+	public MyResponse servantAttack(long uid, int targetPlayerIndex, int i, int target) throws MyException {
 		Battle battle = Manager.getBattle(uid);
 		if (!battle.isStart()) {
-			return new MyResponse(MyErrorNo.notYourTurn);
+			throw new MyException(MyErrorNo.notYourTurn);
 		}
 		Player player = battle.getTurnPlayer();
 		if (player.getUserId() != uid) {
-			return new MyResponse(MyErrorNo.notYourTurn);
+			throw new MyException(MyErrorNo.notYourTurn);
 		}
 		if (i >= player.getServantSize()) {
-			return new MyResponse(MyErrorNo.wrongParam);
+			throw new MyException(MyErrorNo.wrongParam);
 		}
 		if (targetPlayerIndex >= battle.getPlayers().length) {
-			return new MyResponse(MyErrorNo.wrongParam);
+			throw new MyException(MyErrorNo.wrongParam);
 		}
 		Player targetPlayer = battle.getPlayers()[targetPlayerIndex];
 		if (targetPlayer.getUserId() == uid) {
-			return new MyResponse(MyErrorNo.wrongParam);
+			throw new MyException(MyErrorNo.wrongParam);
 		}
 		if (target >= targetPlayer.getServantSize() || target < BattleConstants.TARGET_HERO) {
-			return new MyResponse(MyErrorNo.wrongParam);
+			throw new MyException(MyErrorNo.wrongParam);
 		}
 		Servant servant = player.getServants().get(i);
 		if (!servant.isCanAttack()) {
-			return new MyResponse(MyErrorNo.cannotAttack);
+			throw new MyException(MyErrorNo.cannotAttack);
 		}
 		servant.addAttNum();
 
@@ -177,8 +177,7 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 	 * @return [自己挂没，挂了的目标1，挂了的目标2，挂了的目标。。。]
 	 *         例如[0,2,3,4]表示自己没挂，目标2、3、4号挂了；[1,-1]表示自己挂了，目标英雄挂了
 	 */
-	private List<Integer> doAttack(Entity entity, Player targetPlayer,
-			int target, StringBuilder sb) {
+	private List<Integer> doAttack(Entity entity, Player targetPlayer, int target, StringBuilder sb) {
 		List<Integer> result = new ArrayList<Integer>(2);
 		Entity targetEntity;
 		if (target == BattleConstants.TARGET_HERO) {

@@ -43,15 +43,8 @@ public class CardAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public void useCard() {
-		MyResponse result = null;
-		try {
-			result = cardService.useCard(getUid(), targetIndex, i,
-					location, target, chooseOne);
-		} catch (MyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void useCard() throws MyException {
+		MyResponse result = cardService.useCard(getUid(), targetIndex, i, location, target, chooseOne);
 		setResponse(result);
 	}
 
@@ -60,14 +53,13 @@ public class CardAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public void changeCardsInHand() {
+	public void changeCardsInHand() throws MyException {
 		String[] ss = changeIndexString.trim().split(",");
 		int[] changeIndex = new int[ss.length];
 		for (int i = 0; i < ss.length; i++) {
 			changeIndex[i] = Integer.valueOf(ss[i]);
 		}
-		MyResponse result = cardService.changeCardsInHand(getUid(),
-				changeIndex, turn);
+		MyResponse result = cardService.changeCardsInHand(getUid(), changeIndex, turn);
 		setResponse(result);
 	}
 

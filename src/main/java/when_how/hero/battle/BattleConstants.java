@@ -13,6 +13,11 @@ public class BattleConstants {
 	public static final int TARGET_HERO = -1;
 
 	/**
+	 * 战斗结果——未定
+	 */
+	public static final int BATTLE_RESULT_DEFAULT = 0;
+
+	/**
 	 * 战斗结果——胜利
 	 */
 	public static final int BATTLE_RESULT_WIN = 1;

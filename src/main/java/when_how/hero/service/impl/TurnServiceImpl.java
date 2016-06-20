@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import when_how.hero.battle.Manager;
 import when_how.hero.battle.data.Battle;
 import when_how.hero.battle.data.Player;
+import when_how.hero.common.MyException;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.constants.MyErrorNo;
 import when_how.hero.service.TurnService;
@@ -13,14 +14,14 @@ import when_how.hero.service.TurnService;
 public class TurnServiceImpl extends BaseService implements TurnService {
 
 	@Override
-	public MyResponse endTurn(long uid, int turn) {
+	public MyResponse endTurn(long uid, int turn) throws MyException {
 		Battle battle = Manager.getBattle(uid);
 		if (turn != battle.getTurn()) {
-			return new MyResponse(MyErrorNo.wrongParam);
+			throw new MyException(MyErrorNo.wrongParam);
 		}
 		Player player = battle.getTurnPlayer();
 		if (player.getUserId() != uid) {
-			return new MyResponse(MyErrorNo.notYourTurn);
+			throw new MyException(MyErrorNo.notYourTurn);
 		}
 		battle.endTurn();
 		StringBuilder sb = new StringBuilder();
@@ -31,7 +32,7 @@ public class TurnServiceImpl extends BaseService implements TurnService {
 	}
 
 	@Override
-	public MyResponse concede(long uid) {
+	public MyResponse concede(long uid) throws MyException {
 		// TODO Auto-generated method stub
 		return null;
 	}

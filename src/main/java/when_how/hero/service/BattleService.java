@@ -1,5 +1,6 @@
 package when_how.hero.service;
 
+import when_how.hero.common.MyException;
 import when_how.hero.common.json.MyResponse;
 
 /**
@@ -18,7 +19,7 @@ public interface BattleService {
 	 * @param target
 	 * @return
 	 */
-	MyResponse useHeroSkill(long uid, int targetPlayerIndex, int target);
+	MyResponse useHeroSkill(long uid, int targetPlayerIndex, int target) throws MyException;
 
 	/**
 	 * 英雄攻击
@@ -30,7 +31,7 @@ public interface BattleService {
 	 *            目标序号，-1表示英雄
 	 * @return
 	 */
-	MyResponse heroAttack(long uid, int targetPlayerIndex, int target);
+	MyResponse heroAttack(long uid, int targetPlayerIndex, int target) throws MyException;
 
 	/**
 	 * 随从攻击
@@ -44,6 +45,6 @@ public interface BattleService {
 	 *            目标序号，-1表示英雄
 	 * @return
 	 */
-	MyResponse servantAttack(long uid, int targetPlayerIndex, int i, int target);
+	MyResponse servantAttack(long uid, int targetPlayerIndex, int i, int target) throws MyException;
 
 }

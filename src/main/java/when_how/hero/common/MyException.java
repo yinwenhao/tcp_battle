@@ -9,6 +9,9 @@ public class MyException extends Exception {
 
 	private int errNo;
 
+	public MyException() {
+	}
+
 	public MyException(int errNo) {
 		this.errNo = errNo;
 	}

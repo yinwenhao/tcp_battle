@@ -8,6 +8,8 @@ public class MyErrorNo {
 
 	/** 成功 */
 	public static final int success = 0;
+	/** 通用错误——网络或系统异常，请稍后重试 */
+	public static final int commonError = 1;
 
 	/** 未登陆，或被挤下线 */
 	public static final int needLogin = 10;
@@ -27,5 +29,9 @@ public class MyErrorNo {
 	public static final int requestOutOfDate = 80;
 	/** 随从数量达到上限 */
 	public static final int servantNumberLimit = 90;
+	/** 错误的战斗 */
+	public static final int wrongBattle = 100;
+	/** json相关错误 */
+	public static final int jsonError = 110;
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import when_how.hero.common.MyException;
 import when_how.hero.common.action.BaseAction;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.service.BattleService;
@@ -34,9 +35,8 @@ public class BattleAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public void useHeroSkill() {
-		MyResponse result = battleService.useHeroSkill(getUid(), targetIndex,
-				target);
+	public void useHeroSkill() throws MyException {
+		MyResponse result = battleService.useHeroSkill(getUid(), targetIndex, target);
 		setResponse(result);
 	}
 
@@ -45,9 +45,8 @@ public class BattleAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public void heroAttack() {
-		MyResponse result = battleService.heroAttack(getUid(), targetIndex,
-				target);
+	public void heroAttack() throws MyException {
+		MyResponse result = battleService.heroAttack(getUid(), targetIndex, target);
 		setResponse(result);
 	}
 
@@ -56,9 +55,8 @@ public class BattleAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public void servantAttack() {
-		MyResponse result = battleService.servantAttack(getUid(), targetIndex,
-				i, target);
+	public void servantAttack() throws MyException {
+		MyResponse result = battleService.servantAttack(getUid(), targetIndex, i, target);
 		setResponse(result);
 	}
 

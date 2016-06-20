@@ -33,22 +33,22 @@ public class CardServiceImpl extends BaseService implements CardService {
 	private ComponentFactory componentFactory;
 
 	@Override
-	public MyResponse useCard(long uid, int targetPlayerIndex, int i,
-			int location, int target, int chooseOne) throws MyException {
+	public MyResponse useCard(long uid, int targetPlayerIndex, int i, int location, int target, int chooseOne)
+			throws MyException {
 		Battle battle = Manager.getBattle(uid);
 		if (!battle.isStart()) {
-			return new MyResponse(MyErrorNo.notYourTurn);
+			throw new MyException(MyErrorNo.notYourTurn);
 		}
 		Player player = battle.getTurnPlayer();
 		if (player.getUserId() != uid) {
-			return new MyResponse(MyErrorNo.notYourTurn);
+			throw new MyException(MyErrorNo.notYourTurn);
 		}
 
 		StringBuilder sb = new StringBuilder();
 		Card card = player.getHand().get(i);
 		if (!player.useEnergy(card.getCost())) {
 			// 能量不足
-			return new MyResponse(MyErrorNo.notEnoughEnergy);
+			throw new MyException(MyErrorNo.notEnoughEnergy);
 		}
 
 		if (card.getChooseone() != null) {
@@ -60,7 +60,7 @@ public class CardServiceImpl extends BaseService implements CardService {
 		if (card.getType() == BattleConstants.CARD_TYPE_SERVANT) {
 			if (player.getServantSize() >= BattleConstants.SERVANTS_NUM_MAX) {
 				// 随从数量限制
-				return new MyResponse(MyErrorNo.servantNumberLimit);
+				throw new MyException(MyErrorNo.servantNumberLimit);
 			}
 			// 随从牌，随从需要先占个位置（防止召唤类的战吼把位置占光）
 			Servant servant = new Servant(card);
@@ -69,8 +69,8 @@ public class CardServiceImpl extends BaseService implements CardService {
 
 		if (card.getBattlecryEffect() != null) {
 			// 战吼
-			MyComponent battlecry = componentFactory.getBattlecryComposite(
-					card.getBattlecryEffect(), battle, location, target);
+			MyComponent battlecry = componentFactory.getBattlecryComposite(card.getBattlecryEffect(), battle, location,
+					target);
 			battlecry.display();
 		}
 
@@ -88,14 +88,14 @@ public class CardServiceImpl extends BaseService implements CardService {
 	}
 
 	@Override
-	public MyResponse changeCardsInHand(long uid, int[] changeIndex, int turn) {
+	public MyResponse changeCardsInHand(long uid, int[] changeIndex, int turn) throws MyException {
 		Battle battle = Manager.getBattle(uid);
 		if (turn != battle.getTurn()) {
-			return new MyResponse(MyErrorNo.wrongParam);
+			throw new MyException(MyErrorNo.wrongParam);
 		}
 		Player player = battle.getPlayerByUid(uid);
 		if (!player.isCanChange()) {
-			return new MyResponse(MyErrorNo.cannotChange);
+			throw new MyException(MyErrorNo.cannotChange);
 		}
 		if (changeIndex == null || changeIndex.length <= 0) {
 			player.setCanChange(false);
@@ -103,7 +103,7 @@ public class CardServiceImpl extends BaseService implements CardService {
 		}
 		for (int i : changeIndex) {
 			if (i >= player.getHand().size()) {
-				return new MyResponse(MyErrorNo.wrongParam);
+				throw new MyException(MyErrorNo.wrongParam);
 			}
 		}
 		player.changeCardsInhand(changeIndex);
@@ -115,7 +115,7 @@ public class CardServiceImpl extends BaseService implements CardService {
 	}
 
 	@Override
-	public MyResponse chooseCard(long uid, int i) {
+	public MyResponse discoverOne(long uid, int i) throws MyException {
 		// TODO Auto-generated method stub
 		return null;
 	}

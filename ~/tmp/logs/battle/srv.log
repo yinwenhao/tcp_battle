@@ -1,0 +1,37 @@
+2016-06-16 17:17:53,329 ERROR{Main.java:18}-test 1 -> 2
+2016-06-16 17:17:53,467  INFO{AbstractApplicationContext.java:510}-Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@4d591d15: startup date [Thu Jun 16 17:17:53 CST 2016]; root of context hierarchy
+2016-06-16 17:17:53,509  INFO{XmlBeanDefinitionReader.java:317}-Loading XML bean definitions from class path resource [applicationContext.xml]
+2016-06-16 17:17:53,753  INFO{XmlBeanDefinitionReader.java:317}-Loading XML bean definitions from class path resource [spring-mybatis.xml]
+2016-06-16 17:17:53,798  INFO{XmlBeanDefinitionReader.java:317}-Loading XML bean definitions from class path resource [spring-serial.xml]
+2016-06-16 17:17:53,821  INFO{XmlBeanDefinitionReader.java:317}-Loading XML bean definitions from class path resource [spring-quartz.xml]
+2016-06-16 17:17:53,842  INFO{XmlBeanDefinitionReader.java:317}-Loading XML bean definitions from class path resource [spring-redis.xml]
+2016-06-16 17:17:54,035  INFO{PropertiesLoaderSupport.java:172}-Loading properties file from URL [file:/Users/yinwenhao/workspace/tcp_battle/conf/application.properties]
+2016-06-16 17:17:54,035  INFO{PropertiesLoaderSupport.java:172}-Loading properties file from URL [file:/Users/yinwenhao/workspace/tcp_battle/conf/application.local.properties]
+2016-06-16 17:17:54,036  WARN{PropertiesLoaderSupport.java:181}-Could not load properties from URL [file:/Users/yinwenhao/workspace/tcp_battle/conf/application.local.properties]: /Users/yinwenhao/workspace/tcp_battle/conf/application.local.properties (No such file or directory)
+2016-06-16 17:17:54,037  INFO{PropertiesLoaderSupport.java:172}-Loading properties file from URL [file:/Users/yinwenhao/workspace/tcp_battle/conf/application.server.properties]
+2016-06-16 17:17:54,037  WARN{PropertiesLoaderSupport.java:181}-Could not load properties from URL [file:/Users/yinwenhao/workspace/tcp_battle/conf/application.server.properties]: /Users/yinwenhao/workspace/tcp_battle/conf/application.server.properties (No such file or directory)
+2016-06-16 17:17:54,812  INFO{SCardCache.java:26}-init finish
+2016-06-16 17:17:54,819  INFO{SEffectCache.java:26}-init finish
+2016-06-16 17:17:54,825  INFO{SHeroCache.java:26}-init finish
+2016-06-16 17:17:54,830  INFO{SHeroSkillCache.java:27}-init finish
+2016-06-16 17:17:54,960  INFO{StdSchedulerFactory.java:1184}-Using default implementation for ThreadExecutor
+2016-06-16 17:17:54,985  INFO{SchedulerSignalerImpl.java:61}-Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2016-06-16 17:17:54,986  INFO{QuartzScheduler.java:240}-Quartz Scheduler v.2.2.1 created.
+2016-06-16 17:17:54,988  INFO{RAMJobStore.java:155}-RAMJobStore initialized.
+2016-06-16 17:17:54,990  INFO{QuartzScheduler.java:305}-Scheduler meta-data: Quartz Scheduler (v2.2.1) 'org.springframework.scheduling.quartz.SchedulerFactoryBean#0' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2016-06-16 17:17:54,991  INFO{StdSchedulerFactory.java:1339}-Quartz scheduler 'org.springframework.scheduling.quartz.SchedulerFactoryBean#0' initialized from an externally provided properties instance.
+2016-06-16 17:17:54,991  INFO{StdSchedulerFactory.java:1343}-Quartz scheduler version: 2.2.1
+2016-06-16 17:17:54,994  INFO{QuartzScheduler.java:2311}-JobFactory set to: org.springframework.scheduling.quartz.AdaptableJobFactory@1fb669c3
+2016-06-16 17:17:55,005  INFO{DefaultLifecycleProcessor.java:341}-Starting beans in phase 2147483647
+2016-06-16 17:17:55,006  INFO{SchedulerFactoryBean.java:647}-Starting Quartz Scheduler now
+2016-06-16 17:17:55,006  INFO{QuartzScheduler.java:575}-Scheduler org.springframework.scheduling.quartz.SchedulerFactoryBean#0_$_NON_CLUSTERED started.
+2016-06-16 17:17:55,240  INFO{Slf4JLogger.java:101}-[id: 0x1ecd2b80] REGISTERED
+2016-06-16 17:17:55,243  INFO{Slf4JLogger.java:101}-[id: 0x1ecd2b80] BIND(0.0.0.0/0.0.0.0:8080)
+2016-06-16 17:17:55,247  INFO{Slf4JLogger.java:101}-[id: 0x1ecd2b80, /0:0:0:0:0:0:0:0:8080] ACTIVE

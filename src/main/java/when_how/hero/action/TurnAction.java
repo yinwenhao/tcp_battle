@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import when_how.hero.common.MyException;
 import when_how.hero.common.action.BaseAction;
 import when_how.hero.common.json.MyResponse;
 import when_how.hero.service.TurnService;
@@ -30,7 +31,7 @@ public class TurnAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public void endTurn() {
+	public void endTurn() throws MyException {
 		MyResponse result = turnService.endTurn(getUid(), turn);
 		setResponse(result);
 	}

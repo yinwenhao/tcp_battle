@@ -1,5 +1,6 @@
 package when_how.hero.service;
 
+import when_how.hero.common.MyException;
 import when_how.hero.common.json.MyResponse;
 
 /**
@@ -14,8 +15,8 @@ public interface LoginService {
 	 * 
 	 * @param token
 	 * @return
-	 * @throws Exception
+	 * @throws MyException
 	 */
-	MyResponse login(String token) throws Exception;
+	MyResponse login(String token) throws MyException;
 
 }
