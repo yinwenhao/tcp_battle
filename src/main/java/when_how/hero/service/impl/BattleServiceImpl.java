@@ -6,7 +6,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import when_how.hero.battle.BattleConstants;
@@ -17,10 +16,9 @@ import when_how.hero.battle.data.Hero;
 import when_how.hero.battle.data.Player;
 import when_how.hero.battle.data.Servant;
 import when_how.hero.battle.result.BattleResultChecker;
+import when_how.hero.checker.MyChecker;
 import when_how.hero.common.MyException;
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.constants.MyErrorNo;
-import when_how.hero.constants.RedisKey;
 import when_how.hero.remotememory.RemoteMemory;
 import when_how.hero.service.BattleService;
 
@@ -51,27 +49,23 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 	@Override
 	public MyResponse heroAttack(long uid, int targetPlayerIndex, int target) throws MyException {
 		Battle battle = Manager.getBattle(uid);
-		if (!battle.isStart()) {
-			throw new MyException(MyErrorNo.notYourTurn);
-		}
-		Player player = battle.getTurnPlayer();
-		if (player.getUserId() != uid) {
-			throw new MyException(MyErrorNo.notYourTurn);
-		}
-		if (targetPlayerIndex >= battle.getPlayers().length) {
-			throw new MyException(MyErrorNo.wrongParam);
-		}
+
+		MyChecker.checkBattleNull(battle);
+		MyChecker.checkBattleStart(battle);
+		MyChecker.checkPlayerInTurn(battle, uid);
+		MyChecker.checkTargetPlayerIndexAndCannotBeSelf(uid, battle, targetPlayerIndex);
+
 		Player targetPlayer = battle.getPlayers()[targetPlayerIndex];
-		if (targetPlayer.getUserId() == uid) {
-			throw new MyException(MyErrorNo.wrongParam);
-		}
-		if (target >= targetPlayer.getServantSize() || target < -1) {
-			throw new MyException(MyErrorNo.wrongParam);
-		}
+
+		MyChecker.checkTargetIndex(targetPlayer, target);
+
+		Player player = battle.getTurnPlayer();
 		Hero hero = player.getHero();
-		if (!hero.isCanAttack()) {
-			throw new MyException(MyErrorNo.cannotAttack);
-		}
+
+		MyChecker.checkCanAttack(hero);
+
+		// 下面开始改变数据了，不能再抛异常了
+
 		hero.addAttNum();
 
 		StringBuilder sb = new StringBuilder();
@@ -106,38 +100,34 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 	}
 
 	@Override
-	public MyResponse servantAttack(long uid, int targetPlayerIndex, int i, int target) throws MyException {
+	public MyResponse servantAttack(long uid, int targetPlayerIndex, int servantIndex, int target) throws MyException {
 		Battle battle = Manager.getBattle(uid);
-		if (!battle.isStart()) {
-			throw new MyException(MyErrorNo.notYourTurn);
-		}
-		Player player = battle.getTurnPlayer();
-		if (player.getUserId() != uid) {
-			throw new MyException(MyErrorNo.notYourTurn);
-		}
-		if (i >= player.getServantSize()) {
-			throw new MyException(MyErrorNo.wrongParam);
-		}
-		if (targetPlayerIndex >= battle.getPlayers().length) {
-			throw new MyException(MyErrorNo.wrongParam);
-		}
+
+		MyChecker.checkBattleNull(battle);
+		MyChecker.checkBattleStart(battle);
+		MyChecker.checkPlayerInTurn(battle, uid);
+		MyChecker.checkTargetPlayerIndexAndCannotBeSelf(uid, battle, targetPlayerIndex);
+
 		Player targetPlayer = battle.getPlayers()[targetPlayerIndex];
-		if (targetPlayer.getUserId() == uid) {
-			throw new MyException(MyErrorNo.wrongParam);
-		}
-		if (target >= targetPlayer.getServantSize() || target < BattleConstants.TARGET_HERO) {
-			throw new MyException(MyErrorNo.wrongParam);
-		}
-		Servant servant = player.getServants().get(i);
-		if (!servant.isCanAttack()) {
-			throw new MyException(MyErrorNo.cannotAttack);
-		}
+
+		MyChecker.checkTargetIndex(targetPlayer, target);
+
+		Player player = battle.getTurnPlayer();
+
+		MyChecker.checkServantIndex(player, servantIndex);
+
+		Servant servant = player.getServants().get(servantIndex);
+
+		MyChecker.checkCanAttack(servant);
+
+		// 下面开始改变数据了，不能再抛异常了
+
 		servant.addAttNum();
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(battle.getTurnIndex());
 		sb.append(split);
-		sb.append(i);
+		sb.append(servantIndex);
 		sb.append(split);
 		sb.append(targetPlayerIndex);
 		sb.append(split);
@@ -150,7 +140,7 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 		List<Integer> attackResult = doAttack(servant, targetPlayer, target, sb);
 		if (attackResult.get(0) == 1) {
 			// 自己挂了
-			player.removeServant(i);
+			player.removeServant(servantIndex);
 		}
 		for (int j = 1; j < attackResult.size(); j++) {
 			if (attackResult.get(j) == -1) {

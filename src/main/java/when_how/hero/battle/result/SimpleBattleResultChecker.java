@@ -11,6 +11,7 @@ import when_how.hero.battle.data.Player;
 @Component("simpleBattleResultChecker")
 public class SimpleBattleResultChecker implements BattleResultChecker {
 
+	@Override
 	public void setBattleResultByLosers(Battle battle, List<Long> loserUserIds) {
 		for (Player player : battle.getPlayers()) {
 			for (long loser : loserUserIds) {
@@ -24,6 +25,7 @@ public class SimpleBattleResultChecker implements BattleResultChecker {
 		}
 	}
 
+	@Override
 	public void setBattleResultByWinners(Battle battle, List<Long> winnerUserIds) {
 		for (Player player : battle.getPlayers()) {
 			for (long winner : winnerUserIds) {
@@ -37,6 +39,7 @@ public class SimpleBattleResultChecker implements BattleResultChecker {
 		}
 	}
 
+	@Override
 	public void setBattleResultByLosersAndWinners(Battle battle, List<Long> loserUserIds, List<Long> winnerUserIds) {
 		for (Player player : battle.getPlayers()) {
 			for (long winner : winnerUserIds) {

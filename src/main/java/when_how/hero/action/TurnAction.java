@@ -24,24 +24,14 @@ public class TurnAction extends BaseAction {
 	@Autowired
 	private TurnService turnService;
 
-	private int turn;
-
 	/**
 	 * 结束回合
 	 * 
 	 * @return
 	 */
 	public void endTurn() throws MyException {
-		MyResponse result = turnService.endTurn(getUid(), turn);
+		MyResponse result = turnService.endTurn(getUid());
 		setResponse(result);
-	}
-
-	public int getTurn() {
-		return turn;
-	}
-
-	public void setTurn(int turn) {
-		this.turn = turn;
 	}
 
 }

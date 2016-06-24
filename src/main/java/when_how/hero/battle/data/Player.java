@@ -27,6 +27,16 @@ public class Player {
 	private boolean canChange;
 
 	/**
+	 * 用于发现或收藏的卡牌
+	 */
+	private int[] cardToChoose;
+
+	/**
+	 * 标示是用于发现、收藏或其他作用
+	 */
+	private int cardToChooseType;
+
+	/**
 	 * 0未定，1胜利，2失败
 	 */
 	private int winOrLose = BattleConstants.BATTLE_RESULT_DEFAULT;
@@ -43,6 +53,18 @@ public class Player {
 		this.setCanChange(true);
 	}
 
+	/**
+	 * 是否有卡牌需要选择
+	 * 
+	 * @return
+	 */
+	public boolean hasCardToChoose() {
+		if (cardToChoose == null || cardToChoose.length <= 0) {
+			return false;
+		}
+		return true;
+	}
+
 	public void changeCardsInhand(int[] changeIndex) {
 		for (int i : changeIndex) {
 			cards.add(hand.get(i));
@@ -51,7 +73,6 @@ public class Player {
 		for (int i : changeIndex) {
 			hand.set(i, cards.getOneCard());
 		}
-		this.setCanChange(false);
 	}
 
 	/**
@@ -59,7 +80,7 @@ public class Player {
 	 * 
 	 * @return
 	 */
-	public int getServantSize() {
+	public int getServantNum() {
 		if (servants == null) {
 			return 0;
 		}
@@ -177,6 +198,18 @@ public class Player {
 	}
 
 	/**
+	 * 将一张牌加入手牌
+	 * 
+	 * @param card
+	 * @return
+	 */
+	public void addCardToHand(int sid) {
+		if (hand.size() < BattleConstants.HAND_LIMIT) {
+			hand.add(new Card(sid));
+		}
+	}
+
+	/**
 	 * 根据cardIds初始化cards
 	 */
 	public void initCards() {
@@ -261,6 +294,22 @@ public class Player {
 
 	public void setWinOrLose(int winOrLose) {
 		this.winOrLose = winOrLose;
+	}
+
+	public int[] getCardToChoose() {
+		return cardToChoose;
+	}
+
+	public void setCardToChoose(int[] cardToChoose) {
+		this.cardToChoose = cardToChoose;
+	}
+
+	public int getCardToChooseType() {
+		return cardToChooseType;
+	}
+
+	public void setCardToChooseType(int cardToChooseType) {
+		this.cardToChooseType = cardToChooseType;
 	}
 
 }

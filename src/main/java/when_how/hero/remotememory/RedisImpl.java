@@ -18,14 +18,19 @@ public class RedisImpl implements RemoteMemory {
 	@Autowired
 	private StringRedisTemplate redisTemplate;
 
+	@Override
+	public void delete(String keyHead, Object key) {
+		redisTemplate.delete(keyHead + key);
+	}
+
+	@Override
 	public void putBattleResult(Battle battle) {
 		for (Player p : battle.getPlayers()) {
-			redisTemplate.opsForValue().set(
-					RedisKey.battleResult + p.getUserId(),
-					String.valueOf(p.getWinOrLose()));
+			redisTemplate.opsForValue().set(RedisKey.battleResult + p.getUserId(), String.valueOf(p.getWinOrLose()));
 		}
 	}
 
+	@Override
 	public String getString(String keyHead, Object key) {
 		String wholeKey = keyHead + key;
 		String result = null;

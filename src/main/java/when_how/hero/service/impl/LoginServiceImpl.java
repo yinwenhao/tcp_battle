@@ -6,8 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 
 import when_how.hero.battle.data.Battle;
 import when_how.hero.battle.init.BattleInit;
@@ -46,7 +44,8 @@ public class LoginServiceImpl implements LoginService {
 	private RemoteMemory redisRemoteMemory;
 
 	@Override
-//	@Transactional(rollbackFor = Exception.class, isolation = Isolation.DEFAULT)
+	// @Transactional(rollbackFor = Exception.class, isolation =
+	// Isolation.DEFAULT)
 	public MyResponse login(String token) throws MyException {
 		// try {
 		// testMapper.insertTest2(281475076710965L, "3bebe554fha24", 234354325,
@@ -86,6 +85,7 @@ public class LoginServiceImpl implements LoginService {
 			battleInitData = JsonAutoCloseOutput.MAPPER.readValue(battleInitDataString, BattleInitData.class);
 		} catch (IOException e) {
 			log.error("battleInitData json error.", e);
+			redisRemoteMemory.delete(RedisKey.battleInitData, uid);
 			throw new MyException(MyErrorNo.jsonError);
 		}
 		Battle battle = battleInit.init(battleInitData);

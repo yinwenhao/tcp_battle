@@ -14,9 +14,9 @@ import when_how.hero.battle.data.Player;
 import when_how.hero.battle.data.Servant;
 import when_how.hero.battle.effect.ComponentFactory;
 import when_how.hero.battle.effect.MyComponent;
+import when_how.hero.checker.MyChecker;
 import when_how.hero.common.MyException;
 import when_how.hero.common.json.MyResponse;
-import when_how.hero.constants.MyErrorNo;
 import when_how.hero.service.CardService;
 
 /**
@@ -36,48 +36,66 @@ public class CardServiceImpl extends BaseService implements CardService {
 	public MyResponse useCard(long uid, int targetPlayerIndex, int i, int location, int target, int chooseOne)
 			throws MyException {
 		Battle battle = Manager.getBattle(uid);
-		if (!battle.isStart()) {
-			throw new MyException(MyErrorNo.notYourTurn);
-		}
+
+		MyChecker.checkBattleNull(battle);
+		MyChecker.checkBattleStart(battle);
+		MyChecker.checkPlayerInTurn(battle, uid);
+
 		Player player = battle.getTurnPlayer();
-		if (player.getUserId() != uid) {
-			throw new MyException(MyErrorNo.notYourTurn);
-		}
+
+		MyChecker.checkCardIndex(player, i);
+
+		Card card = player.getHand().get(i);
+
+		MyChecker.checkEnergy(player, card.getCost());
 
 		StringBuilder sb = new StringBuilder();
-		Card card = player.getHand().get(i);
-		if (!player.useEnergy(card.getCost())) {
-			// 能量不足
-			throw new MyException(MyErrorNo.notEnoughEnergy);
-		}
 
 		if (card.getChooseone() != null) {
 			// 抉择
 			card = new Card(card.getChooseone()[chooseOne]);
 		}
 
+		// 卡牌效果检查
+		if (card.getType() == BattleConstants.CARD_TYPE_SERVANT) {
+			MyChecker.checkServantNum(player);
+		}
+
+		MyComponent battlecry = null;
+		if (card.getBattlecryEffect() != null) {
+			// 战吼
+			battlecry = componentFactory.getBattlecryComposite(card.getBattlecryEffect(), battle, location, target,
+					targetPlayerIndex);
+			battlecry.checkParam();
+		}
+
+		MyComponent spell = null;
+		if (card.getType() == BattleConstants.CARD_TYPE_SPELL) {
+			// 法术牌效果
+			spell = componentFactory.getSpellComposite(card.getBattlecryEffect(), battle, target, targetPlayerIndex);
+			spell.checkParam();
+		}
+
+		// 下面就不能抛错了，要改动数据了
+		player.useEnergy(card.getCost());
+
 		// 卡牌效果
 		if (card.getType() == BattleConstants.CARD_TYPE_SERVANT) {
-			if (player.getServantSize() >= BattleConstants.SERVANTS_NUM_MAX) {
-				// 随从数量限制
-				throw new MyException(MyErrorNo.servantNumberLimit);
-			}
 			// 随从牌，随从需要先占个位置（防止召唤类的战吼把位置占光）
 			Servant servant = new Servant(card);
 			player.addServant(location, servant);
 		}
 
-		if (card.getBattlecryEffect() != null) {
+		if (battlecry != null) {
 			// 战吼
-			MyComponent battlecry = componentFactory.getBattlecryComposite(card.getBattlecryEffect(), battle, location,
-					target);
 			battlecry.display();
 		}
 
-		if (card.getType() == BattleConstants.CARD_TYPE_SPELL) {
-			// TODO 法术牌
-
-		} else if (card.getType() == BattleConstants.CARD_TYPE_EQUIP) {
+		if (spell != null) {
+			// 法术牌效果
+			spell.display();
+		}
+		if (card.getType() == BattleConstants.CARD_TYPE_EQUIP) {
 			// 装备牌
 			Equip equip = new Equip(card);
 			player.getHero().setEquip(equip);
@@ -88,25 +106,23 @@ public class CardServiceImpl extends BaseService implements CardService {
 	}
 
 	@Override
-	public MyResponse changeCardsInHand(long uid, int[] changeIndex, int turn) throws MyException {
+	public MyResponse changeCardsInHand(long uid, int[] changeIndex) throws MyException {
 		Battle battle = Manager.getBattle(uid);
-		if (turn != battle.getTurn()) {
-			throw new MyException(MyErrorNo.wrongParam);
-		}
+
+		MyChecker.checkBattleNull(battle);
+
 		Player player = battle.getPlayerByUid(uid);
-		if (!player.isCanChange()) {
-			throw new MyException(MyErrorNo.cannotChange);
-		}
-		if (changeIndex == null || changeIndex.length <= 0) {
-			player.setCanChange(false);
-			return new MyResponse(battle, uid);
-		}
-		for (int i : changeIndex) {
-			if (i >= player.getHand().size()) {
-				throw new MyException(MyErrorNo.wrongParam);
+
+		MyChecker.checkCanChangeHandCards(player);
+
+		if (changeIndex != null && changeIndex.length > 0) {
+			for (int i : changeIndex) {
+				MyChecker.checkCardIndex(player, i);
 			}
+			player.changeCardsInhand(changeIndex);
 		}
-		player.changeCardsInhand(changeIndex);
+
+		player.setCanChange(false);
 		battle.start();
 
 		StringBuilder sb = new StringBuilder();
@@ -115,9 +131,39 @@ public class CardServiceImpl extends BaseService implements CardService {
 	}
 
 	@Override
-	public MyResponse discoverOne(long uid, int i) throws MyException {
-		// TODO Auto-generated method stub
-		return null;
+	public MyResponse discoverOne(long uid, int chooseIndex) throws MyException {
+		Battle battle = Manager.getBattle(uid);
+
+		MyChecker.checkBattleNull(battle);
+
+		Player player = battle.getPlayerByUid(uid);
+
+		MyChecker.checkDiscover(player);
+		MyChecker.checkChooseIndex(player, chooseIndex);
+
+		player.addCardToHand(player.getCardToChoose()[chooseIndex]);
+
+		StringBuilder sb = new StringBuilder();
+		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
+		return new MyResponse(battle, uid, sb.toString());
+	}
+
+	@Override
+	public MyResponse collectOne(long uid, int chooseIndex) throws MyException {
+		Battle battle = Manager.getBattle(uid);
+
+		MyChecker.checkBattleNull(battle);
+
+		Player player = battle.getPlayerByUid(uid);
+
+		MyChecker.checkCollect(player);
+		MyChecker.checkChooseIndex(player, chooseIndex);
+
+		player.getCards().addAndShuffle(new Card(player.getCardToChoose()[chooseIndex]));
+
+		StringBuilder sb = new StringBuilder();
+		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
+		return new MyResponse(battle, uid, sb.toString());
 	}
 
 }

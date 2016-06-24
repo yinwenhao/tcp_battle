@@ -3,36 +3,30 @@ package when_how.hero.battle.effect.impl;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import when_how.hero.battle.data.Entity;
 import when_how.hero.battle.data.Player;
 import when_how.hero.battle.effect.MyComponent;
 import when_how.hero.common.MyException;
 
-@Component("damageComponent")
+@Component("damageAoeComponent")
 @Scope("prototype")
-public class DamageComponent implements MyComponent {
+public class DamageAoeComponent implements MyComponent {
 
 	private Player targetPlayer;
 
 	private int damage;
 
-	private int target;
-
-	public DamageComponent(Player targetPlayer, int damage, int target) {
+	public DamageAoeComponent(Player targetPlayer, int damage) {
 		this.targetPlayer = targetPlayer;
 		this.damage = damage;
-		this.target = target;
 	}
 
 	@Override
 	public void display() throws MyException {
-		Entity targetEntity;
-		if (target == -1) {
-			targetEntity = targetPlayer.getHero();
-		} else {
-			targetEntity = targetPlayer.getServants().get(target);
+		for (int i = targetPlayer.getServantNum() - 1; i >= 0; i--) {
+			if (targetPlayer.getServants().get(i).decreaseHp(damage)) {
+				targetPlayer.removeServant(i);
+			}
 		}
-		targetEntity.decreaseHp(damage);
 	}
 
 	@Override

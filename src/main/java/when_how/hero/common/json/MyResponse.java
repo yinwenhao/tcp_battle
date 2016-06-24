@@ -34,9 +34,7 @@ public class MyResponse {
 	 * @param uid
 	 */
 	public MyResponse(Battle battle, long uid) {
-		this.setState(MyErrorNo.success);
-		OwnBattleData obd = new OwnBattleData(battle, uid, null);
-		this.setData(obd);
+		this(battle, uid, null);
 	}
 	
 	/**

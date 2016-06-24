@@ -39,12 +39,12 @@ public interface BattleService {
 	 * @param uid
 	 * @param targetPlayerIndex
 	 *            目标玩家的index
-	 * @param i
+	 * @param servantIndex
 	 *            随从的序号
 	 * @param target
 	 *            目标序号，-1表示英雄
 	 * @return
 	 */
-	MyResponse servantAttack(long uid, int targetPlayerIndex, int i, int target) throws MyException;
+	MyResponse servantAttack(long uid, int targetPlayerIndex, int servantIndex, int target) throws MyException;
 
 }

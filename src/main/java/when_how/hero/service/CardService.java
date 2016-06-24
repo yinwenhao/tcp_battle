@@ -30,24 +30,34 @@ public interface CardService {
 			throws MyException;
 
 	/**
-	 * 换牌
+	 * 换牌，用于游戏开始时，更换手牌
 	 * 
 	 * @param uid
 	 * @param changeIndex
 	 *            需要交换的手牌index列表
-	 * @param turn
 	 * @return
 	 */
-	MyResponse changeCardsInHand(long uid, int[] changeIndex, int turn) throws MyException;
+	MyResponse changeCardsInHand(long uid, int[] changeIndex) throws MyException;
 
 	/**
-	 * 选择一张牌，用于“发现”
+	 * "发现"一张牌
 	 * 
 	 * @param uid
-	 * @param i
+	 * @param chooseIndex
 	 *            选择的牌的序号
 	 * @return
 	 */
-	MyResponse discoverOne(long uid, int i) throws MyException;
+	MyResponse discoverOne(long uid, int chooseIndex) throws MyException;
+
+	/**
+	 * "收藏"一张牌
+	 * 
+	 * @param uid
+	 * @param chooseIndex
+	 *            选择的牌的序号
+	 * @return
+	 * @throws MyException
+	 */
+	MyResponse collectOne(long uid, int chooseIndex) throws MyException;
 
 }

@@ -12,5 +12,7 @@ public interface RemoteMemory {
 	public void putBattleResult(Battle battle);
 
 	public String getString(String keyHead, Object key);
+	
+	public void delete(String keyHead, Object key);
 
 }

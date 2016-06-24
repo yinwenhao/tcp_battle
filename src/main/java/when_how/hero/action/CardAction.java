@@ -36,8 +36,6 @@ public class CardAction extends BaseAction {
 
 	private String changeIndexString;
 
-	private int turn;
-
 	/**
 	 * 出牌
 	 * 
@@ -59,7 +57,7 @@ public class CardAction extends BaseAction {
 		for (int i = 0; i < ss.length; i++) {
 			changeIndex[i] = Integer.valueOf(ss[i]);
 		}
-		MyResponse result = cardService.changeCardsInHand(getUid(), changeIndex, turn);
+		MyResponse result = cardService.changeCardsInHand(getUid(), changeIndex);
 		setResponse(result);
 	}
 
@@ -101,14 +99,6 @@ public class CardAction extends BaseAction {
 
 	public void setTargetIndex(int targetIndex) {
 		this.targetIndex = targetIndex;
-	}
-
-	public int getTurn() {
-		return turn;
-	}
-
-	public void setTurn(int turn) {
-		this.turn = turn;
 	}
 
 	public String getChangeIndexString() {

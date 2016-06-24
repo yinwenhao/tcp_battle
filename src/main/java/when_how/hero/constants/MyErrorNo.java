@@ -33,5 +33,11 @@ public class MyErrorNo {
 	public static final int wrongBattle = 100;
 	/** json相关错误 */
 	public static final int jsonError = 110;
+	/** 没有战斗 */
+	public static final int noBattle = 120;
+	/** 没有“发现” */
+	public static final int noDiscover = 130;
+	/** 没有“收藏” */
+	public static final int noCollect = 140;
 
 }

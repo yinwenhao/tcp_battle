@@ -14,7 +14,7 @@ public class ComponentFactoryImpl implements ComponentFactory {
 
 	@Override
 	public MyComponent getBattlecryComposite(List<SEffect> effects,
-			Battle battle, int location, int target) {
+			Battle battle, int location, int target, int targetPlayerIndex) {
 		Composite result = new BattlecryCompositeImpl();
 		for (SEffect se : effects) {
 			MyComponent c = createComponent(se, battle, location, target);
@@ -33,8 +33,14 @@ public class ComponentFactoryImpl implements ComponentFactory {
 							: battle.getNextTurnPlayer(), se.getParam()[2],
 					se.getParam()[1],
 					location == BattleConstants.TARGET_NONE ? battle
-							.getTurnPlayer().getServantSize() : location + 1);
+							.getTurnPlayer().getServantNum() : location + 1);
 		}
+		return null;
+	}
+
+	@Override
+	public MyComponent getSpellComposite(List<SEffect> effects, Battle battle, int target, int targetPlayerIndex) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

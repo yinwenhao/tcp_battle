@@ -30,8 +30,8 @@ public class OwnPlayer {
 		this.energyMax = player.getEnergyMax();
 		this.cardsNum = player.getCards().size();
 		this.cardInHandNum = player.getHand().size();
-		if (player.getServantSize() > 0) {
-			this.servants = new OwnServant[player.getServantSize()];
+		if (player.getServantNum() > 0) {
+			this.servants = new OwnServant[player.getServantNum()];
 			for (int i = 0; i < this.servants.length; i++) {
 				this.servants[i] = new OwnServant(player.getServants().get(i));
 			}

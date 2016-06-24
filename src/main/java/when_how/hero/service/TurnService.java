@@ -16,7 +16,7 @@ public interface TurnService {
 	 * @param uid
 	 * @return
 	 */
-	MyResponse endTurn(long uid, int turn) throws MyException;
+	MyResponse endTurn(long uid) throws MyException;
 
 	/**
 	 * 认输

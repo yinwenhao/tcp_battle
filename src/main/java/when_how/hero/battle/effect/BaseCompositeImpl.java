@@ -26,4 +26,11 @@ public class BaseCompositeImpl implements Composite {
 		return components.remove(index);
 	}
 
+	@Override
+	public void checkParam() throws MyException {
+		for (MyComponent c : components) {
+			c.checkParam();
+		}
+	}
+
 }
