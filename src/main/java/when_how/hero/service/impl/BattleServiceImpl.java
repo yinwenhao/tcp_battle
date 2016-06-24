@@ -48,7 +48,7 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 
 	@Override
 	public MyResponse heroAttack(long uid, int targetPlayerIndex, int target) throws MyException {
-		Battle battle = Manager.getBattle(uid);
+		Battle battle = Manager.getBattleCopy(uid);
 
 		MyChecker.checkBattleNull(battle);
 		MyChecker.checkBattleStart(battle);
@@ -95,13 +95,15 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 			// 战斗结束，战斗结果放redis
 			redisRemoteMemory.putBattleResult(battle);
 		}
+		
+		Manager.commit(uid, battle);
 		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
 		return new MyResponse(battle, uid, sb.toString());
 	}
 
 	@Override
 	public MyResponse servantAttack(long uid, int targetPlayerIndex, int servantIndex, int target) throws MyException {
-		Battle battle = Manager.getBattle(uid);
+		Battle battle = Manager.getBattleCopy(uid);
 
 		MyChecker.checkBattleNull(battle);
 		MyChecker.checkBattleStart(battle);
@@ -154,6 +156,8 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 			// 战斗结束，战斗结果放redis
 			redisRemoteMemory.putBattleResult(battle);
 		}
+		
+		Manager.commit(uid, battle);
 		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
 		return new MyResponse(battle, uid, sb.toString());
 	}

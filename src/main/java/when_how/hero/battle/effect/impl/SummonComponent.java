@@ -1,16 +1,11 @@
 package when_how.hero.battle.effect.impl;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import when_how.hero.battle.data.Card;
 import when_how.hero.battle.data.Player;
 import when_how.hero.battle.data.Servant;
 import when_how.hero.battle.effect.MyComponent;
 import when_how.hero.common.MyException;
 
-@Component("summonComponent")
-@Scope("prototype")
 public class SummonComponent implements MyComponent {
 
 	private Player player;

@@ -32,7 +32,7 @@ public class BattleInitImpl implements BattleInit {
 			// 保证一个battle只初始化一次
 			if (Manager.inBattle(uids)) {
 				// 已经初始化过了
-				return Manager.getBattle(uids[0]);
+				return Manager.getBattleCopy(uids[0]);
 			}
 
 			Player[] players = new Player[uids.length];

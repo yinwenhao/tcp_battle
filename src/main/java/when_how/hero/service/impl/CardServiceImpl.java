@@ -35,7 +35,7 @@ public class CardServiceImpl extends BaseService implements CardService {
 	@Override
 	public MyResponse useCard(long uid, int targetPlayerIndex, int i, int location, int target, int chooseOne)
 			throws MyException {
-		Battle battle = Manager.getBattle(uid);
+		Battle battle = Manager.getBattleCopy(uid);
 
 		MyChecker.checkBattleNull(battle);
 		MyChecker.checkBattleStart(battle);
@@ -101,13 +101,14 @@ public class CardServiceImpl extends BaseService implements CardService {
 			player.getHero().setEquip(equip);
 		}
 
+		Manager.commit(uid, battle);
 		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
 		return new MyResponse(battle, uid, sb.toString());
 	}
 
 	@Override
 	public MyResponse changeCardsInHand(long uid, int[] changeIndex) throws MyException {
-		Battle battle = Manager.getBattle(uid);
+		Battle battle = Manager.getBattleCopy(uid);
 
 		MyChecker.checkBattleNull(battle);
 
@@ -119,20 +120,23 @@ public class CardServiceImpl extends BaseService implements CardService {
 			for (int i : changeIndex) {
 				MyChecker.checkCardIndex(player, i);
 			}
+			// 下面就不能抛错了，要改动数据了
 			player.changeCardsInhand(changeIndex);
 		}
 
+		// 下面就不能抛错了，要改动数据了
 		player.setCanChange(false);
 		battle.start();
 
 		StringBuilder sb = new StringBuilder();
+		Manager.commit(uid, battle);
 		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
 		return new MyResponse(battle, uid, sb.toString());
 	}
 
 	@Override
 	public MyResponse discoverOne(long uid, int chooseIndex) throws MyException {
-		Battle battle = Manager.getBattle(uid);
+		Battle battle = Manager.getBattleCopy(uid);
 
 		MyChecker.checkBattleNull(battle);
 
@@ -141,16 +145,18 @@ public class CardServiceImpl extends BaseService implements CardService {
 		MyChecker.checkDiscover(player);
 		MyChecker.checkChooseIndex(player, chooseIndex);
 
+		// 下面就不能抛错了，要改动数据了
 		player.addCardToHand(player.getCardToChoose()[chooseIndex]);
 
 		StringBuilder sb = new StringBuilder();
+		Manager.commit(uid, battle);
 		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
 		return new MyResponse(battle, uid, sb.toString());
 	}
 
 	@Override
 	public MyResponse collectOne(long uid, int chooseIndex) throws MyException {
-		Battle battle = Manager.getBattle(uid);
+		Battle battle = Manager.getBattleCopy(uid);
 
 		MyChecker.checkBattleNull(battle);
 
@@ -159,9 +165,11 @@ public class CardServiceImpl extends BaseService implements CardService {
 		MyChecker.checkCollect(player);
 		MyChecker.checkChooseIndex(player, chooseIndex);
 
+		// 下面就不能抛错了，要改动数据了
 		player.getCards().addAndShuffle(new Card(player.getCardToChoose()[chooseIndex]));
 
 		StringBuilder sb = new StringBuilder();
+		Manager.commit(uid, battle);
 		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
 		return new MyResponse(battle, uid, sb.toString());
 	}

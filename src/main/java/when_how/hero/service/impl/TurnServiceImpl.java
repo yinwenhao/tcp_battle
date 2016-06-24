@@ -26,7 +26,7 @@ public class TurnServiceImpl extends BaseService implements TurnService {
 
 	@Override
 	public MyResponse endTurn(long uid) throws MyException {
-		Battle battle = Manager.getBattle(uid);
+		Battle battle = Manager.getBattleCopy(uid);
 		
 		MyChecker.checkBattleNull(battle);
 		MyChecker.checkPlayerInTurn(battle, uid);
@@ -38,14 +38,15 @@ public class TurnServiceImpl extends BaseService implements TurnService {
 				// 战斗结束，战斗结果放redis
 				redisRemoteMemory.putBattleResult(battle);
 			}
-			notifyAllPlayersExceptUid(battle, sb.toString(), uid);
 		}
+		Manager.commit(uid, battle);
+		notifyAllPlayersExceptUid(battle, sb.toString(), uid);
 		return new MyResponse(battle, uid, sb.toString());
 	}
 
 	@Override
 	public MyResponse concede(long uid) throws MyException {
-		Battle battle = Manager.getBattle(uid);
+		Battle battle = Manager.getBattleCopy(uid);
 		
 		MyChecker.checkBattleNull(battle);
 		
@@ -53,6 +54,8 @@ public class TurnServiceImpl extends BaseService implements TurnService {
 		losers.add(uid);
 		simpleBattleResultChecker.setBattleResultByLosers(battle, losers);
 		redisRemoteMemory.putBattleResult(battle);
+		
+		Manager.commit(uid, battle);
 		notifyAllPlayersExceptUid(battle, uid);
 		return new MyResponse(battle, uid);
 	}

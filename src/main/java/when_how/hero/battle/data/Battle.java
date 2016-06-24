@@ -2,6 +2,8 @@ package when_how.hero.battle.data;
 
 import java.util.Random;
 
+import org.springframework.beans.BeanUtils;
+
 import when_how.hero.battle.BattleConstants;
 
 public class Battle {
@@ -13,6 +15,9 @@ public class Battle {
 	private Random ran = new Random();
 
 	private boolean start;
+
+	public Battle() {
+	}
 
 	public Battle(Player[] players) {
 		this.setPlayers(players);
@@ -26,8 +31,7 @@ public class Battle {
 	public void init() {
 		turn = ran.nextInt(players.length);
 		getPlayer(turn).getCardsToHand(BattleConstants.FIRST_SIDE_HAND_LIMIT);
-		getPlayer(turn + 1).getCardsToHand(
-				BattleConstants.SECOND_SIDE_HAND_LIMIT);
+		getPlayer(turn + 1).getCardsToHand(BattleConstants.SECOND_SIDE_HAND_LIMIT);
 	}
 
 	public void start() {
@@ -86,9 +90,9 @@ public class Battle {
 	public Player getTurnPlayer() {
 		return getPlayer(turn);
 	}
-	
+
 	public Player getNextTurnPlayer() {
-		return getPlayer(turn+1);
+		return getPlayer(turn + 1);
 	}
 
 	private Player getPlayer(int t) {
@@ -118,6 +122,10 @@ public class Battle {
 
 	public void setStart(boolean start) {
 		this.start = start;
+	}
+	
+	synchronized public void commit(Battle battle) {
+		BeanUtils.copyProperties(battle, this);
 	}
 
 }

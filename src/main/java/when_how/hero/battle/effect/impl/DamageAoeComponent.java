@@ -1,14 +1,9 @@
 package when_how.hero.battle.effect.impl;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import when_how.hero.battle.data.Player;
 import when_how.hero.battle.effect.MyComponent;
 import when_how.hero.common.MyException;
 
-@Component("damageAoeComponent")
-@Scope("prototype")
 public class DamageAoeComponent implements MyComponent {
 
 	private Player targetPlayer;

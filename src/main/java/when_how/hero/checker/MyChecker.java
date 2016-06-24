@@ -87,7 +87,7 @@ public class MyChecker {
 		if (i < 0) {
 			throw new MyException(MyErrorNo.wrongParam);
 		}
-		if (player.getHand().size() >= i) {
+		if (i >= player.getHand().size()) {
 			throw new MyException(MyErrorNo.wrongParam);
 		}
 	}

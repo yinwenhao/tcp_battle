@@ -3,6 +3,8 @@ package when_how.hero.battle;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
+
 import io.netty.channel.ChannelHandlerContext;
 import when_how.hero.battle.data.Battle;
 import when_how.hero.common.MyException;
@@ -91,8 +93,25 @@ public class Manager {
 		}
 	}
 
+	public static Battle removeBattle(long uid) {
+		return battles.remove(uid);
+	}
+
 	public static Battle getBattle(long uid) {
 		return battles.get(uid);
+	}
+
+	public static Battle getBattleCopy(long uid) {
+		Battle copy = new Battle();
+		BeanUtils.copyProperties(battles.get(uid), copy);
+		return copy;
+	}
+
+	public static void commit(long uid, Battle battle) {
+		Battle b = battles.get(uid);
+		if (b != null) {
+			b.commit(battle);
+		}
 	}
 
 }

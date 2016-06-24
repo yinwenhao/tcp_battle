@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import when_how.hero.battle.Manager;
 import when_how.hero.battle.data.Battle;
 import when_how.hero.battle.data.Player;
 import when_how.hero.constants.RedisKey;
@@ -27,6 +28,7 @@ public class RedisImpl implements RemoteMemory {
 	public void putBattleResult(Battle battle) {
 		for (Player p : battle.getPlayers()) {
 			redisTemplate.opsForValue().set(RedisKey.battleResult + p.getUserId(), String.valueOf(p.getWinOrLose()));
+			Manager.removeBattle(p.getUserId());
 		}
 	}
 
