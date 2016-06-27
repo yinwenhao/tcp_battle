@@ -126,7 +126,13 @@ public class Player {
 		if (servants.size() >= BattleConstants.SERVANTS_NUM_MAX) {
 			return false;
 		}
-		servants.add(location, s);
+		if (location < 0 && location != BattleConstants.LOCATION_DEFAULT) {
+			throw new RuntimeException("addServant location is negative and not BattleConstants.LOCATION_DEFAULT");
+		} else if (location == BattleConstants.LOCATION_DEFAULT) {
+			servants.add(s);
+		} else {
+			servants.add(location, s);
+		}
 		return true;
 	}
 
@@ -203,10 +209,20 @@ public class Player {
 	 * @param card
 	 * @return
 	 */
-	public void addCardToHand(int sid) {
+	public void addCardToHand(Card card) {
 		if (hand.size() < BattleConstants.HAND_LIMIT) {
-			hand.add(new Card(sid));
+			hand.add(card);
 		}
+	}
+
+	/**
+	 * 将一张牌加入手牌
+	 * 
+	 * @param card
+	 * @return
+	 */
+	public void addCardToHand(int sid) {
+		addCardToHand(new Card(sid));
 	}
 
 	/**

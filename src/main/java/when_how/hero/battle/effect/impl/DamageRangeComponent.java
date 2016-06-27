@@ -3,6 +3,7 @@ package when_how.hero.battle.effect.impl;
 import when_how.hero.battle.data.Player;
 import when_how.hero.battle.data.Servant;
 import when_how.hero.battle.effect.MyComponent;
+import when_how.hero.checker.MyChecker;
 import when_how.hero.common.MyException;
 import when_how.hero.constants.MyErrorNo;
 
@@ -13,7 +14,7 @@ public class DamageRangeComponent implements MyComponent {
 	private int damage;
 
 	private int target;
-	
+
 	private int damageArround;
 
 	public DamageRangeComponent(Player targetPlayer, int damage, int damageArround, int target) {
@@ -54,9 +55,7 @@ public class DamageRangeComponent implements MyComponent {
 
 	@Override
 	public void checkParam() throws MyException {
-		if (target <= 0) {
-			throw new MyException(MyErrorNo.wrongParam);
-		}
+		MyChecker.checkTargetPositive(target);
 	}
 
 }

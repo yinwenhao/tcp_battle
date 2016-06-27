@@ -97,16 +97,24 @@ public class Manager {
 		return battles.remove(uid);
 	}
 
-	public static Battle getBattle(long uid) {
-		return battles.get(uid);
-	}
-
+	/**
+	 * 创建一个battle副本
+	 * 
+	 * @param uid
+	 * @return
+	 */
 	public static Battle getBattleCopy(long uid) {
 		Battle copy = new Battle();
 		BeanUtils.copyProperties(battles.get(uid), copy);
 		return copy;
 	}
 
+	/**
+	 * 提交对battle的更新
+	 * 
+	 * @param uid
+	 * @param battle
+	 */
 	public static void commit(long uid, Battle battle) {
 		Battle b = battles.get(uid);
 		if (b != null) {

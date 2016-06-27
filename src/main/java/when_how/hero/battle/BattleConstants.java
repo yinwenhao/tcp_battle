@@ -3,6 +3,11 @@ package when_how.hero.battle;
 public class BattleConstants {
 
 	/**
+	 * 随从位置——默认最右边
+	 */
+	public static final int LOCATION_DEFAULT = -1;
+
+	/**
 	 * 选择类型——发现
 	 */
 	public static final int CHOOSE_TYPE_DISCOVER = 1;
@@ -11,11 +16,6 @@ public class BattleConstants {
 	 * 选择类型——收藏
 	 */
 	public static final int CHOOSE_TYPE_COLLECT = 2;
-
-	/**
-	 * 指定目标——不需要指定
-	 */
-	public static final int TARGET_NONE = -99;
 
 	/**
 	 * 指定目标——英雄

@@ -64,8 +64,6 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 
 		MyChecker.checkCanAttack(hero);
 
-		// 下面开始改变数据了，不能再抛异常了
-
 		hero.addAttNum();
 
 		StringBuilder sb = new StringBuilder();
@@ -121,8 +119,6 @@ public class BattleServiceImpl extends BaseService implements BattleService {
 		Servant servant = player.getServants().get(servantIndex);
 
 		MyChecker.checkCanAttack(servant);
-
-		// 下面开始改变数据了，不能再抛异常了
 
 		servant.addAttNum();
 

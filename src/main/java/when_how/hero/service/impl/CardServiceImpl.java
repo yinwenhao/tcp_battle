@@ -40,8 +40,10 @@ public class CardServiceImpl extends BaseService implements CardService {
 		MyChecker.checkBattleNull(battle);
 		MyChecker.checkBattleStart(battle);
 		MyChecker.checkPlayerInTurn(battle, uid);
+		MyChecker.checkTargetPlayerIndex(battle, targetPlayerIndex);
 
 		Player player = battle.getTurnPlayer();
+		Player targetPlayer = battle.getPlayers()[targetPlayerIndex];
 
 		MyChecker.checkCardIndex(player, i);
 
@@ -65,18 +67,17 @@ public class CardServiceImpl extends BaseService implements CardService {
 		if (card.getBattlecryEffect() != null) {
 			// 战吼
 			battlecry = componentFactory.getBattlecryComposite(card.getBattlecryEffect(), battle, location, target,
-					targetPlayerIndex);
+					targetPlayer);
 			battlecry.checkParam();
 		}
 
 		MyComponent spell = null;
 		if (card.getType() == BattleConstants.CARD_TYPE_SPELL) {
 			// 法术牌效果
-			spell = componentFactory.getSpellComposite(card.getBattlecryEffect(), battle, target, targetPlayerIndex);
+			spell = componentFactory.getSpellComposite(card.getBattlecryEffect(), battle, target, targetPlayer);
 			spell.checkParam();
 		}
 
-		// 下面就不能抛错了，要改动数据了
 		player.useEnergy(card.getCost());
 
 		// 卡牌效果
@@ -120,11 +121,9 @@ public class CardServiceImpl extends BaseService implements CardService {
 			for (int i : changeIndex) {
 				MyChecker.checkCardIndex(player, i);
 			}
-			// 下面就不能抛错了，要改动数据了
 			player.changeCardsInhand(changeIndex);
 		}
 
-		// 下面就不能抛错了，要改动数据了
 		player.setCanChange(false);
 		battle.start();
 
@@ -145,7 +144,6 @@ public class CardServiceImpl extends BaseService implements CardService {
 		MyChecker.checkDiscover(player);
 		MyChecker.checkChooseIndex(player, chooseIndex);
 
-		// 下面就不能抛错了，要改动数据了
 		player.addCardToHand(player.getCardToChoose()[chooseIndex]);
 
 		StringBuilder sb = new StringBuilder();
@@ -165,7 +163,6 @@ public class CardServiceImpl extends BaseService implements CardService {
 		MyChecker.checkCollect(player);
 		MyChecker.checkChooseIndex(player, chooseIndex);
 
-		// 下面就不能抛错了，要改动数据了
 		player.getCards().addAndShuffle(new Card(player.getCardToChoose()[chooseIndex]));
 
 		StringBuilder sb = new StringBuilder();

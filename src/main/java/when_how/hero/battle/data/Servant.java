@@ -2,6 +2,8 @@ package when_how.hero.battle.data;
 
 import java.util.List;
 
+import when_how.hero.sdata.cache.SCardCache;
+import when_how.hero.sdata.domain.SCard;
 import when_how.hero.sdata.domain.SEffect;
 
 public class Servant extends Entity {
@@ -40,6 +42,22 @@ public class Servant extends Entity {
 
 		// 召唤失调
 		setSummoningSickness(true);
+	}
+
+	/**
+	 * 被沉默
+	 */
+	public void beSilence() {
+		SCard s = SCardCache.CACHE.get(getSid());
+		setEffects(null);
+		setAureoleEffect(null);
+		setDeathrattleEffect(null);
+		setInspireEffect(null);
+		setAtt(s.getAtt());
+		setHpMax(s.getHp());
+		if (getHp() > getHpMax()) {
+			setHp(getHpMax());
+		}
 	}
 
 	@Override

@@ -10,6 +10,18 @@ import when_how.hero.constants.MyErrorNo;
 public class MyChecker {
 
 	/**
+	 * 检查target为正整数
+	 * 
+	 * @param target
+	 * @throws MyException
+	 */
+	public static void checkTargetPositive(int target) throws MyException {
+		if (target <= 0) {
+			throw new MyException(MyErrorNo.wrongParam);
+		}
+	}
+
+	/**
 	 * 检查Battle是否为空
 	 * 
 	 * @param battle
@@ -54,7 +66,7 @@ public class MyChecker {
 	 * @throws MyException
 	 */
 	public static void checkTargetPlayerIndex(Battle battle, int targetPlayerIndex) throws MyException {
-		if (targetPlayerIndex >= battle.getPlayers().length) {
+		if (targetPlayerIndex >= battle.getPlayers().length || targetPlayerIndex < 0) {
 			throw new MyException(MyErrorNo.wrongParam);
 		}
 	}

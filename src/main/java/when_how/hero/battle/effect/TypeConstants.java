@@ -23,7 +23,7 @@ public class TypeConstants {
 	public static final int SILENCE = 4;
 
 	/**
-	 * 抽牌
+	 * 自己抽牌
 	 */
 	public static final int CARD = 5;
 
@@ -56,5 +56,15 @@ public class TypeConstants {
 	 * 治疗
 	 */
 	public static final int HEAL = 11;
+
+	/**
+	 * 对手抽牌
+	 */
+	public static final int CARD_ENEMY = 12;
+
+	/**
+	 * 对手召唤
+	 */
+	public static final int SUMMON_ENEMY = 13;
 
 }

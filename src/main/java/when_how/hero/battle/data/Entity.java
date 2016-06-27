@@ -12,6 +12,19 @@ public class Entity {
 
 	private int attNum; // 本回合中，已经攻击的次数
 
+	/**
+	 * 增加生命值和上限
+	 * 
+	 * @param num
+	 */
+	public void addHpMax(int num) {
+		if (num <= 0) {
+			throw new RuntimeException("addHpMax a negative num");
+		}
+		this.hpMax += num;
+		this.hp += num;
+	}
+
 	public void addAttNum() {
 		this.attNum++;
 	}
@@ -47,8 +60,29 @@ public class Entity {
 	 * @return 是否死亡
 	 */
 	public boolean decreaseHp(int damage) {
+		if (damage <= 0) {
+			throw new RuntimeException("decreaseHp a negative num");
+		}
 		hp -= damage;
 		if (hp <= 0) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 治疗hp
+	 * 
+	 * @param num
+	 * @return 是否满血
+	 */
+	public boolean heal(int num) {
+		if (num <= 0) {
+			throw new RuntimeException("heal a negative num");
+		}
+		this.hp += num;
+		if (this.hp >= this.hpMax) {
+			this.hp = this.hpMax;
 			return true;
 		}
 		return false;
