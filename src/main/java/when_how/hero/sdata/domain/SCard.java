@@ -54,104 +54,52 @@ public class SCard {
 		return sid;
 	}
 
-	public void setSid(int sid) {
-		this.sid = sid;
-	}
-
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getIntro() {
 		return intro;
 	}
 
-	public void setIntro(String intro) {
-		this.intro = intro;
-	}
-
 	public int getHp() {
 		return hp;
-	}
-
-	public void setHp(int hp) {
-		this.hp = hp;
 	}
 
 	public int getAtt() {
 		return att;
 	}
 
-	public void setAtt(int att) {
-		this.att = att;
-	}
-
 	public int getCost() {
 		return cost;
-	}
-
-	public void setCost(int cost) {
-		this.cost = cost;
 	}
 
 	public int getType() {
 		return type;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public int[] getSpellEffect() {
+		return spellEffect;
 	}
 
 	public int[] getAureoleEffect() {
 		return aureoleEffect;
 	}
 
-	public void setAureoleEffect(int[] aureoleEffect) {
-		this.aureoleEffect = aureoleEffect;
-	}
-
 	public int[] getBattlecryEffect() {
 		return battlecryEffect;
-	}
-
-	public void setBattlecryEffect(int[] battlecryEffect) {
-		this.battlecryEffect = battlecryEffect;
 	}
 
 	public int[] getDeathrattleEffect() {
 		return deathrattleEffect;
 	}
 
-	public void setDeathrattleEffect(int[] deathrattleEffect) {
-		this.deathrattleEffect = deathrattleEffect;
-	}
-
 	public int[] getInspireEffect() {
 		return inspireEffect;
 	}
 
-	public void setInspireEffect(int[] inspireEffect) {
-		this.inspireEffect = inspireEffect;
-	}
-
 	public int[] getChooseoneEffect() {
 		return chooseoneEffect;
-	}
-
-	public void setChooseoneEffect(int[] chooseoneEffect) {
-		this.chooseoneEffect = chooseoneEffect;
-	}
-
-	public int[] getSpellEffect() {
-		return spellEffect;
-	}
-
-	public void setSpellEffect(int[] spellEffect) {
-		this.spellEffect = spellEffect;
 	}
 
 }
