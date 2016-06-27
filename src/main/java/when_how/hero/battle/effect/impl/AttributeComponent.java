@@ -5,7 +5,6 @@ import when_how.hero.battle.data.Servant;
 import when_how.hero.battle.effect.MyComponent;
 import when_how.hero.checker.MyChecker;
 import when_how.hero.common.MyException;
-import when_how.hero.constants.MyErrorNo;
 import when_how.hero.sdata.domain.SEffect;
 
 public class AttributeComponent implements MyComponent {

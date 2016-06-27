@@ -16,6 +16,7 @@ import when_how.hero.battle.effect.impl.DamageComponent;
 import when_how.hero.battle.effect.impl.DamageRangeComponent;
 import when_how.hero.battle.effect.impl.DiscoverComponent;
 import when_how.hero.battle.effect.impl.HealComponent;
+import when_how.hero.battle.effect.impl.SilenceComponent;
 import when_how.hero.battle.effect.impl.SummonComponent;
 import when_how.hero.sdata.domain.SEffect;
 
@@ -71,7 +72,7 @@ public class ComponentFactoryImpl implements ComponentFactory {
 			return new HealComponent(targetPlayer, target, se.getParam()[0]);
 		case TypeConstants.SILENCE:
 			// 沉默
-			return null;
+			return new SilenceComponent(targetPlayer, target);
 		case TypeConstants.SUMMON_ENEMY:
 			// 对手召唤, [召唤物的cardId，召唤数量]
 			return new SummonComponent(battle.getNextTurnPlayer(), se.getParam()[1], se.getParam()[0],
