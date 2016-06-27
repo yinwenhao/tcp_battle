@@ -48,6 +48,11 @@ public class Card {
 		this.setHp(s.getHp());
 		this.setSid(s.getSid());
 		this.setType(s.getType());
+		if (s.getEffect() != null) {
+			for (int eId : s.getEffect()) {
+				this.addEffect(SEffectCache.CACHE.get(eId));
+			}
+		}
 		if (s.getSpellEffect() != null) {
 			for (int eId : s.getSpellEffect()) {
 				this.addSpellEffect(SEffectCache.CACHE.get(eId));

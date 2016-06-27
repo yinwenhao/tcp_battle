@@ -32,7 +32,7 @@ public class AttributeComponent implements MyComponent {
 		Servant targetServant = targetPlayer.getServants().get(target);
 		targetServant.setAtt(targetServant.getAtt() + attAttribute);
 		targetServant.addHpMax(hpAttribute);
-		targetServant.getEffects().add(se);
+		targetServant.getEffect().add(se);
 	}
 
 	@Override

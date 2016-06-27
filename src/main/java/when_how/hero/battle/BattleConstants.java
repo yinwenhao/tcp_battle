@@ -3,6 +3,11 @@ package when_how.hero.battle;
 public class BattleConstants {
 
 	/**
+	 * 每回合攻击次数——默认
+	 */
+	public static final int ATT_NUM_DEFAULT = 1;
+
+	/**
 	 * 随从位置——默认最右边
 	 */
 	public static final int LOCATION_DEFAULT = -1;

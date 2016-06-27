@@ -1,20 +1,16 @@
 package when_how.hero.dto.own;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
-import when_how.hero.battle.data.Servant;
+import when_how.hero.battle.data.Equip;
 import when_how.hero.sdata.cache.SCardCache;
 import when_how.hero.sdata.domain.SCard;
 
-@JsonInclude(Include.NON_NULL)
-public class OwnServant extends OwnEntity {
+public class OwnEquip {
 
-	private boolean summoningSickness; // 是否召唤失调
+	private int sid;
 
-	private int attNum; // 本回合已经攻击的次数
+	private int hp;
 
-	private int attNumLimit; // 本回合攻击次数上限
+	private int att;
 
 	private int[] aureoleEffect; // 光环
 
@@ -24,17 +20,39 @@ public class OwnServant extends OwnEntity {
 
 	private int[] inspireEffect; // 激励
 
-	public OwnServant(Servant servant) {
-		super(servant);
-		this.summoningSickness = servant.isSummoningSickness();
-		this.attNum = servant.getAttNum();
-		this.attNumLimit = servant.getAttNumLimit();
-
-		SCard sCard = SCardCache.CACHE.get(servant.getSid());
+	public OwnEquip(Equip equip) {
+		this.sid = equip.getSid();
+		this.hp = equip.getHp();
+		this.att = equip.getAtt();
+		SCard sCard = SCardCache.CACHE.get(equip.getSid());
 		this.aureoleEffect = sCard.getAureoleEffect();
 		this.battlecryEffect = sCard.getBattlecryEffect();
 		this.deathrattleEffect = sCard.getDeathrattleEffect();
 		this.inspireEffect = sCard.getInspireEffect();
+	}
+
+	public int getSid() {
+		return sid;
+	}
+
+	public void setSid(int sid) {
+		this.sid = sid;
+	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	public int getAtt() {
+		return att;
+	}
+
+	public void setAtt(int att) {
+		this.att = att;
 	}
 
 	public int[] getAureoleEffect() {
@@ -67,30 +85,6 @@ public class OwnServant extends OwnEntity {
 
 	public void setInspireEffect(int[] inspireEffect) {
 		this.inspireEffect = inspireEffect;
-	}
-
-	public boolean isSummoningSickness() {
-		return summoningSickness;
-	}
-
-	public void setSummoningSickness(boolean summoningSickness) {
-		this.summoningSickness = summoningSickness;
-	}
-
-	public int getAttNum() {
-		return attNum;
-	}
-
-	public void setAttNum(int attNum) {
-		this.attNum = attNum;
-	}
-
-	public int getAttNumLimit() {
-		return attNumLimit;
-	}
-
-	public void setAttNumLimit(int attNumLimit) {
-		this.attNumLimit = attNumLimit;
 	}
 
 }

@@ -3,29 +3,29 @@ package when_how.hero.battle.effect;
 public class TypeConstants {
 
 	/**
-	 * 伤害
+	 * 嘲讽
 	 */
-	public static final int DAMAGE = 1;
+	public static final int TAUNT = 1;
 
 	/**
-	 * 附近伤害
+	 * 潜行
 	 */
-	public static final int DAMAGE_RANGE = 2;
+	public static final int STEALTH = 2;
 
 	/**
-	 * 范围伤害
+	 * 冲锋
 	 */
-	public static final int DAMAGE_AOE = 3;
+	public static final int CHARGE = 3;
 
 	/**
-	 * 沉默
+	 * 圣盾
 	 */
-	public static final int SILENCE = 4;
+	public static final int DIVINE_SHIELD = 4;
 
 	/**
-	 * 自己抽牌
+	 * 风怒
 	 */
-	public static final int CARD = 5;
+	public static final int WINDFURY = 5;
 
 	/**
 	 * 发现
@@ -66,5 +66,30 @@ public class TypeConstants {
 	 * 对手召唤
 	 */
 	public static final int SUMMON_ENEMY = 13;
+
+	/**
+	 * 伤害
+	 */
+	public static final int DAMAGE = 14;
+
+	/**
+	 * 附近伤害
+	 */
+	public static final int DAMAGE_RANGE = 15;
+
+	/**
+	 * 范围伤害
+	 */
+	public static final int DAMAGE_AOE = 16;
+
+	/**
+	 * 沉默
+	 */
+	public static final int SILENCE = 17;
+
+	/**
+	 * 自己抽牌
+	 */
+	public static final int CARD = 18;
 
 }

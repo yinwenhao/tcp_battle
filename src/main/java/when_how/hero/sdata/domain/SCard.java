@@ -33,6 +33,9 @@ public class SCard {
 	private int type;
 
 	@SdataColumn
+	private int[] effect; // 自带的效果
+
+	@SdataColumn
 	private int[] spellEffect; // 法术效果
 
 	@SdataColumn
@@ -100,6 +103,10 @@ public class SCard {
 
 	public int[] getChooseoneEffect() {
 		return chooseoneEffect;
+	}
+
+	public int[] getEffect() {
+		return effect;
 	}
 
 }
