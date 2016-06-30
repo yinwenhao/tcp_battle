@@ -4,7 +4,7 @@ import java.util.List;
 
 import when_how.hero.battle.data.Battle;
 import when_how.hero.battle.data.Player;
-import when_how.hero.sdata.domain.SEffect;
+import when_how.hero.battle.data.Servant;
 
 public interface ComponentFactory {
 
@@ -20,7 +20,7 @@ public interface ComponentFactory {
 	 * @param targetPlayer
 	 * @return
 	 */
-	public MyComponent getBattlecryComposite(List<SEffect> effects, Battle battle, int location, int target,
+	public MyComponent getBattlecryComposite(List<Integer> effects, Battle battle, int location, int target,
 			Player targetPlayer);
 
 	/**
@@ -32,6 +32,21 @@ public interface ComponentFactory {
 	 * @param targetPlayer
 	 * @return
 	 */
-	public MyComponent getSpellComposite(List<SEffect> effects, Battle battle, int target, Player targetPlayer);
+	public MyComponent getSpellComposite(List<Integer> effects, Battle battle, int target, Player targetPlayer);
+
+	/**
+	 * 自带效果配件
+	 * 
+	 * @param effects
+	 * @param battle
+	 * @param location
+	 *            随从放置位置
+	 * @param target
+	 *            目标序号，-1表示英雄
+	 * @param targetPlayer
+	 * @return
+	 */
+	public MyComponent getEffectComposite(List<Integer> effects, Battle battle, int location, int target,
+			Player targetPlayer);
 
 }

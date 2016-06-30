@@ -3,6 +3,16 @@ package when_how.hero.battle;
 public class BattleConstants {
 
 	/**
+	 * 指定目标类型——攻击
+	 */
+	public static final int TARGET_TYPE_ATTACK = 1;
+
+	/**
+	 * 指定目标类型——法术
+	 */
+	public static final int TARGET_TYPE_SPELL = 2;
+
+	/**
 	 * 每回合攻击次数——默认
 	 */
 	public static final int ATT_NUM_DEFAULT = 1;

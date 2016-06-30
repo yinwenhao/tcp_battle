@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import when_how.hero.sdata.cache.SCardCache;
-import when_how.hero.sdata.cache.SEffectCache;
 import when_how.hero.sdata.domain.SCard;
-import when_how.hero.sdata.domain.SEffect;
 
 public class Card {
 
@@ -23,17 +21,17 @@ public class Card {
 
 	private int type;
 
-	private List<SEffect> effects; // 受到的影响
+	private List<Integer> effects; // 自带的影响
 
-	private List<SEffect> spellEffect; // 法术效果
+	private List<Integer> spellEffect; // 法术效果
 
-	private List<SEffect> aureoleEffect; // 光环
+	private List<Integer> aureoleEffect; // 光环
 
-	private List<SEffect> battlecryEffect; // 战吼
+	private List<Integer> battlecryEffect; // 战吼
 
-	private List<SEffect> deathrattleEffect; // 亡语
+	private List<Integer> deathrattleEffect; // 亡语
 
-	private List<SEffect> inspireEffect; // 激励
+	private List<Integer> inspireEffect; // 激励
 
 	private int[] chooseone; // 抉择
 
@@ -50,75 +48,75 @@ public class Card {
 		this.setType(s.getType());
 		if (s.getEffect() != null) {
 			for (int eId : s.getEffect()) {
-				this.addEffect(SEffectCache.CACHE.get(eId));
+				this.addEffect(eId);
 			}
 		}
 		if (s.getSpellEffect() != null) {
 			for (int eId : s.getSpellEffect()) {
-				this.addSpellEffect(SEffectCache.CACHE.get(eId));
+				this.addSpellEffect(eId);
 			}
 		}
 		if (s.getAureoleEffect() != null) {
 			for (int eId : s.getAureoleEffect()) {
-				this.addAureoleEffect(SEffectCache.CACHE.get(eId));
+				this.addAureoleEffect(eId);
 			}
 		}
 		if (s.getBattlecryEffect() != null) {
 			for (int eId : s.getBattlecryEffect()) {
-				this.addBattlecryEffect(SEffectCache.CACHE.get(eId));
+				this.addBattlecryEffect(eId);
 			}
 		}
 		if (s.getDeathrattleEffect() != null) {
 			for (int eId : s.getDeathrattleEffect()) {
-				this.addDeathrattleEffect(SEffectCache.CACHE.get(eId));
+				this.addDeathrattleEffect(eId);
 			}
 		}
 		if (s.getInspireEffect() != null) {
 			for (int eId : s.getInspireEffect()) {
-				this.addInspireEffect(SEffectCache.CACHE.get(eId));
+				this.addInspireEffect(eId);
 			}
 		}
 		this.setChooseone(s.getChooseoneEffect());
 	}
 
-	public void addEffect(SEffect se) {
+	public void addEffect(int se) {
 		if (effects == null) {
-			effects = new ArrayList<SEffect>();
+			effects = new ArrayList<Integer>();
 		}
 		effects.add(se);
 	}
 
-	public void addSpellEffect(SEffect se) {
+	public void addSpellEffect(int se) {
 		if (spellEffect == null) {
-			spellEffect = new ArrayList<SEffect>();
+			spellEffect = new ArrayList<Integer>();
 		}
 		spellEffect.add(se);
 	}
 
-	public void addAureoleEffect(SEffect se) {
+	public void addAureoleEffect(int se) {
 		if (aureoleEffect == null) {
-			aureoleEffect = new ArrayList<SEffect>();
+			aureoleEffect = new ArrayList<Integer>();
 		}
 		aureoleEffect.add(se);
 	}
 
-	public void addBattlecryEffect(SEffect se) {
+	public void addBattlecryEffect(int se) {
 		if (battlecryEffect == null) {
-			battlecryEffect = new ArrayList<SEffect>();
+			battlecryEffect = new ArrayList<Integer>();
 		}
 		battlecryEffect.add(se);
 	}
 
-	public void addDeathrattleEffect(SEffect se) {
+	public void addDeathrattleEffect(int se) {
 		if (deathrattleEffect == null) {
-			deathrattleEffect = new ArrayList<SEffect>();
+			deathrattleEffect = new ArrayList<Integer>();
 		}
 		deathrattleEffect.add(se);
 	}
 
-	public void addInspireEffect(SEffect se) {
+	public void addInspireEffect(int se) {
 		if (inspireEffect == null) {
-			inspireEffect = new ArrayList<SEffect>();
+			inspireEffect = new ArrayList<Integer>();
 		}
 		inspireEffect.add(se);
 	}
@@ -163,43 +161,43 @@ public class Card {
 		this.type = type;
 	}
 
-	public List<SEffect> getAureoleEffect() {
+	public List<Integer> getAureoleEffect() {
 		return aureoleEffect;
 	}
 
-	public void setAureoleEffect(List<SEffect> aureoleEffect) {
+	public void setAureoleEffect(List<Integer> aureoleEffect) {
 		this.aureoleEffect = aureoleEffect;
 	}
 
-	public List<SEffect> getBattlecryEffect() {
+	public List<Integer> getBattlecryEffect() {
 		return battlecryEffect;
 	}
 
-	public void setBattlecryEffect(List<SEffect> battlecryEffect) {
+	public void setBattlecryEffect(List<Integer> battlecryEffect) {
 		this.battlecryEffect = battlecryEffect;
 	}
 
-	public List<SEffect> getDeathrattleEffect() {
+	public List<Integer> getDeathrattleEffect() {
 		return deathrattleEffect;
 	}
 
-	public void setDeathrattleEffect(List<SEffect> deathrattleEffect) {
+	public void setDeathrattleEffect(List<Integer> deathrattleEffect) {
 		this.deathrattleEffect = deathrattleEffect;
 	}
 
-	public List<SEffect> getInspireEffect() {
+	public List<Integer> getInspireEffect() {
 		return inspireEffect;
 	}
 
-	public void setInspireEffect(List<SEffect> inspireEffect) {
+	public void setInspireEffect(List<Integer> inspireEffect) {
 		this.inspireEffect = inspireEffect;
 	}
 
-	public List<SEffect> getEffects() {
+	public List<Integer> getEffects() {
 		return effects;
 	}
 
-	public void setEffects(List<SEffect> effects) {
+	public void setEffects(List<Integer> effects) {
 		this.effects = effects;
 	}
 
@@ -211,11 +209,11 @@ public class Card {
 		this.damage = damage;
 	}
 
-	public List<SEffect> getSpellEffect() {
+	public List<Integer> getSpellEffect() {
 		return spellEffect;
 	}
 
-	public void setSpellEffect(List<SEffect> spellEffect) {
+	public void setSpellEffect(List<Integer> spellEffect) {
 		this.spellEffect = spellEffect;
 	}
 

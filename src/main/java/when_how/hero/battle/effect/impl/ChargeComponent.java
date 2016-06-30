@@ -3,27 +3,21 @@ package when_how.hero.battle.effect.impl;
 import when_how.hero.battle.data.Player;
 import when_how.hero.battle.data.Servant;
 import when_how.hero.battle.effect.MyComponent;
-import when_how.hero.battle.listener.impl.PlusAttributeListener;
+import when_how.hero.battle.listener.impl.ChargeSummoningSicknessListener;
 import when_how.hero.checker.MyChecker;
 import when_how.hero.common.MyException;
 import when_how.hero.sdata.domain.SEffect;
 
-public class AttributeComponent implements MyComponent {
+public class ChargeComponent implements MyComponent {
 
 	private Player targetPlayer;
-
-	private int attAttribute;
-
-	private int hpAttribute;
 
 	private int target;
 
 	private SEffect se;
 
-	public AttributeComponent(SEffect se, Player targetPlayer, int target, int attAttribute, int hpAttribute) {
+	public ChargeComponent(SEffect se, Player targetPlayer, int target) {
 		this.targetPlayer = targetPlayer;
-		this.hpAttribute = hpAttribute;
-		this.attAttribute = attAttribute;
 		this.target = target;
 		this.se = se;
 	}
@@ -31,7 +25,7 @@ public class AttributeComponent implements MyComponent {
 	@Override
 	public void display() throws MyException {
 		Servant targetServant = targetPlayer.getServants().get(target);
-		targetServant.addAttributeListener(new PlusAttributeListener(attAttribute, hpAttribute), se);
+		targetServant.setSummoningSicknessListener(new ChargeSummoningSicknessListener(), se);
 	}
 
 	@Override

@@ -10,24 +10,31 @@ import when_how.hero.battle.data.Player;
 import when_how.hero.battle.effect.impl.AttributeComponent;
 import when_how.hero.battle.effect.impl.BackToHandComponent;
 import when_how.hero.battle.effect.impl.CardComponent;
+import when_how.hero.battle.effect.impl.ChargeComponent;
 import when_how.hero.battle.effect.impl.CollectComponent;
 import when_how.hero.battle.effect.impl.DamageAoeComponent;
 import when_how.hero.battle.effect.impl.DamageComponent;
 import when_how.hero.battle.effect.impl.DamageRangeComponent;
 import when_how.hero.battle.effect.impl.DiscoverComponent;
+import when_how.hero.battle.effect.impl.DivineShieldComponent;
 import when_how.hero.battle.effect.impl.HealComponent;
 import when_how.hero.battle.effect.impl.SilenceComponent;
+import when_how.hero.battle.effect.impl.StealthComponent;
 import when_how.hero.battle.effect.impl.SummonComponent;
+import when_how.hero.battle.effect.impl.TauntComponent;
+import when_how.hero.battle.effect.impl.WindfuryComponent;
+import when_how.hero.sdata.cache.SEffectCache;
 import when_how.hero.sdata.domain.SEffect;
 
 @Component("componentFactory")
 public class ComponentFactoryImpl implements ComponentFactory {
 
 	@Override
-	public MyComponent getBattlecryComposite(List<SEffect> effects, Battle battle, int location, int target,
+	public MyComponent getBattlecryComposite(List<Integer> effects, Battle battle, int location, int target,
 			Player targetPlayer) {
 		Composite result = new BattlecryCompositeImpl();
-		for (SEffect se : effects) {
+		for (int s : effects) {
+			SEffect se = SEffectCache.CACHE.get(s);
 			MyComponent c = createComponent(se, battle, targetPlayer, location, target);
 			result.add(c);
 		}
@@ -77,15 +84,46 @@ public class ComponentFactoryImpl implements ComponentFactory {
 			// 对手召唤, [召唤物的cardId，召唤数量]
 			return new SummonComponent(battle.getNextTurnPlayer(), se.getParam()[1], se.getParam()[0],
 					location == BattleConstants.LOCATION_DEFAULT ? location : location + 1);
+		case TypeConstants.WINDFURY:
+			// 风怒, [额外攻击次数]
+			return new WindfuryComponent(se, targetPlayer, target, se.getParam()[0]);
+		case TypeConstants.DIVINE_SHIELD:
+			// 圣盾
+			return new DivineShieldComponent(se, targetPlayer, target);
+		case TypeConstants.CHARGE:
+			// 冲锋
+			return new ChargeComponent(se, targetPlayer, target);
+		case TypeConstants.STEALTH:
+			// 潜行
+			return new StealthComponent(se, targetPlayer, target);
+		case TypeConstants.TAUNT:
+			// 嘲讽
+			return new TauntComponent(se, targetPlayer, target);
+		case TypeConstants.DAMAGE_ALL:
+			// 全体伤害
+			
 		}
 		return null;
 	}
 
 	@Override
-	public MyComponent getSpellComposite(List<SEffect> effects, Battle battle, int target, Player targetPlayer) {
+	public MyComponent getSpellComposite(List<Integer> effects, Battle battle, int target, Player targetPlayer) {
 		Composite result = new SpellCompositeImpl();
-		for (SEffect se : effects) {
+		for (int s : effects) {
+			SEffect se = SEffectCache.CACHE.get(s);
 			MyComponent c = createComponent(se, battle, targetPlayer, BattleConstants.LOCATION_DEFAULT, target);
+			result.add(c);
+		}
+		return result;
+	}
+
+	@Override
+	public MyComponent getEffectComposite(List<Integer> effects, Battle battle, int location, int target,
+			Player targetPlayer) {
+		Composite result = new EffectCompositeImpl();
+		for (int s : effects) {
+			SEffect se = SEffectCache.CACHE.get(s);
+			MyComponent c = createComponent(se, battle, targetPlayer, location, target);
 			result.add(c);
 		}
 		return result;

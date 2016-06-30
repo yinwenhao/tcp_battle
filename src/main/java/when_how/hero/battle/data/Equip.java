@@ -2,8 +2,6 @@ package when_how.hero.battle.data;
 
 import java.util.List;
 
-import when_how.hero.sdata.domain.SEffect;
-
 public class Equip {
 
 	private int sid;
@@ -12,7 +10,7 @@ public class Equip {
 
 	private int att;
 
-	private List<SEffect> deathrattleEffect; // 亡语
+	private List<Integer> deathrattleEffect; // 亡语
 
 	public Equip(Card card) {
 		this.sid = card.getSid();
@@ -45,11 +43,11 @@ public class Equip {
 		this.att = att;
 	}
 
-	public List<SEffect> getDeathrattleEffect() {
+	public List<Integer> getDeathrattleEffect() {
 		return deathrattleEffect;
 	}
 
-	public void setDeathrattleEffect(List<SEffect> deathrattleEffect) {
+	public void setDeathrattleEffect(List<Integer> deathrattleEffect) {
 		this.deathrattleEffect = deathrattleEffect;
 	}
 

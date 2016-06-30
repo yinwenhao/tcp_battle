@@ -92,4 +92,9 @@ public class TypeConstants {
 	 */
 	public static final int CARD = 18;
 
+	/**
+	 * 全体伤害
+	 */
+	public static final int DAMAGE_ALL = 19;
+
 }

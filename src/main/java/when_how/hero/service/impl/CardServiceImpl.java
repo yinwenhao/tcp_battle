@@ -72,10 +72,17 @@ public class CardServiceImpl extends BaseService implements CardService {
 		}
 
 		MyComponent spell = null;
-		if (card.getType() == BattleConstants.CARD_TYPE_SPELL) {
+		if (card.getType() == BattleConstants.CARD_TYPE_SPELL && card.getSpellEffect() != null) {
 			// 法术牌效果
-			spell = componentFactory.getSpellComposite(card.getBattlecryEffect(), battle, target, targetPlayer);
+			spell = componentFactory.getSpellComposite(card.getSpellEffect(), battle, target, targetPlayer);
 			spell.checkParam();
+		}
+
+		MyComponent effect = null;
+		if (card.getEffects() != null) {
+			// 自带的效果，目标为自己
+			effect = componentFactory.getEffectComposite(card.getBattlecryEffect(), battle, location, location, player);
+			effect.checkParam();
 		}
 
 		player.useEnergy(card.getCost());
@@ -85,6 +92,10 @@ public class CardServiceImpl extends BaseService implements CardService {
 			// 随从牌，随从需要先占个位置（防止召唤类的战吼把位置占光）
 			Servant servant = new Servant(card);
 			player.addServant(location, servant);
+			if (player == targetPlayer && target >= location) {
+				// 如果目标是自己的随从，需要确定target是否要变化
+				target++;
+			}
 		}
 
 		if (battlecry != null) {
@@ -95,6 +106,10 @@ public class CardServiceImpl extends BaseService implements CardService {
 		if (spell != null) {
 			// 法术牌效果
 			spell.display();
+		}
+		if (effect != null) {
+			// 自带的效果
+			effect.display();
 		}
 		if (card.getType() == BattleConstants.CARD_TYPE_EQUIP) {
 			// 装备牌
